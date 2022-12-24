@@ -1,0 +1,8 @@
+
+.custom-font {
+    font-family: 'Jua' !important;
+}
+
+a.custom.card-img-top {
+    min-height: 4rem;
+}
