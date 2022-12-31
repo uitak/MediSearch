@@ -75,7 +75,7 @@
 			dutyTime1c, dutyTime2c, dutyTime3c, dutyTime4c, dutyTime5c, dutyTime6c, dutyTime7c, dutyTime8c,
 			dutyTime1s, dutyTime2s, dutyTime3s, dutyTime4s, dutyTime5s, dutyTime6s, dutyTime7s, dutyTime8s,
 			postCdn1, postCdn2, wgs84Lon, wgs84Lat,
-			AVG(star) AS star, COUNT(reviewNo) AS reviews
+			TRUNCATE(AVG(star), 1) AS star, COUNT(reviewNo) AS reviews
 		FROM HOSPITAL H
 		LEFT JOIN REVIEW_HOSPITAL R ON H.hpid = R.hpid
 		WHERE H.hpid = #{hpid}
@@ -122,7 +122,7 @@
 	<select id="selectPharmacy" resultMap="PharmacyResult" parameterType="String">
 		SELECT
 			P.pharmacyNo, hpid, dutyName, dutyAddr, 
-			AVG(star) AS star, COUNT(reviewNo) AS reviews,
+			TRUNCATE(AVG(star), 1) AS star, COUNT(reviewNo) AS reviews,
 		    ROUND(ST_Distance_Sphere(POINT(
 				(SELECT wgs84Lon FROM HOSPITAL WHERE hpid = #{hpid}),
 				(SELECT wgs84Lat FROM HOSPITAL WHERE hpid = #{hpid})

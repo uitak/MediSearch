@@ -256,7 +256,7 @@
 	<select id="selectPharmacy" resultMap="PharmacyResult" parameterType="String">
 		SELECT
 			P.pharmacyNo, hpid, dutyName, dutyAddr, 
-			AVG(star) AS star, COUNT(reviewNo) AS reviews,
+			TRUNCATE(AVG(star) ,1) AS star, COUNT(reviewNo) AS reviews,
 		    ROUND(ST_Distance_Sphere(POINT(
 				(SELECT wgs84Lon FROM HOSPITAL WHERE hpid = #{hpid}),
 				(SELECT wgs84Lat FROM HOSPITAL WHERE hpid = #{hpid})

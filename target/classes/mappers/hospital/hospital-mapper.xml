@@ -15,7 +15,7 @@
 	<select id="selectHospitalList" resultMap="HospitalListMap" parameterType="map">
 		SELECT
 			H.hpid, dutyName, dutyAddr, dutyDivNam,
-			AVG(star) AS star, COUNT(reviewNo) AS reviews
+			TRUNCATE(AVG(star), 1) AS star, COUNT(reviewNo) AS reviews
 		FROM HOSPITAL H
 		LEFT JOIN REVIEW_HOSPITAL R ON H.hpid = R.hpid
 		<if test="searchMD != null">

@@ -87,7 +87,7 @@ public class HospitalController {
 		model.addAttribute("list", list);
 		model.addAttribute("param", param);
 		model.addAttribute("dutyDiv", Arrays.toString(dutyDiv));
-		model.addAttribute("searchMD", Arrays.toString(searchMD));
+		model.addAttribute("sesarchMD", Arrays.toString(searchMD));
 		model.addAttribute("pageInfo", pageInfo);
 		
 		

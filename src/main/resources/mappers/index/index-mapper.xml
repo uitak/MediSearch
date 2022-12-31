@@ -46,7 +46,7 @@
 		SELECT 
 			H.hpid, dutyName, 
 			ROUND(ST_Distance_Sphere(POINT(127.0016985, 37.5642135), POINT(wgs84Lon, wgs84Lat)), -1) AS distance,
-			AVG(star) AS star, COUNT(reviewNo) AS reviews
+			TRUNCATE(AVG(star), 1) AS star, COUNT(reviewNo) AS reviews
 		FROM HOSPITAL H
 		LEFT JOIN REVIEW_HOSPITAL R ON H.hpid = R.hpid
 		GROUP BY H.hpid
