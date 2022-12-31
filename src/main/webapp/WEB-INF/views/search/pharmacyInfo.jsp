@@ -457,9 +457,10 @@
           <div class="mb-4 pb-4 border-bottom">
             <h3 class="h4 pb-3"><i class="fi-star-filled mt-n1 me-2 lead align-middle text-warning"></i><c:out value="${pharmacy.star}"/> (${pharmacy.reviews } reviews)
             </h3>
+            <c:if test="${loginMember != null}">
             <div
               class="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch justify-content-between">
-              <a class="btn btn-outline-primary mb-sm-0 mb-3" href="#modal-review" data-bs-toggle="modal"><i
+              <a class="btn btn-outline-primary mb-sm-0 mb-3" onclick="moveReview();" data-bs-toggle="modal"><i
                   class="fi-edit me-1"></i>리뷰 쓰기</a>
               <!-- <div class="d-flex align-items-center ms-sm-4">
                 <label class="me-2 pe-1 text-nowrap" for="reviews-sorting"><i
@@ -473,6 +474,7 @@
                 </select>
               </div> -->
             </div>
+            </c:if>
           </div>
           <c:if test="${empty reviewList}">
 	          <div class="mb-4">
@@ -582,6 +584,13 @@
 			
 			window.location.search = url.searchParams;
 		};
+		
+		const urlParams = new URLSearchParams(window.location.search);
+		function moveReview(){
+			var idValue = urlParams.get('no');
+			location.href = '${path}/board/postPharmacyReview?no='+idValue;
+			
+	  }
   </script> 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

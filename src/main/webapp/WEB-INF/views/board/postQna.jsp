@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-12 mb-4">
                     <label class="form-label" for="pr-description"><b>내용</b> <span class='text-danger'>*</span></label>
-                    <textarea style="resize: none;"class="form-control" rows="7" id="pr-description" name="content" placeholder="500자 이내로 작성해주세요."></textarea>
+                    <textarea style="resize: none;"class="form-control" rows="7" id="pr-description" name="content" placeholder="500자 이내로 작성해주세요."required></textarea>
                 </div>
 
                 <div class="col-12 mb-4">

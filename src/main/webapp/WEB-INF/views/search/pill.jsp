@@ -155,12 +155,14 @@
              dataType: 'json',
              success :(obj) =>{
             	 str = '<div class="d-flex flex-row-reverse" >';
-            	 str += '<a href="#" class=" icon-box card flex-row align-items-center card-hover rounded-pill py-2 ps-2 pe-4">';
-            	 str += '<div class="icon-box-media bg-faded-primary text-primary rounded-circle me-2">';
+            	 str += '<c:if test="${loginMember != null}">'
+            	 str += '<a href="${path}/board/postPillReview?pillNo='+ obj.pillNo +'" class=" icon-box card flex-row align-items-center card-hover rounded-pill py-2 ps-2 pe-4">';
+            	 str += '<div class="icon-box-media bg-faded-primary text-primary rounded-circle me-2">';            	 
             	 str += '<i class="fi-chat-left"></i>';
             	 str += '</div>';
             	 str += ' <h2 class="icon-box-title fs-sm ps-1 mb-0">리뷰 쓰기</h3>';
             	 str += ' </a>';
+            	 str += '</c:if>';
             	 str += '</div>';
                  str += '<h3 class="h3 pt-2 mb-4" style="color:rgb(255, 125, 0)">'+obj.itemName+'</h3>';
                  if(obj.itemImage != '-'){

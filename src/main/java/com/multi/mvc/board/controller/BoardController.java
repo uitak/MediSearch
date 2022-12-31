@@ -122,9 +122,10 @@ public class BoardController {
 	
 	@GetMapping("/postNotice")
 	public String noticeWrite() {
-		log.info("QnA 게시판 글쓰기 요청");
+		log.info("공지사항 글쓰기 요청");
 		return "/board/postNotice";
 	}
+	
 	
 	@PostMapping("/postBoard")
 	public String writeBoard(Model model, HttpSession session,
@@ -256,6 +257,7 @@ public class BoardController {
 		
 		return "common/msg";
 	}
+	
 	
 	
 	
@@ -449,5 +451,96 @@ public class BoardController {
 		
 		return list;
 	}
+	
+	
+	// 리뷰 글쓰기 영역
+	
+	@GetMapping("/postHospitalReview")
+	public String reviewWriteHospital() {
+		log.info("병원 리뷰 글쓰기 요청");
+		return "/board/postHospitalReview";
+	}
+	
+	@GetMapping("/postPharmacyReview")
+	public String reviewWritePharmacy() {
+		log.info("약국 리뷰 글쓰기 요청");
+		return "/board/postPharmacyReview";
+	}
+	
+	@GetMapping("/postPillReview")
+	public String reviewWritePill() {
+		log.info("의약품 리뷰 글쓰기 요청");
+		return "/board/postPillReview";
+	}
+	
+	@PostMapping("/postHospitalReview")
+	public String writeReviewHospital(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@ModelAttribute Review review		
+	) {
+		log.info("병원 리뷰 작성 요청");
+		
+		review.setMemberNo(loginMember.getMemberNo());
+			
+		log.debug("review : " + review);
+		int result = service.saveHospitalReview(review);
+
+		if(result > 0) {
+			model.addAttribute("msg", "게시글이 등록되었습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}else {
+			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}
+		
+		return "common/msg";
+	}
+	
+	@PostMapping("/postPharmacyReview")
+	public String writeReviewPharmacy(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@ModelAttribute Review review		
+	) {
+		log.info("약국 리뷰 작성 요청");
+		
+		review.setMemberNo(loginMember.getMemberNo());
+			
+		log.debug("review : " + review);
+		int result = service.savePharmacyReview(review);
+
+		if(result > 0) {
+			model.addAttribute("msg", "게시글이 등록되었습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}else {
+			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}
+		
+		return "common/msg";
+	}
+	
+	@PostMapping("/postPillReview")
+	public String writeReviewPill(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@ModelAttribute Review review		
+	) {
+		log.info("알약 리뷰 작성 요청");
+		
+		review.setMemberNo(loginMember.getMemberNo());
+			
+		log.debug("review : " + review);
+		int result = service.savePillReview(review);
+
+		if(result > 0) {
+			model.addAttribute("msg", "게시글이 등록되었습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}else {
+			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}
+		
+		return "common/msg";
+	}
+	
 	
 }

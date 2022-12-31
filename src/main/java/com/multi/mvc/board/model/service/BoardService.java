@@ -140,6 +140,39 @@ public class BoardService {
 		return mapper.selectPillReview();
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
+	public int saveHospitalReview(Review review) {
+		int result = 0;
+		if(review.getReviewNo() == 0) {
+			result = mapper.insertHospitalReview(review);
+		}else {
+			result = mapper.updateHospitalReview(review);
+		}
+		return result;
+	}
+	@Transactional(rollbackFor = Exception.class)
+	public int savePharmacyReview(Review review) {
+		int result = 0;
+		if(review.getReviewNo() == 0) {
+			result = mapper.insertPharmacyReview(review);
+		}else {
+			result = mapper.updatePharmacyReview(review);
+		}
+		return result;
+	}
+	@Transactional(rollbackFor = Exception.class)
+	public int savePillReview(Review review) {
+		int result = 0;
+		if(review.getReviewNo() == 0) {
+			result = mapper.insertPillReview(review);
+		}else {
+			result = mapper.updatePillReview(review);
+		}
+		return result;
+	}
+	
+	
+	
 }
 
 

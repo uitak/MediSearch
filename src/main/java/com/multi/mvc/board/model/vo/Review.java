@@ -18,6 +18,6 @@ public class Review {
 	private String name;
 	private String title;
 	private String content;
-	private int star;
+	private double star;
 	private Date createDate;
 }

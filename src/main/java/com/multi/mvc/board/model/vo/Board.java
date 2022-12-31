@@ -16,7 +16,8 @@ public class Board {
 	private String userId;
 	private String title;
 	private String content;
-	private String dtype;
+	private String dType;
+	private String qType;
 	private String originalFileName;
 	private String renamedFileName;
 	private int views;

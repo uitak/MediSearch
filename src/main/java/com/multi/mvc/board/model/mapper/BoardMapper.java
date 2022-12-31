@@ -32,4 +32,13 @@ public interface BoardMapper {
 	List<Review> selectPharmacyReview();
 	List<Review> selectPillReview();
 	
+	int insertHospitalReview(Review review);
+	int insertPharmacyReview(Review review);
+	int insertPillReview(Review review);
+	int updateHospitalReview(Review review);
+	int updatePharmacyReview(Review review);
+	int updatePillReview(Review review);
+	
+	
+	
 }

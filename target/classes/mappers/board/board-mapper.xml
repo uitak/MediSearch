@@ -9,7 +9,8 @@
 		<result property="title" column="TITLE"/>    <!-- 타이틀 그대로-->
 	<!--  	<result property="writerId" column="USERID"/> -->	<!-- 라이트아이디 -->
 		<result property="memberNo" column="memberNo"/>
-		<result property="dtype" column="DTYPE"/>
+		<result property="dType" column="DTYPE"/>
+		<result property="qType" column="QTYPE"/>
 		<result property="views" column="VIEWS"/>    <!-- READCOUNT -->
 		<result property="content" column="CONTENT"/>  <!-- 그대로 -->
 		<result property="originalFileName" column="ORIGINALFILENAME"/>
@@ -40,9 +41,9 @@
 		<result property="division" 	column="division"/>
 		<result property="name" 		column="name"/>
 		<result property="title" 		column="title"/>
-		<result property="title" 		column="title"/>
 		<result property="content" 		column="content"/>
 		<result property="createDate" 	column="createDate"/>
+		<result property="star" 	column="star"/>
 	</resultMap>
 	
 	
@@ -120,12 +121,12 @@
 			BOARDNO, MEMBERNO, DTYPE, TITLE,
 			CONTENT, ORIGINALFILENAME,
 			RENAMEDFILENAME, VIEWS, STATUS,
-			CREATEDATE	
+			CREATEDATE, QTYPE	
 		) VALUES (
-			0, #{memberNo}, 'f', #{title}, 
+			0, #{memberNo}, #{dType}, #{title}, 
 			#{content}, #{originalFileName}, 
 			#{renamedFileName}, DEFAULT, DEFAULT, 
-			DEFAULT		
+			DEFAULT, #{qType} 		
 		)
 	</insert>
 
@@ -258,6 +259,66 @@
 			JOIN MEMBER M ON R.memberNo = M.memberNo
 		) T
 	</select>
+	
+	<insert id="insertHospitalReview" parameterType="Review">
+		INSERT REVIEW_HOSPITAL (
+			REVIEWNO, HPID, MEMBERNO, CONTENT,
+			STAR, CREATEDATE, TITLE	
+		) VALUES (
+			0, #{divId}, #{memberNo}, #{content}, 
+			#{star}, DEFAULT, #{title}		
+		)
+	</insert>
+	
+	<insert id="insertPharmacyReview" parameterType="Review">
+		INSERT REVIEW_PHARMACY (
+			REVIEWNO, PHARMACYNO, MEMBERNO, CONTENT,
+			STAR, CREATEDATE, TITLE	
+		) VALUES (
+			0, #{divId}, #{memberNo}, #{content}, 
+			#{star}, DEFAULT, #{title}		
+		)
+	</insert>
+	
+	<insert id="insertPillReview" parameterType="Review">
+		INSERT REVIEW_PILL(
+			REVIEWNO, PILLNO, MEMBERNO, CONTENT,
+			STAR, CREATEDATE, TITLE	
+		) VALUES (
+			0, #{divId}, #{memberNo}, #{content}, 
+			#{star}, DEFAULT, #{title}		
+		)
+	</insert>
+	
+	<update id="updateHospitalReview" parameterType="Review">
+		UPDATE REVIEW_HOSPITAL
+		SET
+			TITLE=#{title},
+			CONTENT=#{content},
+			STAR=#{star}
+			WHERE
+			BORADNO=#{boardNo}
+	</update>
+	
+	<update id="updatePharmacyReview" parameterType="Review">
+		UPDATE REVIEW_PHARMACY
+		SET
+			TITLE=#{title},
+			CONTENT=#{content},
+			STAR=#{star}
+			WHERE
+			BORADNO=#{boardNo}
+	</update>
+	
+	<update id="updatePillReview" parameterType="Review">
+		UPDATE REVIEW_PILL
+		SET
+			TITLE=#{title},
+			CONTENT=#{content},
+			STAR=#{star}
+			WHERE
+			BORADNO=#{boardNo}
+	</update>
 	
 
 </mapper>
