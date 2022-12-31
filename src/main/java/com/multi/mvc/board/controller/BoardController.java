@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.multi.mvc.board.model.service.BoardService;
 import com.multi.mvc.board.model.vo.Board;
 import com.multi.mvc.board.model.vo.Reply;
+import com.multi.mvc.board.model.vo.Review;
 import com.multi.mvc.common.util.PageInfo;
 import com.multi.mvc.member.model.vo.Member;
 
@@ -45,10 +46,10 @@ public class BoardController {
 	private ResourceLoader resourceLoader; // 파일 다운로드 기능시 활용하는 loader
 
 //	@GetMapping("/board/list") // class 상단의 @RequestMapping로 인하여 /board 생략
-	@GetMapping("/list")
-	public String list(Model model, @RequestParam Map<String, String> param) {
+	@GetMapping("/communityList")
+	public String communityList(Model model, @RequestParam Map<String, String> param) {
 		
-		log.info("list 요청 param : " + param);
+		log.info("communityList 요청 param : " + param);
 		int page = 1;
 		Map<String, String> searchMap = new HashMap<String, String>();
 		try {
@@ -64,19 +65,33 @@ public class BoardController {
 		
 		int boardCount = service.getBoardCount(searchMap);
 		PageInfo pageInfo = new PageInfo(page, 10, boardCount, 10);
-		List<Board> list = service.getBoardList(pageInfo, searchMap);
+		List<Board> list1 = service.getBoardList(pageInfo, searchMap);
 		
-		model.addAttribute("list", list);
+		int reviewCount = service.getAllReviewCount();
+		List<Review> reviewList = service.getALLReview();
+		reviewList = setName(reviewList);
+		List<Review> hospitalReview = service.getHospitalReview();
+		List<Review> pharmacyReview = service.getPharmacyReview();
+		List<Review> pillReview = service.getPillReview();
+		pillReview = setName(pillReview);
+		
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("hospitalReview", hospitalReview);
+		model.addAttribute("pharmacyReview", pharmacyReview);
+		model.addAttribute("pillReview", pillReview);
+		
+		
+		model.addAttribute("boardList", list1);
 		model.addAttribute("param", param);
-		model.addAttribute("pageInfo", pageInfo);
-		
-		return "/board/list";
+//		model.addAttribute("pageInfo", pageInfo);
+		return "/board/communityList";
 	}
 	
 //	@RequestMapping("/board/view")
-	@RequestMapping("/view")
-	public String view(Model model, @RequestParam("no") int no) {
-		Board board = service.findByNo(no);
+	@RequestMapping("/postView")
+	public String postView(Model model, @RequestParam("boardNo") int boardNo) {
+		Board board = service.findByNo(boardNo);
 		
 		if(board == null) {
 			return "redirect:error";
@@ -84,35 +99,50 @@ public class BoardController {
 		model.addAttribute("board", board);
 		model.addAttribute("replyList", board.getReplies());
 		
-		return "/board/view";
+		return "/board/postView";
 	}
+	
 	
 	@GetMapping("/error")
 	public String error() {
 		return "/common/error.jsp";
 	}
-
-	@GetMapping("/write")
-	public String writeView() {
-		return "/board/write";
+// 4개 더 만들기
+	@GetMapping("/postBoard")
+	public String postBoardPage() {
+		log.info("자유 게시판 글쓰기 요청");
+		return "board/postBoard";
 	}
 	
-	@PostMapping("/write")
+	@GetMapping("/postQna")
+	public String qnaWrite() {
+		log.info("QnA 게시판 글쓰기 요청");
+		return "/board/postQna";
+	}
+	
+	@GetMapping("/postNotice")
+	public String noticeWrite() {
+		log.info("QnA 게시판 글쓰기 요청");
+		return "/board/postNotice";
+	}
+	
+	@PostMapping("/postBoard")
 	public String writeBoard(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute Board board,
 			@RequestParam("upfile") MultipartFile upfile
 	) {
-		log.info("게시글 작성 요청");
+		log.info("자유 게시글 작성 요청");
 		
 		// 보안상의 코드라 프로젝트때는 없어도 된다. 잘못된 접근 체킹하는 예시
-		if(loginMember.getId().equals(board.getWriterId()) == false) {
-			model.addAttribute("msg", "잘못된 접근입니다.");
-			model.addAttribute("location", "/");
-			return "common/msg";
-		}
+//		if(loginMember.getUserId().equals(board.getWriterId()) == false) {
+//			log.info("userId : " + loginMember.getUserId() + "WriterId : " +board.getWriterId());
+//			model.addAttribute("msg", "잘못된 접근입니다.");
+//			model.addAttribute("location", "/");
+//			return "common/msg";
+//		}
 		
-		board.setWriterNo(loginMember.getNo());
+		board.setMemberNo(loginMember.getMemberNo());
 		
 		// 파일 저장 로직
 		if(upfile != null && upfile.isEmpty() == false) {
@@ -131,14 +161,104 @@ public class BoardController {
 
 		if(result > 0) {
 			model.addAttribute("msg", "게시글이 등록되었습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/communityList");
 		}else {
 			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/communityList");
+		}
+		return "common/msg";
+		}
+		
+		
+		
+	@PostMapping("/postQna")
+	public String writeQna(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@ModelAttribute Board board,
+			@RequestParam("upfile") MultipartFile upfile
+	) {
+		log.info("qna 게시글 작성 요청");
+		
+		// 보안상의 코드라 프로젝트때는 없어도 된다. 잘못된 접근 체킹하는 예시
+//		if(loginMember.getUserId().equals(board.getWriterId()) == false) {
+//			model.addAttribute("msg", "잘못된 접근입니다.");
+//			model.addAttribute("location", "/");
+//			return "common/msg";
+//		}
+		
+		board.setMemberNo(loginMember.getMemberNo());
+		
+		// 파일 저장 로직
+		if(upfile != null && upfile.isEmpty() == false) {
+			String rootPath = session.getServletContext().getRealPath("resources");
+			String savePath = rootPath +"/upload/board";
+			String renameFileName = service.saveFile(upfile, savePath); // 실제 파일 저장하는 로직
+			
+			if(renameFileName != null) {
+				board.setOriginalFileName(upfile.getOriginalFilename());
+				board.setRenamedFileName(renameFileName);
+			}
+		}
+		
+		log.debug("board : " + board);
+		int result = service.saveBoard(board);
+
+		if(result > 0) {
+			model.addAttribute("msg", "게시글이 등록되었습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}else {
+			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
+			model.addAttribute("location", "/board/communityList");
 		}
 		
 		return "common/msg";
 	}
+	
+	@PostMapping("/postNotice")
+	public String writeNotice(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@ModelAttribute Board board,
+			@RequestParam("upfile") MultipartFile upfile
+	) {
+		log.info("qna 게시글 작성 요청");
+		
+		// 보안상의 코드라 프로젝트때는 없어도 된다. 잘못된 접근 체킹하는 예시
+//		if(loginMember.getUserId().equals(board.getWriterId()) == false) {
+//			model.addAttribute("msg", "잘못된 접근입니다.");
+//			model.addAttribute("location", "/");
+//			return "common/msg";
+//		}
+		
+		board.setMemberNo(loginMember.getMemberNo());
+		
+		// 파일 저장 로직
+		if(upfile != null && upfile.isEmpty() == false) {
+			String rootPath = session.getServletContext().getRealPath("resources");
+			String savePath = rootPath +"/upload/board";
+			String renameFileName = service.saveFile(upfile, savePath); // 실제 파일 저장하는 로직
+			
+			if(renameFileName != null) {
+				board.setOriginalFileName(upfile.getOriginalFilename());
+				board.setRenamedFileName(renameFileName);
+			}
+		}
+		
+		log.debug("board : " + board);
+		int result = service.saveBoard(board);
+
+		if(result > 0) {
+			model.addAttribute("msg", "게시글이 등록되었습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}else {
+			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
+			model.addAttribute("location", "/board/communityList");
+		}
+		
+		return "common/msg";
+	}
+	
+	
+	
 	
 	
 	@RequestMapping("/reply")
@@ -146,7 +266,7 @@ public class BoardController {
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute Reply reply
 	) {
-		reply.setWriterNo(loginMember.getNo());
+		reply.setMemberNo(loginMember.getMemberNo());
 	
 		log.info("Reply : " + reply);
 		
@@ -157,10 +277,14 @@ public class BoardController {
 		} else {
 			model.addAttribute("msg", "리플 등록에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/board/view?no=" + reply.getBoardNo());
+		model.addAttribute("location", "/board/postView?boardNo=" + reply.getBoardNo());
 		
 		return "/common/msg";
 	}
+	
+	
+	
+
 	
 	@RequestMapping("/delete")
 	public String deleteBoard(Model model, HttpSession session,
@@ -179,7 +303,7 @@ public class BoardController {
 		} else {
 			model.addAttribute("msg", "게시글 삭제에 실패하셨습니다.");
 		}
-		model.addAttribute("location", "/board/list");
+		model.addAttribute("location", "/board/communityList");
 		
 		return "/common/msg";
 	}
@@ -199,16 +323,16 @@ public class BoardController {
 		}else {
 			model.addAttribute("msg", "리플 삭제에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/board/view?no=" + boardNo);
+		model.addAttribute("location", "/board/postView?boardNo=" + boardNo);
 		return "/common/msg";
 	}
 	
 	@GetMapping("/update")
 	public String updateView(Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@RequestParam("no") int no
+			@RequestParam("boardNo") int boardNo
 	) {
-		Board board = service.findByNo(no);
+		Board board = service.findByNo(boardNo);
 		model.addAttribute("board", board);
 		return "/board/update";
 	}
@@ -239,13 +363,13 @@ public class BoardController {
 		log.info("게시글 수정 요청");
 		
 		// 보안상의 코드라 프로젝트때는 없어도 된다. 잘못된 접근 체킹하는 예시
-		if(loginMember.getId().equals(board.getWriterId()) == false) {
-			model.addAttribute("msg", "잘못된 접근입니다.");
-			model.addAttribute("location", "/");
-			return "common/msg";
-		}
+//		if(loginMember.getUserId().equals(board.getWriterId()) == false) {
+//			model.addAttribute("msg", "잘못된 접근입니다.");
+//			model.addAttribute("location", "/");
+//			return "common/msg";
+//		}
 		
-		board.setWriterNo(loginMember.getNo());
+		board.setBoardNo(loginMember.getMemberNo());
 		
 		// 파일 저장 로직
 		if(reloadFile != null && reloadFile.isEmpty() == false) {
@@ -270,10 +394,10 @@ public class BoardController {
 
 		if(result > 0) {
 			model.addAttribute("msg", "게시글이 수정되었습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/communityList");
 		}else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-			model.addAttribute("location", "/board/list");
+			model.addAttribute("location", "/board/communityList");
 		}
 		
 		return "common/msg";
@@ -307,6 +431,23 @@ public class BoardController {
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 실패했을 경우
 	}
-
+	
+	@GetMapping("/help")
+	public String helpCenter() {
+		return "/board/helpCenter";
+	}
+	
+	private List<Review> setName(List<Review> list) {
+		
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).getDivision().equals("의약품")) {
+				String[] nameArray = list.get(i).getName().split("\\(");
+				String newName = nameArray[0];
+				list.get(i).setName(newName);
+			}
+		}
+		
+		return list;
+	}
 	
 }

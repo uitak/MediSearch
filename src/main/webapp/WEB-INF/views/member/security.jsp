@@ -25,20 +25,20 @@
             <div class="card card-body border-0 shadow-sm pb-1 me-lg-1">
               <div class="d-flex d-md-block d-lg-flex align-items-start pt-lg-2 mb-4"><img class="rounded-circle" src="${path}/resources/img/avatars/14.png" width="48" alt="Annette Black">
                 <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ps-lg-3">
-                  <h2 class="fs-lg mb-0">홍길동 님</h2>
+                  <h2 class="fs-lg mb-0">${loginMember.name} 님</h2>
                   <ul class="list-unstyled fs-sm mt-3 mb-0">
-                    <li><i class="fi-mail opacity-60 me-2"></i>hong@email.com</li>
-                    <li><i class="fi-map-pin opacity-60 me-2"></i>서울시 강남구 역삼동</li>
+                    <li><i class="fi-mail opacity-60 me-2"></i>${loginMember.email}</li>
+                    <li><i class="fi-map-pin opacity-60 me-2"></i>${loginMember.address}</li>
                   </ul>
                 </div>
               </div>
               <div class="collapse d-md-block mt-3" id="account-nav">
                 <div class="card-nav">
-                  <a class="card-nav-link" href="medisearch-member-info.html"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
-                  <a class="card-nav-link active" href="medisearch-member-security.html"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
-                  <a class="card-nav-link" href="medisearch-member-favorites.html"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
-                  <a class="card-nav-link" href="medisearch-member-reviews.html"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
-                  <a class="card-nav-link" href="medisearch-index.html"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
+                  <a class="card-nav-link active" onclick="location.href='${path}/member/info';" style="cursor: pointer;"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/security';" style="cursor: pointer;"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/favorites';" style="cursor: pointer;"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/reviews';" style="cursor: pointer;"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
+                  <a class="card-nav-link" onclick="location.replace('${path}/logout')" style="cursor:pointer;"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
                 </div>
               </div>
             </div>
@@ -50,24 +50,24 @@
             <div class="progress mb-4" style="height: .25rem;">
               <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <form class="needs-validation pb-4" novalidate>
+            <form class="needs-validation pb-4" action="${path}/member/security" method="POST" novalidate>
               <div class="row align-items-end mb-2">
                 <div class="col-sm-6 mb-2">
-                  <label class="form-label" for="account-password">현재 비밀번호</label>
+                  <label class="form-label" for="pass1">현재 비밀번호</label>
                   <div class="password-toggle">
-                    <input class="form-control" type="password" id="account-password" required>
+                    <input class="form-control" type="password" id="pass1" name="password" required> <!-- account-password -->
                     <label class="password-toggle-btn" aria-label="Show/hide password">
                       <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
                     </label>
                   </div>
                 </div>
-                <div class="col-sm-6 mb-2"><a class="d-inline-block mb-2" href="#">비밀보호를 잊으셨나요?</a></div>
+                <div class="col-sm-6 mb-2"><a class="d-inline-block mb-2" href="#">비밀번호를 잊으셨나요?</a></div>
               </div>
               <div class="row mb-2">
                 <div class="col-sm-6 mb-3">
                   <label class="form-label" for="account-password-new">새 비밀번호</label>
                   <div class="password-toggle">
-                    <input class="form-control" type="password" id="account-password-new" required>
+                    <input class="form-control" type="password" id="account-password-new" name="userPwd" required> <!-- id="account-password-new" -->
                     <label class="password-toggle-btn" aria-label="Show/hide password">
                       <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
                     </label>
@@ -85,7 +85,7 @@
                   <p class="fs-xs text-danger mb-0" id="pwCheck2"></p>
                 </div>
               </div>
-              <button class="btn btn-outline-primary" type="submit">비밀번호 수정</button>
+              <button class="btn btn-outline-primary" id="updatePwd" type="submit">비밀번호 수정</button>
             </form>
 		    <script>
 		      $(function() {

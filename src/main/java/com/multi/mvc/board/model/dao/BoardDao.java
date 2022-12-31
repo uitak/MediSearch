@@ -48,8 +48,8 @@ public class BoardDao {
 	}
 
 	
-	public int deleteBoard(SqlSession session, int no) {
-		return session.insert("com.multi.mvc.board.model.mapper.BoardMapper.deleteBoard", no);
+	public int deleteBoard(SqlSession session, int boardNo) {
+		return session.insert("com.multi.mvc.board.model.mapper.BoardMapper.deleteBoard", boardNo);
 	}
 
 	

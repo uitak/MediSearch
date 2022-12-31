@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.mvc.hospital.model.mapper.HospitalMapper">
+
+	<resultMap id="HospitalInfoResult" type="HospitalInfo">
+		<id		property="hpid" 		column="hpid"/>
+		<result property="dutyName" 	column="dutyName"/>
+		<result property="dutyAddr" 	column="dutyAddr"/>
+		<result property="dutyDivNam" 	column="dutyDivNam"/>
+		<result property="dutyTel1" 	column="dutyTel1"/>
+		<result property="dutyInf" 		column="dutyInf"/>
+		<result property="dutyEryn" 	column="dutyEryn"/>
+		<result property="postCdn1" 	column="postCdn1"/>
+		<result property="postCdn2" 	column="postCdn2"/>
+		<result property="dutyTime1s" 	column="dutyTime1s"/>
+		<result property="dutyTime2s" 	column="dutyTime2s"/>
+		<result property="dutyTime3s" 	column="dutyTime3s"/>
+		<result property="dutyTime4s" 	column="dutyTime4s"/>
+		<result property="dutyTime5s" 	column="dutyTime5s"/>
+		<result property="dutyTime6s" 	column="dutyTime6s"/>
+		<result property="dutyTime7s" 	column="dutyTime7s"/>
+		<result property="dutyTime8s" 	column="dutyTime8s"/>
+		<result property="dutyTime1c" 	column="dutyTime1c"/>
+		<result property="dutyTime2c" 	column="dutyTime2c"/>
+		<result property="dutyTime3c" 	column="dutyTime3c"/>
+		<result property="dutyTime4c" 	column="dutyTime4c"/>
+		<result property="dutyTime5c" 	column="dutyTime5c"/>
+		<result property="dutyTime6c" 	column="dutyTime6c"/>
+		<result property="dutyTime7c" 	column="dutyTime7c"/>
+		<result property="dutyTime8c" 	column="dutyTime8c"/>
+		<result property="wgs84Lon" 	column="wgs84Lon"/>
+		<result property="wgs84Lat" 	column="wgs84Lat"/>
+		<result property="star" 		column="star"/>
+		<result property="reviews" 		column="reviews"/>
+	</resultMap>
+	
+	<resultMap 	id="OperationResult" type="Operation">
+		<id		property="hpid" 		column="hpid"/>
+		<result property="MkioskTy1" 	column="MkioskTy1"/>
+		<result property="MkioskTy2" 	column="MkioskTy2"/>
+		<result property="MkioskTy3" 	column="MkioskTy3"/>
+		<result property="MkioskTy4" 	column="MkioskTy4"/>
+		<result property="MkioskTy5" 	column="MkioskTy5"/>
+		<result property="MkioskTy6" 	column="MkioskTy6"/>
+		<result property="MkioskTy7" 	column="MkioskTy7"/>
+		<result property="MkioskTy8" 	column="MkioskTy8"/>
+		<result property="MkioskTy9" 	column="MkioskTy9"/>
+		<result property="MkioskTy10" 	column="MkioskTy10"/>
+		<result property="MkioskTy11" 	column="MkioskTy11"/>
+	</resultMap>
+	
+	<resultMap 	id="ReviewResult" type="HReview">
+		<id		property="reviewNo" 	column="reviewNo"/>
+		<result property="userId" 		column="userId"/>
+		<result property="content" 		column="content"/>
+		<result property="star" 		column="star"/>
+		<result property="createDate" 	column="createDate"/>
+	</resultMap>
+	
+	<resultMap 	type="HPharmacy" id="PharmacyResult">
+		<id 	property="pharmacyNo" 	column="pharmacyNo" />
+		<result property="hpid" 		column="hpid" />
+		<result property="dutyName" 	column="dutyName" />
+		<result property="dutyAddr" 	column="dutyAddr" />
+		<result property="star" 		column="star" />
+		<result property="reviews" 		column="reviews" />
+		<result property="distance" 	column="distance" />
+	</resultMap>
+	
+	<!-- 병원 정보 가져오기 -->
+	<select id="selectHospitalInfo" resultMap="HospitalInfoResult" parameterType="String">
+		SELECT 
+			H.hpid, dutyName, dutyAddr, dutyDivNam, dutyTel1, dutyInf, dutyEryn,
+			dutyTime1c, dutyTime2c, dutyTime3c, dutyTime4c, dutyTime5c, dutyTime6c, dutyTime7c, dutyTime8c,
+			dutyTime1s, dutyTime2s, dutyTime3s, dutyTime4s, dutyTime5s, dutyTime6s, dutyTime7s, dutyTime8s,
+			postCdn1, postCdn2, wgs84Lon, wgs84Lat,
+			AVG(star) AS star, COUNT(reviewNo) AS reviews
+		FROM HOSPITAL H
+		LEFT JOIN REVIEW_HOSPITAL R ON H.hpid = R.hpid
+		WHERE H.hpid = #{hpid}
+	</select>
+
+
+	
+	<resultMap id="MedicalDepartmentResult" type="MedicalDepartmentInfo">
+		<result property="medicalDepartment" column="dgidIdName"/>
+	</resultMap>
+	
+	<!-- 병원 진료과목 가져오기 --> 
+	<select id="selectMedicalDepartment" resultMap="MedicalDepartmentResult" parameterType="String">
+		SELECT dgidIdName
+		FROM medical_department
+		WHERE hpid = #{hpid}	
+	</select>
+	
+	<select id="selectOperation" resultMap="OperationResult" parameterType="String">
+		SELECT 
+			hpid, MkioskTy1, MkioskTy2, MkioskTy3, 
+    		MkioskTy4, MkioskTy5, MkioskTy6, MkioskTy7, 
+    		MkioskTy8, MkioskTy9, MkioskTy10, MkioskTy11
+		FROM EMERGENCY_OPERATION
+		WHERE hpid = #{hpid}
+	</select>
+	
+	<select id="selectReview" resultMap="ReviewResult" parameterType="map">
+		SELECT 
+			reviewNo, userId, content, star, createDate 
+		FROM REVIEW_HOSPITAL R
+		JOIN Member M ON M.memberNo = R.memberNo
+		WHERE hpid = #{hpid}
+		LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectReviewCount" resultType="int" parameterType="String">
+		SELECT 
+			COUNT(*) 
+		FROM REVIEW_HOSPITAL
+		WHERE hpid = #{hpid}
+	</select>
+	
+	<select id="selectPharmacy" resultMap="PharmacyResult" parameterType="String">
+		SELECT
+			P.pharmacyNo, hpid, dutyName, dutyAddr, 
+			AVG(star) AS star, COUNT(reviewNo) AS reviews,
+		    ROUND(ST_Distance_Sphere(POINT(
+				(SELECT wgs84Lon FROM HOSPITAL WHERE hpid = #{hpid}),
+				(SELECT wgs84Lat FROM HOSPITAL WHERE hpid = #{hpid})
+		    ), POINT(wgs84Lon, wgs84Lat)), -1) AS distance
+		FROM PHARMACY P
+		LEFT JOIN REVIEW_PHARMACY R ON P.pharmacyNo = R.pharmacyNo
+		GROUP BY P.pharmacyNo
+		ORDER BY distance
+		LIMIT 0 , 5
+	</select>
+	
+	
+</mapper>

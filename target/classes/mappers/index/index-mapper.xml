@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.mvc.index.model.mapper.IndexMapper">
+
+	<resultMap type="IndexHospital" id="HospitalResultMap">
+		<id 	property="hpid" 	column="hpid" />
+		<result property="dutyName" column="dutyName" />
+		<result property="distance" column="distance" />
+		<result property="star" 	column="star" />
+		<result property="reviews" 	column="reviews" />
+	</resultMap>
+	
+	<resultMap type="IndexEmergency" id="EmergencyResultMap">
+		<id 	property="hpid" 	column="hpid" />
+		<result property="dutyName" column="dutyName" />
+		<result property="dutyAddr" column="dutyAddr" />
+		<result property="distance" column="distance" />
+		<result property="dutyTel1" column="dutyTel1" />
+		<result property="dutyTel3" column="dutyTel3" />
+	</resultMap>
+	
+	<resultMap type="IndexHoliday" id="HolidayResultMap">
+		<id 	property="hpid" 		column="hpid" />
+		<result property="dutyName" 	column="dutyName" />
+		<result property="dutyDivNam"	column="dutyDivNam" />
+		<result property="distance" 	column="distance" />
+	</resultMap>
+	
+	<resultMap type="IndexPharmacy" id="PharmacyResultMap">
+		<id 	property="pharmacyNo" 	column="pharmacyNo" />
+		<result property="hpid" 		column="hpid" />
+		<result property="dutyName" 	column="dutyName" />
+		<result property="dutyAddr" 	column="dutyAddr" />
+		<result property="distance" 	column="distance" />
+	</resultMap>
+	
+	<resultMap type="IndexPill" id="PillResultMap">
+		<id 	property="pillNo" 	column="pharmacyNo" />
+		<result property="itemSeq" 		column="hpid" />
+		<result property="itemName" 	column="dutyName" />
+	</resultMap>
+	
+	
+	<select id="selectHospitalDefault" resultMap="HospitalResultMap">
+		SELECT 
+			H.hpid, dutyName, 
+			ROUND(ST_Distance_Sphere(POINT(127.0016985, 37.5642135), POINT(wgs84Lon, wgs84Lat)), -1) AS distance,
+			AVG(star) AS star, COUNT(reviewNo) AS reviews
+		FROM HOSPITAL H
+		LEFT JOIN REVIEW_HOSPITAL R ON H.hpid = R.hpid
+		GROUP BY H.hpid
+		ORDER BY distance
+		LIMIT 0 , 6
+	</select>
+	
+	<select id="selectEmergencylDefault" resultMap="EmergencyResultMap">
+		SELECT 
+			H.hpid, dutyName, dutyAddr, dutyTel1, dutyTel3,
+			ROUND(ST_Distance_Sphere(POINT(127.0016985, 37.5642135), POINT(wgs84Lon, wgs84Lat)), -1) AS distance
+		FROM HOSPITAL H
+		JOIN EMERGENCY_BASE E ON H.hpid = E.hpid
+		WHERE dutyTel3 != '-'
+		ORDER BY distance
+		LIMIT 0 , 4
+	</select>
+	
+	<select id="selectHolidaylDefault" resultMap="HolidayResultMap">
+		SELECT 
+			hpid, dutyDivNam, dutyName, 
+			ROUND(ST_Distance_Sphere(POINT(127.0016985, 37.5642135), POINT(wgs84Lon, wgs84Lat)), -1) AS distance
+		FROM HOSPITAL
+		WHERE dutyTime8c != '-' AND dutyTime8s != '-'
+		UNION
+		SELECT 
+			hpid, '약국' AS dutyDivNam, dutyName, 
+			ROUND(ST_Distance_Sphere(POINT(127.0016985, 37.5642135), POINT(wgs84Lon, wgs84Lat)), -1) AS distance
+		FROM PHARMACY
+		WHERE dutyTime8c != '-' AND dutyTime8s != '-'
+		ORDER BY distance
+		LIMIT 0 , 5
+	</select>
+	
+	
+	<select id="selectPharmacylDefault" resultMap="PharmacyResultMap">
+		SELECT 
+			hpid, dutyName, dutyAddr, 
+			ROUND(ST_Distance_Sphere(POINT(127.0016985, 37.5642135), POINT(wgs84Lon, wgs84Lat)), -1) AS distance
+		FROM PHARMACY
+		ORDER BY distance
+		LIMIT 0 , 4
+	</select>
+	
+	<select id="selectPill" resultMap="PillResultMap">
+		SELECT
+			pillNo, itemSeq, itemName
+		FROM PILL 
+		WHERE itemName LIKE '복합마데카솔연고%' 
+			OR itemName LIKE '게보린정%' 
+			OR itemName LIKE '알보칠%'
+			OR itemName LIKE '판콜에스%' 
+			OR itemName LIKE '활명수'
+	</select>
+
+</mapper>

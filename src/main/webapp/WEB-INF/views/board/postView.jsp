@@ -54,12 +54,12 @@
           </div>
           
           <blockquote class="blockquote mb-4">
-            <h1>Board Title</h1>
+            <h1><c:out value="${board.title}"/></h1>
             <footer class="blockquote-footer"> </footer>
           </blockquote>
 
-          <p class="opacity-70">Praesent sed pulvinar posuere nisl tincidunt. Iaculis sit quam magna congue. Amet vel non aliquet habitasse. Egestas erat odio et, eleifend turpis etiam blandit interdum. Nec augue ut senectus quisque diam quis. At augue accumsan, in bibendum. A eget et, eget quisque egestas netus vel. Velit, aliquet turpis convallis ullamcorper. Scelerisque sagittis condimentum pretium in vitae etiam lacinia quis amet. Porttitor consequat, sollicitudin vivamus pharetra nibh faucibus neque, viverra. Praesent amet sed lacus vitae.</p>
-          <p class="opacity-70">Velit parturient tellus tellus, congue pulvinar tellus viverra. In cum massa mattis ac. Amet vitae massa ut mi etiam. Auctor aliquam tristique felis donec eu sit nisi. Accumsan mauris eget convallis mattis sed etiam scelerisque.</p>
+          <p class="opacity-70"><c:out value="${board.content}"/></p>
+         
           
           <!-- Tags + Sharing-->
           <div class="pt-4 pb-5 mb-md-3">

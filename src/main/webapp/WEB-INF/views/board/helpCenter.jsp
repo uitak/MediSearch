@@ -79,7 +79,7 @@
           <div class="col-sm-10 col-11 d-flex flex-md-row flex-column align-items-center justify-content-between mx-auto px-0">
             <div class="order-md-1 order-2 text-md-start text-center" style="max-width: 524px;">
               <h2 class="mb-4 pb-md-3">메디서치 팀에게 연락해서<br>직접 문의할 수 있어요!</h2><a class="btn btn-lg btn-primary rounded-pill w-sm-auto w-100" href="job-board-contacts.html">문의하기</a>
-            </div><img class="order-md-2 order-1 ms-md-4" src="${path}/resources/img/job-board/illustrations/mail.svg" alt="Illustration">
+            </div><img class="order-md-2 order-1 ms-md-4" src="img/job-board/illustrations/mail.svg" alt="Illustration">
           </div>
         </div>
       </section>

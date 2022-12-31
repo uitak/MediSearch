@@ -1,9 +1,13 @@
 /*리셋 버튼*/
 	function resetfilters() {
-		$('#btn-search').val('');
+		$('#searchValue').val('');
 	}
 
 	function itemChange() {
+		const urlParams = new URL(location.href).searchParams;
+		
+		var town = urlParams.get('town');
+
 		var seoul = [ "강북구", "광진구", "노원구", "도봉구", "동대문구", "마포구", "서대문구", "성동구",
 				"성북구", "용산구", "은평구", "종로구", "중구", "중량구", "강남구", "강동구", "강서구",
 				"관악구", "구로구", "금천구", "동작구", "서초구", "송파구", "양천구", "영등포구" ];
@@ -48,44 +52,49 @@
 		var selectItem = $("#city").val();
 		console.log(selectItem);
 		var changeItem;
-		if (selectItem == "seoul") {
+		if (selectItem == "서울") {
 			changeItem = seoul;
-		} else if (selectItem == "busan") {
+		} else if (selectItem == "부산") {
 			changeItem = busan;
-		} else if (selectItem == "daegu") {
+		} else if (selectItem == "대구") {
 			changeItem = daegu;
-		} else if (selectItem == "incheon") {
+		} else if (selectItem == "인천") {
 			changeItem = incheon;
-		} else if (selectItem == "gwangju") {
+		} else if (selectItem == "광주") {
 			changeItem = gwangju;
-		} else if (selectItem == "daejun") {
+		} else if (selectItem == "대전") {
 			changeItem = daejun;
-		} else if (selectItem == "ulsan") {
+		} else if (selectItem == "울산") {
 			changeItem = ulsan;
-		} else if (selectItem == "sejong") {
+		} else if (selectItem == "세종") {
 			changeItem = sejong;
-		} else if (selectItem == "gyeonggi") {
+		} else if (selectItem == "경기도") {
 			changeItem = gyeonggi;
-		} else if (selectItem == "gangwon") {
+		} else if (selectItem == "강원도") {
 			changeItem = gangwon;
-		} else if (selectItem == "chungcheongB") {
+		} else if (selectItem == "충청북도") {
 			changeItem = chungcheongB;
-		} else if (selectItem == "chungcheongN") {
+		} else if (selectItem == "충청남도") {
 			changeItem = chungcheongN;
-		} else if (selectItem == "jeollanB") {
+		} else if (selectItem == "전라북도") {
 			changeItem = jeollanB;
-		} else if (selectItem == "jeollanN") {
+		} else if (selectItem == "전라남도") {
 			changeItem = jeollanN;
-		} else if (selectItem == "gyeongsangB") {
+		} else if (selectItem == "경상북도") {
 			changeItem = gyeongsangB;
-		} else if (selectItem == "gyeongsangN") {
+		} else if (selectItem == "경상남도") {
 			changeItem = gyeongsangN;
-		} else if (selectItem == "jeju") {
+		} else if (selectItem == "제주") {
 			changeItem = jeju;
 		}
 		$("#gu").empty();
-		for (var count = 0; count < changeItem.length; count++) {
-			var option = $("<option>" + changeItem[count] + "</option>");
+		for (var gu of changeItem) {
+			if(town == gu) {
+				var option = $("<option value='" + gu + "' selected>" + gu + "</option>");
+			}
+			else {
+				var option = $("<option value='" + gu + "'>" + gu + "</option>");
+			}
 			$("#gu").append(option);
 		}
 	}

@@ -18,6 +18,7 @@
             <li class="breadcrumb-item active" aria-current="page">회원정보</li>
           </ol>
         </nav>
+        <form id="enroll-container" action="${path}/member/update" method="post">  <!-- update 어딧지? -->
         <!-- Page content-->
         <div class="row">
           <!-- Sidebar-->
@@ -26,20 +27,20 @@
             <div class="card card-body border-0 shadow-sm pb-1 me-lg-1">
               <div class="d-flex d-md-block d-lg-flex align-items-start pt-lg-2 mb-4"><img class="rounded-circle" src="${path}/resources/img/avatars/14.png" width="48" alt="Annette Black">
                 <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ps-lg-3">
-                  <h2 class="fs-lg mb-0">홍길동 님</h2>
+                  <h2 class="fs-lg mb-0">${loginMember.name} 님</h2>
                   <ul class="list-unstyled fs-sm mt-3 mb-0">
-                    <li><i class="fi-mail opacity-60 me-2"></i>hong@email.com</li>
-                    <li><i class="fi-map-pin opacity-60 me-2"></i>서울시 강남구 역삼동</li>
+                    <li><i class="fi-mail opacity-60 me-2"></i>${loginMember.email}</li>
+                    <li><i class="fi-map-pin opacity-60 me-2"></i>${loginMember.address}</li>
                   </ul>
                 </div>
               </div>
               <div class="collapse d-md-block mt-3" id="account-nav">
                 <div class="card-nav">
-                  <a class="card-nav-link active" href="medisearch-member-info.html"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
-                  <a class="card-nav-link" href="medisearch-member-security.html"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
-                  <a class="card-nav-link" href="medisearch-member-favorites.html"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
-                  <a class="card-nav-link" href="medisearch-member-reviews.html"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
-                  <a class="card-nav-link" href="medisearch-index.html"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
+                  <a class="card-nav-link active" onclick="location.href='${path}/member/info';" style="cursor: pointer;"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/security';" style="cursor: pointer;"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/favorites';" style="cursor: pointer;"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/reviews';" style="cursor: pointer;"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
+                  <a class="card-nav-link" onclick="location.replace('${path}/logout')" style="cursor:pointer;"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
                 </div>
               </div>
             </div>
@@ -57,12 +58,13 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="pe-2">
                     <label class="form-label fw-bold">아이디</label>
-                    <div id="id-value">id123</div>
+                    <div id="id-value">${loginMember.userId}</div>
                   </div>
                   <div class="me-n3" data-bs-toggle="tooltip" title="수정"><a class="nav-link py-0" href="#id-collapse" data-bs-toggle="collapse"><i class="fi-edit"></i></a></div>
                 </div>
                 <div class="collapse" id="id-collapse" data-bs-parent="#personal-info">
-                  <input class="form-control mt-3" id="readonly-input" type="text" data-bs-binded-element="#id-value" data-bs-unset-value="Not specified" value="id123" readonly>
+                  <input class="form-control mt-3" id="userId" name="userId" type="text" data-bs-binded-element="#id-value" data-bs-unset-value="Not specified" value="${loginMember.userId}" readonly>
+                  <!-- id="readonly-input" -->
                 </div>
               </div>
               <!-- 이름-->
@@ -70,12 +72,12 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="pe-2">
                     <label class="form-label fw-bold">이름</label>
-                    <div id="name-value">홍길동</div>
+                    <div id="name-value">${loginMember.name}</div>
                   </div>
                   <div class="me-n3" data-bs-toggle="tooltip" title="수정"><a class="nav-link py-0" href="#name-collapse" data-bs-toggle="collapse"><i class="fi-edit"></i></a></div>
                 </div>
                 <div class="collapse" id="name-collapse" data-bs-parent="#personal-info">
-                  <input class="form-control mt-3" type="text" data-bs-binded-element="#name-value" data-bs-unset-value="Not specified" value="홍길동">
+                  <input class="form-control mt-3" type="text" name="name" id="name" data-bs-binded-element="#name-value" data-bs-unset-value="Not specified" value="${loginMember.name}">
                 </div>
               </div>
               <!-- 이메일-->
@@ -83,12 +85,12 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="pe-2">
                     <label class="form-label fw-bold">이메일</label>
-                    <div id="email-value">hong@email.com</div>
+                    <div id="email-value">${loginMember.email}</div>
                   </div>
                   <div class="me-n3" data-bs-toggle="tooltip" title="수정"><a class="nav-link py-0" href="#email-collapse" data-bs-toggle="collapse"><i class="fi-edit"></i></a></div>
                 </div>
                 <div class="collapse" id="email-collapse" data-bs-parent="#personal-info">
-                  <input class="form-control mt-3" type="email" data-bs-binded-element="#email-value" data-bs-unset-value="Not specified" value="hong@email.com">
+                  <input class="form-control mt-3" type="email" id="email" name="email" data-bs-binded-element="#email-value" data-bs-unset-value="Not specified" value="${loginMember.email}">
                 </div>
               </div>
               <!-- Address-->
@@ -96,23 +98,40 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="pe-2">
                     <label class="form-label fw-bold">주소</label>
-                    <div id="address-value"></div>
+                    <div id="address-value">${loginMember.address}</div>
                   </div>
                   <div class="me-n3" data-bs-toggle="tooltip" title="수정"><a class="nav-link py-0" href="#address-collapse" data-bs-toggle="collapse"><i class="fi-edit"></i></a></div>
                 </div>
                 <div class="collapse" id="address-collapse" data-bs-parent="#personal-info">
-                  <input class="form-control mt-3" type="text" data-bs-binded-element="#address-value" data-bs-unset-value="Not specified" placeholder="주소">
+                  <input class="form-control mt-3" type="text" name="address" id="address" data-bs-binded-element="#address-value" data-bs-unset-value="Not specified" value="${loginMember.address}">
                 </div>
               </div>
             </div>
             <div class="d-flex align-items-center justify-content-between border-top mt-4 pt-4 pb-1">
-              <button class="btn btn-primary px-3 px-sm-4" type="button">회원정보 저장</button>
-              <button class="btn btn-link btn-sm px-0" type="button"><i class="fi-trash me-2"></i>탈퇴하기</button>
+              <button class="btn btn-primary px-3 px-sm-4" type="submit"  value="정보수정" >회원정보 저장</button>
+              <button class="btn btn-link btn-sm px-0" type="button" id="deleteMember" onclick="location.replace('${path}/deleteMember')"><i class="fi-trash me-2"></i>탈퇴하기</button>
             </div>
           </div>
         </div>
+        </form>
       </div>
     </main>
+    
+    <script type="text/javascript">
+	$(function () {
+		$("#deleteMember").on("click", (e) => {
+			if(confirm("정말로 탈퇴하시겠습니까?!")) {
+				location.replace('${path}/member/delete');
+			}
+		});
+		
+		$("#updatePwd").on("click", (e) => {
+			const url = "${path}/member/updatePwd";
+			const status = "left=500px,top=200px,width=400px,height=210px"
+			open(url, "", status);
+		});
+	});
+</script>
     
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

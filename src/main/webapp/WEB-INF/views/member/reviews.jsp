@@ -34,11 +34,11 @@
               </div>
               <div class="collapse d-md-block mt-3" id="account-nav">
                 <div class="card-nav">
-                  <a class="card-nav-link" href="medisearch-member-info.html"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
-                  <a class="card-nav-link" href="medisearch-member-security.html"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
-                  <a class="card-nav-link" href="medisearch-member-favorites.html"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
-                  <a class="card-nav-link active" href="medisearch-member-reviews.html"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
-                  <a class="card-nav-link" href="medisearch-index.html"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
+                  <a class="card-nav-link active" onclick="location.href='${path}/member/info';" style="cursor: pointer;"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/security';" style="cursor: pointer;"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/favorites';" style="cursor: pointer;"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/reviews';" style="cursor: pointer;"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
+                  <a class="card-nav-link" onclick="location.replace('${path}/logout')" style="cursor:pointer;"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
                 </div>
               </div>
             </div>

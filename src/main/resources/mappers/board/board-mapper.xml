@@ -5,27 +5,26 @@
 <mapper namespace="com.multi.mvc.board.model.mapper.BoardMapper">
 
 	<resultMap type="Board" id="boardListResultMap">
-		<id property="no" column="NO"/>
-		<result property="title" column="TITLE"/>
-		<result property="writerId" column="ID"/>
-		<result property="writerNo" column="WRITER_NO"/>
-		<result property="readCount" column="READCOUNT"/>
-		<result property="originalFileName" column="ORIGINAL_FILENAME"/>
-		<result property="renamedFileName" column="RENAMED_FILENAME"/>
-		<result property="content" column="CONTENT"/>
-		<result property="type" column="TYPE"/>
-		<result property="createDate" column="CREATE_DATE"/>
-		<result property="modifyDate" column="MODIFY_DATE"/>
+		<id property="boardNo" column="BOARDNO"/>    <!-- 보드 넘버 -->
+		<result property="title" column="TITLE"/>    <!-- 타이틀 그대로-->
+	<!--  	<result property="writerId" column="USERID"/> -->	<!-- 라이트아이디 -->
+		<result property="memberNo" column="memberNo"/>
+		<result property="dtype" column="DTYPE"/>
+		<result property="views" column="VIEWS"/>    <!-- READCOUNT -->
+		<result property="content" column="CONTENT"/>  <!-- 그대로 -->
+		<result property="originalFileName" column="ORIGINALFILENAME"/>
+		<result property="renamedFileName" column="RENAMEDFILENAME"/>
+		<result property="createDate" column="CREATEDATE"/>
+		<result property="status" 	column="STATUS" />
 	</resultMap>
 
 	<resultMap type="Reply" id="boardReplyResultMap">
-		<id 	property="no"			column="NO"/>
-		<result property="boardNo" 		column="BOARD_NO"/>
-		<result property="writerNo" 	column="WRITER_NO"/>
-		<result property="writerId" 	column="ID"/>
+		<id 	property="replyNo"			column="REPLYNO"/>
+		<result property="boardNo" 		column="BOARDNO"/>
+		<result property="memberNo" 	column="MEMBERNO"/>
+	<!--	<result property="writerId" 	column="USERID"/> -->
 		<result property="content" 		column="CONTENT"/>
-		<result property="createDate" 	column="CREATE_DATE"/>
-		<result property="modifyDate" 	column="MODIFY_DATE"/>
+		<result property="createDate" 	column="CREATEDATE"/>
 	</resultMap>
 	
 	<resultMap type="Board" id="boardDetailResultMap" extends="boardListResultMap">
@@ -33,14 +32,29 @@
 												resultMap="boardReplyResultMap"/>
 	</resultMap>
 	
+	<resultMap type="Review" id="ReviewResultMap">
+		<id 	property="reviewNo"		column="reviewNo"/>
+		<result	property="divId"		column="divId"/>
+		<result property="memberNo" 	column="memberNo"/>
+		<result property="writer" 		column="userId"/>
+		<result property="division" 	column="division"/>
+		<result property="name" 		column="name"/>
+		<result property="title" 		column="title"/>
+		<result property="title" 		column="title"/>
+		<result property="content" 		column="content"/>
+		<result property="createDate" 	column="createDate"/>
+	</resultMap>
+	
+	
+	
 	<!-- MySQL의 페이징 기능을 활용한 코드 -->
 	<select id="selectBoardList1" resultMap="boardListResultMap" parameterType="map">
 		SELECT  
-			B.NO, B.TITLE, M.ID, B.CREATE_DATE, B.ORIGINAL_FILENAME, B.READCOUNT, B.STATUS
-		FROM BOARD B JOIN MEMBER M ON(B.WRITER_NO = M.NO) 
+			B.BOARDNO, B.TITLE, M.USERID, B.CREATEDATE, B.DTYPE, B.ORIGINALFILENAME, B.VIEWS, B.STATUS
+		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
 		WHERE B.STATUS = 'Y'
 		<if test="writer != null">
-			AND M.ID LIKE '%${writer}%' 
+			AND M.USERID LIKE '%${writer}%' 
 		</if>		
 		<if test="title != null">
 			AND B.TITLE LIKE '%${title}%' 
@@ -48,17 +62,17 @@
 		<if test="content != null">
 			AND B.CONTENT LIKE '%${content}%' 
 		</if>		
-		ORDER BY B.NO DESC LIMIT ${limit} OFFSET ${offset}
+		ORDER BY B.BOARDNO DESC LIMIT ${limit} OFFSET ${offset}
 	</select>
 	
 	<!-- Mybatis의 페이징 기능을 활용할 코드, 추천하지 않음. -->
 	<select id="selectBoardList2" resultMap="boardListResultMap" parameterType="map">
 		SELECT  
-			B.NO, B.TITLE, M.ID, B.CREATE_DATE, B.ORIGINAL_FILENAME, B.READCOUNT, B.STATUS
-		FROM BOARD B JOIN MEMBER M ON(B.WRITER_NO = M.NO) 
+			B.BOARDNO, B.TITLE, M.USERID, B.CREATEDATE, B.DTYPE,B.ORIGINALFILENAME, B.VIEWS, B.STATUS
+		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
 		WHERE B.STATUS = 'Y'
 		<if test="writer != null">
-			AND M.ID LIKE '%${writer}%' 
+			AND M.USERID LIKE '%${writer}%' 
 		</if>		
 		<if test="title != null">
 			AND B.TITLE LIKE '%${title}%' 
@@ -66,16 +80,16 @@
 		<if test="content != null">
 			AND B.CONTENT LIKE '%${content}%' 
 		</if>		
-		ORDER BY B.NO DESC 
+		ORDER BY B.BOARDNO DESC 
 	</select>
 	
 	<select id="selectBoardCount" resultType="int" parameterType="map">
 		SELECT  
 			COUNT(*)
-		FROM BOARD B JOIN MEMBER M ON(B.WRITER_NO = M.NO) 
+		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
 		WHERE B.STATUS = 'Y'
 		<if test="writer != null">
-			AND M.ID LIKE '%${writer}%' 
+			AND M.USERID LIKE '%${writer}%' 
 		</if>		
 		<if test="title != null">
 			AND B.TITLE LIKE '%${title}%' 
@@ -87,32 +101,31 @@
 	
 	<select id="selectBoardByNo" parameterType="int" resultMap="boardDetailResultMap">
 		SELECT  
-			B.NO, B.TITLE, M.ID, B.READCOUNT, B.TYPE, B.ORIGINAL_FILENAME, B.RENAMED_FILENAME, B.CONTENT, B.CREATE_DATE, B.MODIFY_DATE,
-			R.NO AS R_NO, 
-		    R.BOARD_NO AS R_BOARD_NO, 
-		    R.CONTENT  AS R_CONTENT, 
-		    M2.ID  AS R_ID, 
-		    R.CREATE_DATE  AS R_CREATE_DATE, 
-		    R.MODIFY_DATE  AS R_MODIFY_DATE
+			B.BOARDNO, B.TITLE, M.USERID, B.VIEWS, B.TYPE, B.ORIGINALFILENAME, B.RENAMEDFILENAME, B.CONTENT, B.CREATEDATE,
+			R.REPLYNO,
+		    R.BOARDNO,
+		    R.CONTENT,
+		    M2.USERID  AS R_ID, 
+		    R.CREATEDATE  AS R_CREATEDATE,
 		FROM BOARD B
-		JOIN MEMBER M ON(B.WRITER_NO = M.NO)
-		LEFT JOIN REPLY R ON (B.NO = R.BOARD_NO)
-		LEFT JOIN MEMBER M2 ON (R.WRITER_NO = M2.NO)
-		WHERE B.STATUS = 'Y' AND B.NO = #{no}
-		ORDER BY R.NO DESC
+		JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO)
+		LEFT JOIN REPLY R ON (B.BOARDNO = R.BOARDNO)
+		LEFT JOIN MEMBER M2 ON (R.MEMBERNO = M2.MEMBERNO)
+		WHERE B.STATUS = 'Y' AND B.BOARDNO = #{boardNo}
+		ORDER BY R.REPLYNO DESC
 	</select>
 	
 	<insert id="insertBoard" parameterType="Board">
 		INSERT INTO BOARD(
-			NO, WRITER_NO, TITLE,
-			CONTENT, ORIGINAL_FILENAME,
-			RENAMED_FILENAME, READCOUNT, STATUS,
-			CREATE_DATE, MODIFY_DATE, TYPE	
+			BOARDNO, MEMBERNO, DTYPE, TITLE,
+			CONTENT, ORIGINALFILENAME,
+			RENAMEDFILENAME, VIEWS, STATUS,
+			CREATEDATE	
 		) VALUES (
-			0, #{writerNo}, #{title}, 
+			0, #{memberNo}, 'f', #{title}, 
 			#{content}, #{originalFileName}, 
 			#{renamedFileName}, DEFAULT, DEFAULT, 
-			DEFAULT, DEFAULT, DEFAULT			
+			DEFAULT		
 		)
 	</insert>
 
@@ -120,41 +133,131 @@
 
 	<insert id="insertReply" parameterType="Reply">
 		INSERT INTO REPLY(
-				NO, BOARD_NO, WRITER_NO, 
-				CONTENT, STATUS, CREATE_DATE, MODIFY_DATE) 
+				REPLYNO, BOARDNO, MEMBERNO, 
+				CONTENT, STATUS, CREATEDATE) 
 			VALUES(
-				0, #{boardNo}, #{writerNo}, #{content}, 
-				DEFAULT, DEFAULT, DEFAULT
+				0, #{boardNo}, #{memberNo}, #{content}, 
+				DEFAULT, DEFAULT
 			)
 	</insert>
 	
-	<update id="updateBoard" parameterType="Board">
+ <update id="updateBoard" parameterType="Board">
 		UPDATE BOARD
 		SET
 			TITLE=#{title},
 			CONTENT=#{content},
 			<if test="originalFileName != null">
-				ORIGINAL_FILENAME=#{originalFileName},
+				ORIGINALFILENAME=#{originalFileName},
 			</if>
 			<if test="renamedFileName != null">
-				RENAMED_FILENAME=#{renamedFileName},
+				RENAMEDFILENAME=#{renamedFileName}
 			</if>
-			MODIFY_DATE = CURRENT_TIMESTAMP
-		WHERE
-			NO=#{no}
+			WHERE
+			BORADNO=#{boardNo}
 	</update>
-	
+
 	<update id="updateReadCount" parameterType="map">
-		UPDATE BOARD SET READCOUNT=#{readCount} WHERE NO=#{no}
+		UPDATE BOARD SET VIEWS=#{views} WHERE BOARDNO=#{boardNo}
 	</update>
 	
 	<update id="deleteBoard" parameterType="int">
-		UPDATE BOARD SET STATUS='N' WHERE NO=#{no}
+		UPDATE BOARD SET STATUS='N' WHERE BOARDNO=#{boardNo}
 	</update>
 	
 	<delete id="deleteReply" parameterType="int">
-		DELETE FROM REPLY WHERE NO=#{no}
+		DELETE FROM REPLY WHERE BOARDNO=#{boardNo}
 	</delete>
+	
+	
+	
+	
+	
+	<select id="selectALLReview" resultMap="ReviewResultMap">
+	
+		SELECT 
+			reviewNo, R.hpid AS divId, M.memberNo, userId, 
+			'병원' AS division, dutyName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_HOSPITAL R 
+		JOIN HOSPITAL H ON R.hpid = H.hpid
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		UNION
+		SELECT 
+			reviewNo, R.pharmacyNo AS divId, M.memberNo, userId, 
+			'약국' AS division, dutyName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_PHARMACY R 
+		JOIN PHARMACY P ON R.pharmacyNo = P.pharmacyNo
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		UNION
+		SELECT 
+			reviewNo, R.pillNo AS divId, M.memberNo, userId, 
+			'의약품' AS division, itemName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_PILL R 
+		JOIN PILL P ON R.pillNo = P.pillNo
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		ORDER BY createDate
+	
+	</select>
+	
+	<select id="selectHospitalReview" resultMap="ReviewResultMap">
+	
+		SELECT 
+			reviewNo, R.hpid AS divId, M.memberNo, userId, 
+			'병원' AS division, dutyName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_HOSPITAL R 
+		JOIN HOSPITAL H ON R.hpid = H.hpid
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		ORDER BY createDate
+	
+	</select>
+	
+	<select id="selectPharmacyReview" resultMap="ReviewResultMap">
+	
+		SELECT 
+			reviewNo, R.pharmacyNo AS divId, M.memberNo, userId, 
+			'약국' AS division, dutyName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_PHARMACY R 
+		JOIN PHARMACY P ON R.pharmacyNo = P.pharmacyNo
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		ORDER BY createDate
+	
+	</select>
+	
+	<select id="selectPillReview" resultMap="ReviewResultMap">
+	
+		SELECT 
+			reviewNo, R.pillNo AS divId, M.memberNo, userId, 
+			'의약품' AS division, itemName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_PILL R 
+		JOIN PILL P ON R.pillNo = P.pillNo
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		ORDER BY createDate
+	
+	</select>
+	
+	<select id="selectAllReviewCount" resultType="int">
+		SELECT SUM(count) FROM ( 
+			SELECT COUNT(*) AS count
+			FROM REVIEW_HOSPITAL R 
+			JOIN HOSPITAL H ON R.hpid = H.hpid
+			JOIN MEMBER M ON R.memberNo = M.memberNo
+			UNION ALL
+			SELECT COUNT(*) AS count
+			FROM REVIEW_PHARMACY R 
+			JOIN PHARMACY P ON R.pharmacyNo = P.pharmacyNo
+			JOIN MEMBER M ON R.memberNo = M.memberNo
+			UNION ALL
+			SELECT COUNT(*) AS count
+			FROM REVIEW_PILL R 
+			JOIN PILL P ON R.pillNo = P.pillNo
+			JOIN MEMBER M ON R.memberNo = M.memberNo
+		) T
+	</select>
 	
 
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.multi.mvc.board.model.mapper.BoardMapper;
 import com.multi.mvc.board.model.vo.Board;
 import com.multi.mvc.board.model.vo.Reply;
+import com.multi.mvc.board.model.vo.Review;
 import com.multi.mvc.common.util.PageInfo;
 
 @Service
@@ -33,7 +34,7 @@ public class BoardService {
 	@Transactional(rollbackFor = Exception.class)
 	public int saveBoard(Board board) {
 		int result = 0;
-		if(board.getNo() == 0) {
+		if(board.getBoardNo() == 0) {
 			result = mapper.insertBoard(board);
 		}else {
 			result = mapper.updateBoard(board);
@@ -95,7 +96,7 @@ public class BoardService {
 	@Transactional(rollbackFor = Exception.class)
 	public Board findByNo(int boardNo) {
 		Board board = mapper.selectBoardByNo(boardNo); 
-		board.setReadCount(board.getReadCount() + 1);  
+		board.setViews(board.getViews() + 1);  
 		mapper.updateReadCount(board); 
 		return board; 
 	}
@@ -108,15 +109,35 @@ public class BoardService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteBoard(int no, String rootPath) {
-		Board board = mapper.selectBoardByNo(no);
+	public int deleteBoard(int boardNo, String rootPath) {
+		Board board = mapper.selectBoardByNo(boardNo);
 		deleteFile(rootPath + "\\" + board.getRenamedFileName());
-		return mapper.deleteBoard(no);
+		return mapper.deleteBoard(boardNo);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteReply(int no) {
 		return mapper.deleteReply(no);
+	}
+	
+	public List<Review> getALLReview() {
+		return mapper.selectALLReview();
+	}
+	
+	public int getAllReviewCount() {
+		return mapper.selectAllReviewCount();
+	}
+	
+	public List<Review> getHospitalReview() {
+		return mapper.selectHospitalReview();
+	}
+	
+	public List<Review> getPharmacyReview() {
+		return mapper.selectPharmacyReview();
+	}
+	
+	public List<Review> getPillReview() {
+		return mapper.selectPillReview();
 	}
 	
 }

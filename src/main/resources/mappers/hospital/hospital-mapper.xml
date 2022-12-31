@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.mvc.hospital.model.mapper.HospitalMapper">
+
+	<resultMap type="HospitalList" id="HospitalListMap">
+		<id		property="hpid" 		column="hpid"/>
+		<result property="dutyName" 	column="dutyName"/>
+		<result property="dutyAddr" 	column="dutyAddr"/>
+		<result property="dutyDivNam" 	column="dutyDivNam"/>
+		<result property="star" 		column="star"/>
+		<result property="reviews" 		column="reviews"/>
+	</resultMap>
+	
+	<select id="selectHospitalList" resultMap="HospitalListMap" parameterType="map">
+		SELECT
+			H.hpid, dutyName, dutyAddr, dutyDivNam,
+			AVG(star) AS star, COUNT(reviewNo) AS reviews
+		FROM HOSPITAL H
+		LEFT JOIN REVIEW_HOSPITAL R ON H.hpid = R.hpid
+		<if test="searchMD != null">
+			JOIN MEDICAL_DEPARTMENT M ON H.hpid = M.hpid
+		</if>
+		<if test="D001 != null">
+			AND dgidIdName LIKE '내과'
+		</if>
+		<if test="D002 != null">
+			AND dgidIdName LIKE '소아청년과'
+		</if>
+		<if test="D003 != null">
+			AND dgidIdName LIKE '신경과'
+		</if>
+		<if test="D004 != null">
+			AND dgidIdName LIKE '정신건강의학과'
+		</if>
+		<if test="D005 != null">
+			AND dgidIdName LIKE '피부과'
+		</if>
+		<if test="D006 != null">
+			AND dgidIdName LIKE '외과'
+		</if>
+		<if test="D007 != null">
+			AND dgidIdName LIKE '흉부외과'
+		</if>
+		<if test="D008 != null">
+			AND dgidIdName LIKE '정형외과'
+		</if>
+		<if test="D009 != null">
+			AND dgidIdName LIKE '신경외과'
+		</if>
+		<if test="D010 != null">
+			AND dgidIdName LIKE '성형외과'
+		</if>
+		<if test="D011 != null">
+			AND dgidIdName LIKE '산부인과'
+		</if>
+		<if test="D012 != null">
+			AND dgidIdName LIKE '안과'
+		</if>
+		<if test="D013 != null">
+			AND dgidIdName LIKE '이빈인후과'
+		</if>
+		<if test="D014 != null">
+			AND dgidIdName LIKE '비뇨기과'
+		</if>
+		<if test="D016 != null">
+			AND dgidIdName LIKE '재활의학과'
+		</if>
+		<if test="D017 != null">
+			AND dgidIdName LIKE '마치통증의학과'
+		</if>
+		<if test="D018 != null">
+			AND dgidIdName LIKE '영상의학과'
+		</if>
+		<if test="D019 != null">
+			AND dgidIdName LIKE '치료방사건과'
+		</if>
+		<if test="D020 != null">
+			AND dgidIdName LIKE '임상병리과'
+		</if>
+		<if test="D021 != null">
+			AND dgidIdName LIKE '해부병리과'
+		</if>
+		<if test="D022 != null">
+			AND dgidIdName LIKE '가정의학과'
+		</if>
+		<if test="D023 != null">
+			AND dgidIdName LIKE '핵의학과'
+		</if>
+		<if test="D024 != null">
+			AND dgidIdName LIKE '응급의학과'
+		</if>
+		<if test="D026 != null">
+			AND dgidIdName LIKE '치과'
+		</if>
+		<if test="D034 != null">
+			AND dgidIdName LIKE '구강악안면외과'
+		</if>
+		WHERE 1 = 1
+		<if test="searchValue != null">
+			AND dutyName LIKE '%${searchValue}%'
+		</if>
+		<if test="searchCity != null">
+			AND dutyAddr LIKE '${searchCity}%'
+		</if>
+		<if test="searchTown != null">
+			AND dutyAddr LIKE '%${searchTown}%'
+		</if>
+		<if test="dutyDiv != null">
+			AND dutyDivNam IN (
+		</if>
+		<if test="A1 != null">
+			'상급종합병원',
+		</if>
+		<if test="A2 != null">
+			'종합병원',
+		</if>
+		<if test="B1 != null">
+			'병원',
+		</if>
+		<if test="B2 != null">
+			'군 병원',
+		</if>
+		<if test="C1 != null">
+			'의원',
+		</if>
+		<if test="C2 != null">
+			'군 의원',
+		</if>
+		<if test="D != null">
+			'요양병원',
+		</if>
+		<if test="E != null">
+			'한방병원',
+		</if>
+		<if test="F != null">
+			'노인전문병원',
+		</if>
+		<if test="G1 != null">
+			'한의원',
+		</if>
+		<if test="G2 != null">
+			'군 한의원',
+		</if>
+		<if test="J != null">
+			'결핵병원',
+		</if>
+		<if test="K != null">
+			'한센병원',
+		</if>
+		<if test="L != null">
+			'정신병원',
+		</if>
+		<if test="M != null">
+			'치과병원',
+		</if>
+		<if test="N != null">
+			'치과의원',
+		</if>
+		<if test="O != null">
+			'부속병의원',
+		</if>
+		<if test="P != null">
+			'조산원',
+		</if>
+		<if test="Q != null">
+			'치매병원',
+		</if>
+		<if test="R1 != null">
+			'보건소',
+		</if>
+		<if test="R2 != null">
+			'보건지소',
+		</if>
+		<if test="R3 != null">
+			'보건진료소',
+		</if>
+		<if test="R4 != null">
+			'보건의료원',
+		</if>
+		<if test="S != null">
+			'이송단체',
+		</if>
+		<if test="T != null">
+			'119구급대',
+		</if>
+		<if test="U1 != null">
+			'경찰서',
+		</if>
+		<if test="U2 != null">
+			'교도소',
+		</if>
+		<if test="V != null">
+			'지방자치단체',
+		</if>
+		<if test="Y != null">
+			'중앙응급의료센터',
+		</if>
+		<if test="Z != null">
+			'응급의료지원센터',
+		</if>
+		<if test="I != null">
+			'기타',
+		</if>
+		<if test="dutyDiv != null">
+			'')
+		</if>
+		GROUP BY H.hpid
+		<if test="name == null and star == null and addr == null">
+			ORDER BY H.hpid DESC 
+		</if>
+		<if test="name != null">
+			ORDER BY dutyName 
+		</if>
+		<if test="star != null">
+			ORDER BY star
+		</if>
+		<if test="addr != null">
+			ORDER BY dutyAddr
+		</if>
+		LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectHospitalCount" resultType="int" parameterType="map">
+		SELECT  
+			COUNT(*)
+		FROM HOSPITAL H
+		<if test="searchMD != null">
+			JOIN MEDICAL_DEPARTMENT M ON H.hpid = M.hpid
+		</if>
+		<if test="D001 != null">
+			AND dgidIdName LIKE '내과'
+		</if>
+		<if test="D002 != null">
+			AND dgidIdName LIKE '소아청년과'
+		</if>
+		<if test="D003 != null">
+			AND dgidIdName LIKE '신경과'
+		</if>
+		<if test="D004 != null">
+			AND dgidIdName LIKE '정신건강의학과'
+		</if>
+		<if test="D005 != null">
+			AND dgidIdName LIKE '피부과'
+		</if>
+		<if test="D006 != null">
+			AND dgidIdName LIKE '외과'
+		</if>
+		<if test="D007 != null">
+			AND dgidIdName LIKE '흉부외과'
+		</if>
+		<if test="D008 != null">
+			AND dgidIdName LIKE '정형외과'
+		</if>
+		<if test="D009 != null">
+			AND dgidIdName LIKE '신경외과'
+		</if>
+		<if test="D010 != null">
+			AND dgidIdName LIKE '성형외과'
+		</if>
+		<if test="D011 != null">
+			AND dgidIdName LIKE '산부인과'
+		</if>
+		<if test="D012 != null">
+			AND dgidIdName LIKE '안과'
+		</if>
+		<if test="D013 != null">
+			AND dgidIdName LIKE '이빈인후과'
+		</if>
+		<if test="D014 != null">
+			AND dgidIdName LIKE '비뇨기과'
+		</if>
+		<if test="D016 != null">
+			AND dgidIdName LIKE '재활의학과'
+		</if>
+		<if test="D017 != null">
+			AND dgidIdName LIKE '마치통증의학과'
+		</if>
+		<if test="D018 != null">
+			AND dgidIdName LIKE '영상의학과'
+		</if>
+		<if test="D019 != null">
+			AND dgidIdName LIKE '치료방사건과'
+		</if>
+		<if test="D020 != null">
+			AND dgidIdName LIKE '임상병리과'
+		</if>
+		<if test="D021 != null">
+			AND dgidIdName LIKE '해부병리과'
+		</if>
+		<if test="D022 != null">
+			AND dgidIdName LIKE '가정의학과'
+		</if>
+		<if test="D023 != null">
+			AND dgidIdName LIKE '핵의학과'
+		</if>
+		<if test="D024 != null">
+			AND dgidIdName LIKE '응급의학과'
+		</if>
+		<if test="D026 != null">
+			AND dgidIdName LIKE '치과'
+		</if>
+		<if test="D034 != null">
+			AND dgidIdName LIKE '구강악안면외과'
+		</if>
+		WHERE 1 = 1
+		<if test="searchValue != null">
+			AND dutyName LIKE '%${searchValue}%'
+		</if>
+		<if test="searchCity != null">
+			AND dutyAddr LIKE '${searchCity}%'
+		</if>
+		<if test="searchTown != null">
+			AND dutyAddr LIKE '%${searchTown}%'
+		</if>
+		<if test="dutyDiv != null">
+			AND dutyDivNam IN (
+		</if>
+		<if test="A1 != null">
+			'상급종합병원',
+		</if>
+		<if test="A2 != null">
+			'종합병원',
+		</if>
+		<if test="B1 != null">
+			'병원',
+		</if>
+		<if test="B2 != null">
+			'군 병원',
+		</if>
+		<if test="C1 != null">
+			'의원',
+		</if>
+		<if test="C2 != null">
+			'군 의원',
+		</if>
+		<if test="D != null">
+			'요양병원',
+		</if>
+		<if test="E != null">
+			'한방병원',
+		</if>
+		<if test="F != null">
+			'노인전문병원',
+		</if>
+		<if test="G1 != null">
+			'한의원',
+		</if>
+		<if test="G2 != null">
+			'군 한의원',
+		</if>
+		<if test="J != null">
+			'결핵병원',
+		</if>
+		<if test="K != null">
+			'한센병원',
+		</if>
+		<if test="L != null">
+			'정신병원',
+		</if>
+		<if test="M != null">
+			'치과병원',
+		</if>
+		<if test="N != null">
+			'치과의원',
+		</if>
+		<if test="O != null">
+			'부속병의원',
+		</if>
+		<if test="P != null">
+			'조산원',
+		</if>
+		<if test="Q != null">
+			'치매병원',
+		</if>
+		<if test="R1 != null">
+			'보건소',
+		</if>
+		<if test="R2 != null">
+			'보건지소',
+		</if>
+		<if test="R3 != null">
+			'보건진료소',
+		</if>
+		<if test="R4 != null">
+			'보건의료원',
+		</if>
+		<if test="S != null">
+			'이송단체',
+		</if>
+		<if test="T != null">
+			'119구급대',
+		</if>
+		<if test="U1 != null">
+			'경찰서',
+		</if>
+		<if test="U2 != null">
+			'교도소',
+		</if>
+		<if test="V != null">
+			'지방자치단체',
+		</if>
+		<if test="Y != null">
+			'중앙응급의료센터',
+		</if>
+		<if test="Z != null">
+			'응급의료지원센터',
+		</if>
+		<if test="I != null">
+			'기타',
+		</if>
+		<if test="dutyDiv != null">
+			'')
+		</if>
+	</select>
+	
+</mapper>

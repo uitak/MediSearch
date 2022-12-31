@@ -8,6 +8,13 @@
 	<jsp:param name="title" value="| 커뮤니티" />
 </jsp:include>
 
+<c:set var="searchType" value="${param.searchType}"/>
+<c:if test="${empty searchType}">
+	<c:set var="searchType" value="${'title'}"/>
+</c:if>
+
+
+
     <!-- 헤더 이미지 부분 -->
     <!-- Page header-->
     <section class="mt-5 pt-4">
@@ -52,7 +59,7 @@
                 <!-- Card header -->
                 <div class="card-header border-bottom p-3">
                   <div class="d-flex align-items-center">
-                    <div class="icon-lg shadow bg-body rounded-circle"><img class="img-icons"
+                    <div class="icon-lg shadow bg-body rounded-circle" ><img class="img-icons"
                         src="${path}/resources/blogzine/template/assets/images/MediSearch/icons/free-forum.png"></div>
                     <h3 class="mb-0 ms-3">자유게시판</h3>
                   </div>
@@ -147,8 +154,7 @@
                 <!-- Card header -->
                 <div class="card-header border-bottom p-3">
                   <div class="d-flex align-items-center">
-                    <a href="#" class="icon-lg shadow bg-body rounded-circle"><img class="img-icons"
-                        src="${path}/resources/blogzine/template/assets/images/MediSearch/icons/operator-color.png"></a>
+                    <a href="${path}/board/help" class="icon-lg shadow bg-body rounded-circle"><img class="img-icons" src="${path}/resources/blogzine/template/assets/images/MediSearch/icons/operator-color.png"></a>
                     <h3 class="mb-0 ms-3">고객센터</h3>
                   </div>
                 </div>
@@ -163,8 +169,8 @@
                       <h5 class="mb-0">41</h5>
                     </div>
                     <div>
-                      <div class="btn btn-primary-soft w-100 mb-0 hv-btn"
-                        style="background-color: rgb(255, 158, 84); color: white; font-weight: 700;"><b>포스트 더보기</b></div>
+                      <a href="${path}/board/help"><div class="btn btn-primary-soft w-100 mb-0 hv-btn"
+                        style="background-color: rgb(255, 158, 84); color: white; font-weight: 700;"><b>포스트 더보기</b></div></a>
                     </div>
                   </div>
 
@@ -566,9 +572,7 @@
                   <!-- Card header START -->
                   <div class="card-header bg-transparent border-bottom p-3">
                     <div class="d-sm-flex justify-content-sm-between align-items-center">
-                      <h5 class="mb-2 mb-sm-0">리뷰 <span class="badge"
-                          style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; opacity: 90%;">12</span>
-                      </h5>
+                      <h5 class="mb-2 mb-sm-0">리뷰</h5>
                       <span id="review_pages">
                         <span class="btn btn-sm  mb-0 hv-btn" id="review_0"
                           style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;">전체</span>
@@ -578,9 +582,9 @@
                           style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;">약국</span>
                         <span class="btn btn-sm  mb-0 hv-btn" id="review_3"
                           style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;">의약품</span>
-                        <a href="#" class="btn btn-sm  mb-0 hv-btn"
-                          style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none; margin-left: 30px;"><i
-                            class="fas fa-plus me-2"></i>글쓰기</a>
+<!--                         <a href="#" class="btn btn-sm  mb-0 hv-btn" -->
+<!--                           style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none; margin-left: 30px;"><i -->
+<!--                             class="fas fa-plus me-2"></i>글쓰기</a> -->
                       </span>
                     </div>
                   </div>
@@ -608,10 +612,9 @@
                         <!-- Short by filter -->
                         <form>
                           <select class="form-select z-index-9 bg-transparent" aria-label=".form-select-sm">
-                            <option value="">최신순</option>
-                            <option>조회수</option>
-                            <option>제목 오름차순</option>
-                            <option>제목 내림차순</option>
+                            <option value="">최신</option>
+                            <option>별점</option>
+                            <option>이름</option>
                           </select>
                         </form>
                       </div>
@@ -620,44 +623,53 @@
 
 <!-- 리뷰_전체 -->
                     <div class="table-responsive border-0" id="review_list_0">
-                      <table class="table table-dark-gray align-middle p-4 mb-0  table-shrink">
+                      <table class="table table-dark-gray align-middle p-4 mb-0 table-shrink">
                         <!-- Table head -->
                         <thead>
                           <tr>
-                            <th scope="col" class="border-0 rounded-start">Post Name</th>
-                            <th scope="col" class="border-0">Author Name</th>
-                            <th scope="col" class="border-0">Published Date</th>
-                            <th scope="col" class="border-0">Views</th>
-                            <th scope="col" class="border-0 rounded-end">Action</th>
+                            <th scope="col" class="border-0 rounded-start">분류</th>
+                            <th scope="col" class="border-0">이름</th>
+                            <th scope="col" class="border-0">제목</th>
+                            <th scope="col" class="border-0">작성자</th>
+                            <th scope="col" class="border-0">별점</th>
+                            <th scope="col" class="border-0">작성일</th>
+                            <th scope="col" class="border-0 rounded-end">수정 / 삭제</th>
                           </tr>
                         </thead>
 
                         <!-- Table body START -->
                         <tbody>
-                          <!-- Table item -->
-                          <tr>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">리뷰_전체</a></h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="mb-0">관리자</h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>Jan 22, 2022</td>
-                            <!-- Table data -->
-                            <td>2,546</td>
-                            <!-- Table data -->
-                            <td>
-                              <div class="d-flex gap-2">
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
-                              </div>
-                            </td>
-                          </tr>
+                        
+                        	<c:if test="${empty reviewList}">
+                        		<tr>
+                        			<td colspan="7">리뷰가 없습니다.</td>
+                        		</tr>
+                        	</c:if>
+                        	<c:if test="${not empty reviewList}">
+                        		<c:forEach var="review" items="${reviewList}">
+									<tr>
+										<td>${review.division}
+<%-- 											<h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">${review.division}</a></h6> --%>
+			                            </td>
+			                            <td>${review.name}
+<%-- 			                              <h6 class="mb-0">${review.name}</h6> --%>
+			                            </td>
+			                            <td>${review.title}</td>
+			                            <td>${review.writer}</td>
+			                            <td>${review.star}</td>
+			                            <td><fmt:formatDate type="date" value="${review.createDate}"/></td>
+			                            <td>
+			                              <div class="d-flex gap-2">
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
+			                              </div>
+			                            </td>
+									</tr>
+                        		</c:forEach>
+                        	</c:if>
+                        	
                         </tbody>
                         <!-- Table body END -->
                       </table>
@@ -669,40 +681,50 @@
                         <!-- Table head -->
                         <thead>
                           <tr>
-                            <th scope="col" class="border-0 rounded-start">Post Name</th>
-                            <th scope="col" class="border-0">Author Name</th>
-                            <th scope="col" class="border-0">Published Date</th>
-                            <th scope="col" class="border-0">Views</th>
-                            <th scope="col" class="border-0 rounded-end">Action</th>
+                            <th scope="col" class="border-0 rounded-start">분류</th>
+                            <th scope="col" class="border-0">이름</th>
+                            <th scope="col" class="border-0">제목</th>
+                            <th scope="col" class="border-0">작성자</th>
+                            <th scope="col" class="border-0">별점</th>
+                            <th scope="col" class="border-0">작성일</th>
+                            <th scope="col" class="border-0 rounded-end">수정 / 삭제</th>
                           </tr>
                         </thead>
 
                         <!-- Table body START -->
                         <tbody>
-                          <!-- Table item -->
-                          <tr>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">리뷰_병원</a></h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="mb-0">관리자</h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>Jan 22, 2022</td>
-                            <!-- Table data -->
-                            <td>2,546</td>
-                            <!-- Table data -->
-                            <td>
-                              <div class="d-flex gap-2">
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
-                              </div>
-                            </td>
-                          </tr>
+                        
+                        	<c:if test="${empty hospitalReview}">
+                        		<tr>
+                        			<td colspan="7">리뷰가 없습니다.</td>
+                        		</tr>
+                        	</c:if>
+                        	<c:if test="${not empty hospitalReview}">
+                        		<c:forEach var="review" items="${hospitalReview}">
+									<tr>
+										<td>${review.division}
+<%-- 											<h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">${review.division}</a></h6> --%>
+			                            </td>
+			                            <td>${review.name}
+<%-- 			                              <h6 class="mb-0">${review.name}</h6> --%>
+			                            </td>
+			                            <td>${review.title}</td>
+			                            <td>${review.writer}</td>
+			                            <td>${review.star}</td>
+			                            
+			                            <td><fmt:formatDate type="date" value="${review.createDate}"/></td>
+			                            <td>
+			                              <div class="d-flex gap-2">
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
+			                              </div>
+			                            </td>
+									</tr>
+                        		</c:forEach>
+                        	</c:if>
+                        	
                         </tbody>
                         <!-- Table body END -->
                       </table>
@@ -714,85 +736,103 @@
                         <!-- Table head -->
                         <thead>
                           <tr>
-                            <th scope="col" class="border-0 rounded-start">Post Name</th>
-                            <th scope="col" class="border-0">Author Name</th>
-                            <th scope="col" class="border-0">Published Date</th>
-                            <th scope="col" class="border-0">Views</th>
-                            <th scope="col" class="border-0 rounded-end">Action</th>
+                            <th scope="col" class="border-0 rounded-start">분류</th>
+                            <th scope="col" class="border-0">이름</th>
+                            <th scope="col" class="border-0">제목</th>
+                            <th scope="col" class="border-0">작성자</th>
+                            <th scope="col" class="border-0">별점</th>
+                            <th scope="col" class="border-0">작성일</th>
+                            <th scope="col" class="border-0 rounded-end">수정 / 삭제</th>
                           </tr>
                         </thead>
 
                         <!-- Table body START -->
                         <tbody>
-                          <!-- Table item -->
-                          <tr>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">리뷰_약국</a></h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="mb-0">관리자</h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>Jan 22, 2022</td>
-                            <!-- Table data -->
-                            <td>2,546</td>
-                            <!-- Table data -->
-                            <td>
-                              <div class="d-flex gap-2">
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
-                              </div>
-                            </td>
-                          </tr>
+                        
+                        	<c:if test="${empty pharmacyReview}">
+                        		<tr>
+                        			<td colspan="7">리뷰가 없습니다.</td>
+                        		</tr>
+                        	</c:if>
+                        	<c:if test="${not empty pharmacyReview}">
+                        		<c:forEach var="review" items="${pharmacyReview}">
+									<tr>
+										<td>${review.division}
+<%-- 											<h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">${review.division}</a></h6> --%>
+			                            </td>
+			                            <td>${review.name}
+<%-- 			                              <h6 class="mb-0">${review.name}</h6> --%>
+			                            </td>
+			                            <td>${review.title}</td>
+			                            <td>${review.writer}</td>
+			                            <td>${review.star}</td>
+			                            <td><fmt:formatDate type="date" value="${review.createDate}"/></td>
+			                            <td>
+			                              <div class="d-flex gap-2">
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
+			                              </div>
+			                            </td>
+									</tr>
+                        		</c:forEach>
+                        	</c:if>
+                        	
                         </tbody>
                         <!-- Table body END -->
                       </table>
                     </div>
                     <!-- Blog list table END -->
-<!-- 리뷰_Q&A -->
+<!-- 리뷰_의약품 -->
                     <div class="table-responsive border-0" id="review_list_3">
                       <table class="table table-dark-gray align-middle p-4 mb-0  table-shrink">
                         <!-- Table head -->
                         <thead>
                           <tr>
-                            <th scope="col" class="border-0 rounded-start">Post Name</th>
-                            <th scope="col" class="border-0">Author Name</th>
-                            <th scope="col" class="border-0">Published Date</th>
-                            <th scope="col" class="border-0">Views</th>
-                            <th scope="col" class="border-0 rounded-end">Action</th>
+                            <th scope="col" class="border-0 rounded-start">분류</th>
+                            <th scope="col" class="border-0">이름</th>
+                            <th scope="col" class="border-0">제목</th>
+                            <th scope="col" class="border-0">작성자</th>
+                            <th scope="col" class="border-0">별점</th>
+                            <th scope="col" class="border-0">작성일</th>
+                            <th scope="col" class="border-0 rounded-end">수정 / 삭제</th>
                           </tr>
                         </thead>
 
                         <!-- Table body START -->
                         <tbody>
-                          <!-- Table item -->
-                          <tr>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">리뷰_의약품</a></h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>
-                              <h6 class="mb-0">관리자</h6>
-                            </td>
-                            <!-- Table data -->
-                            <td>Jan 22, 2022</td>
-                            <!-- Table data -->
-                            <td>2,546</td>
-                            <!-- Table data -->
-                            <td>
-                              <div class="d-flex gap-2">
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
-                                <a href="#" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
-                              </div>
-                            </td>
-                          </tr>
+                        
+                        	<c:if test="${empty pillReview}">
+                        		<tr>
+                        			<td colspan="7">리뷰가 없습니다.</td>
+                        		</tr>
+                        	</c:if>
+                        	<c:if test="${not empty pillReview}">
+                        		<c:forEach var="review" items="${pillReview}">
+									<tr>
+										<td>${review.division}
+<%-- 											<h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">${review.division}</a></h6> --%>
+			                            </td>
+			                            <td>${review.name}
+<%-- 			                              <h6 class="mb-0">${review.name}</h6> --%>
+			                            </td>
+			                            <td>${review.title}</td>
+			                            <td>${review.writer}</td>
+			                            <td>${review.star}</td>
+			                            <td><fmt:formatDate type="date" value="${review.createDate}"/></td>
+			                            <td>
+			                              <div class="d-flex gap-2">
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="삭제"><i class="bi bi-trash"></i></a>
+			                                <a href="#" class="btn btn-light btn-round mb-0 ms-0 align-item-center" data-bs-toggle="tooltip"
+			                                  data-bs-placement="top" title="수정"><i class="bi bi-pencil-square"></i></a>
+			                              </div>
+			                            </td>
+									</tr>
+                        		</c:forEach>
+                        	</c:if>
+                        	
                         </tbody>
                         <!-- Table body END -->
                       </table>
@@ -831,7 +871,7 @@
                       <h5 class="mb-2 mb-sm-0">자유게시판 <span class="badge"
                           style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; opacity: 90%;">12</span>
                       </h5>
-                      <a href="#" class="btn btn-sm  mb-0 hv-btn"
+                      <a class="btn btn-sm  mb-0 hv-btn" onclick="location.href='${path}/board/postBoard';"
                         style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;"><i
                           class="fas fa-plus me-2"></i>글쓰기</a>
                     </div>
@@ -878,30 +918,37 @@
                         <!-- Table head -->
                         <thead>
                           <tr>
-                            <th scope="col" class="border-0 rounded-start">Post Name</th>
-                            <th scope="col" class="border-0">Author Name</th>
-                            <th scope="col" class="border-0">Published Date</th>
-                            <th scope="col" class="border-0">Views</th>
-                            <th scope="col" class="border-0 rounded-end">Action</th>
+                            <th scope="col" class="border-0 rounded-start">제목</th>
+                            <th scope="col" class="border-0">작성자</th>
+                            <th scope="col" class="border-0">작성일</th>
+                            <th scope="col" class="border-0">조회수</th>
+                            <th scope="col" class="border-0 rounded-end">수정/삭제</th>
                           </tr>
                         </thead>
 
                         <!-- Table body START -->
                         <tbody>
+                        <c:if test="${empty boardList}">
+				<tr>
+					<td colspan="6">조회된 글이 없습니다.</td>
+				</tr>
+			</c:if>
+			<c:if test="${not empty boardList}">
+							<c:forEach var="board" items="${boardList}">
                           <!-- Table item -->
                           <tr>
                             <!-- Table data -->
                             <td>
-                              <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">자유게시판</a></h6>
+                              <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="${path}/board/postView?boardNo=${board.boardNo}"><c:out value="${board.title}"/></a></h6>
                             </td>
                             <!-- Table data -->
                             <td>
-                              <h6 class="mb-0">관리자</h6>
+                              <h6 class="mb-0"><c:out value="${board.userId}"/></h6>
                             </td>
                             <!-- Table data -->
-                            <td>Jan 22, 2022</td>
+                            <td><fmt:formatDate type="date" value="${board.createDate}"/></td>
                             <!-- Table data -->
-                            <td>2,546</td>
+                            <td><c:out value="${board.views}"/></td>
                             <!-- Table data -->
                             <td>
                               <div class="d-flex gap-2">
@@ -912,6 +959,8 @@
                               </div>
                             </td>
                           </tr>
+                 	</c:forEach>
+			</c:if>
                         </tbody>
                         <!-- Table body END -->
                       </table>
@@ -927,8 +976,8 @@
                           <li class="page-item disabled">
                             <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&lt;&lt;</a>
                           </li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item disabled"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item disabled"><a class="page-link" href="#">1</a></li>
+                          <li class="page-item "><a class="page-link" href="#">2</a></li>
                           <li class="page-item disabled"><a class="page-link" href="#">..</a></li>
                           <li class="page-item"><a class="page-link" href="#">15</a></li>
                           <li class="page-item">
@@ -941,6 +990,10 @@
                   </div>
                 </div>
               </div>
+              
+              
+              
+              
 <!-- Q&A -->
               <div class="col-12 box-route" style="margin-top: 80px;" id="box-2">
                 <div class="card border bg-transparent rounded-3">
@@ -950,9 +1003,9 @@
                       <h5 class="mb-2 mb-sm-0">질병 Q&A <span class="badge"
                           style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; opacity: 90%;">12</span>
                       </h5>
-                      <a href="#" class="btn btn-sm  mb-0 hv-btn"
-                        style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;"><i
-                          class="fas fa-plus me-2"></i>글쓰기</a>
+                      <a class="btn btn-sm  mb-0 hv-btn" onclick="location.href='${path}/board/postQna';" 
+                      id="writeQ&A" name="writeQ&A" style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;">
+                        <i class="fas fa-plus me-2"></i>글쓰기</a>
                     </div>
                   </div>
                   <!-- Card header END -->
@@ -1066,6 +1119,16 @@ Main contain END -->
 
 
     <!-- blogzine 코드 끝 -->
+<script type="text/javascript">
+function fn_articleForm(loginMember,postBoard){
+	if(loginMember !='' && loginMember != 'flase'){
+		location.href=postBoard; <%-- 로그인 상태이면 글쓰기창으로 이동 --%>
+	}else{
+		alert("로그인 후 글쓰기가 가능합니다.");
+		location.href='?action=/board/postBoard';
+	}
+}
+
 
   </main>
   

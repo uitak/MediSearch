@@ -59,18 +59,19 @@
             <!-- Step 1: Basic Info-->
             <div class="bg-light rounded-3 p-4 p-md-5 mb-3">
               <h2 class="h4 mb-4"><i class="fi-pencil text-primary fs-5 mt-n1 me-2"></i>글 쓰기</h2>
-              <form>
+              <form action="${path}/board/postBoard" method="post" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-sm-12 mb-4">
                   <label class="form-label" for="pr-fn"><b>제목</b> <span class='text-danger'>*</span></label>
-                  <input class="form-control form-control-lg" type="text" id="pr-fn" placeholder="글 제목을 입력하세요" required>
+                  <input class="form-control form-control-lg" type="text" id="pr-fn" name="title" placeholder="글 제목을 입력하세요" required>
                 </div>
                 
-              
+              	<div><input type="hidden" name="writerId" value="${loginMember.userId}" readonly></div>
+              	<div><input type="hidden" name="dType" value="A" readonly></div>
                 
                 <div class="col-12 mb-4">
                     <label class="form-label" for="pr-description"><b>내용</b> <span class='text-danger'>*</span></label>
-                    <textarea style="resize: none;"class="form-control" rows="7" id="pr-description" placeholder="500자 이내로 작성해주세요."></textarea>
+                    <textarea style="resize: none;"class="form-control" rows="7" id="pr-description" name="content" placeholder="500자 이내로 작성해주세요."></textarea>
                 </div>
 
                 <div class="col-12 mb-4">
@@ -80,7 +81,7 @@
                     <label class="form-label" for="pr-country"><b>파일 <span class='text-danger'>올리기</span></b></label>
                     <label class="w-100" style="cursor:pointer;">
                       <span> 
-                        <input class="form-control" type="file" name="my-image" id="pr-file" accept="image/gif, image/jpeg, image/png">
+                        <input class="form-control" type="file" name="upfile" id="pr-file" accept="image/gif, image/jpeg, image/png"> <!-- name="my-image" -->
                       </span>
                     </label>
                   </div>
@@ -91,7 +92,8 @@
               
             
               <div class="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
-                <a class="btn btn-primary btn-lg rounded-pill ms-sm-auto"type="submit">제출<i class="fi-chevron-right fs-sm ms-2"></i></a>
+          <!--      <a class="btn btn-primary btn-lg rounded-pill ms-sm-auto" type="submit" value="등록">등록<i class="fi-chevron-right fs-sm ms-2"></i></a>  -->
+                <input class="btn btn-primary btn-lg rounded-pill ms-sm-auto" type="submit" value="등록">
               </div>
             </div>
         </form>

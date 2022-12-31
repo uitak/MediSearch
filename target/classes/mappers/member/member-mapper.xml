@@ -6,25 +6,20 @@
 <mapper namespace="com.multi.mvc.member.model.mapper.MemberMapper">
 	<sql id="selectMemberSql">
 		SELECT 	
-			NO, ID, PASSWORD, ROLE, NAME, PHONE,
-			EMAIL, ADDRESS, HOBBY,
-			STATUS, ENROLL_DATE, MODIFY_DATE 
-		FROM MEMBER
+			MEMBERNO, USERID, PASSWORD, NAME, EMAIL, ADDRESS,
+			ROLE, STATUS
+			FROM MEMBER
 	</sql>
 	
 	<resultMap	type="Member" id="memberResultMap">
-		<id 	property="no" 		column="NO" />
-		<result property="id" 		column="ID" />
+		<id 	property="memberNo" 		column="MEMBERNO" />
+		<result property="userId" 		column="USERID" />
 		<result property="password" column="PASSWORD" />
-		<result property="role" 	column="ROLE" />
 		<result property="name" 	column="NAME" />
-		<result property="phone" 	column="PHONE" />
 		<result property="email" 	column="EMAIL" />
 		<result property="address" 	column="ADDRESS" />
-		<result property="hobby" 	column="HOBBY" />
+		<result property="role" 	column="ROLE" />
 		<result property="status" 	column="STATUS" />
-		<result property="enrollDate" column="ENROLL_DATE" />
-		<result property="modifyDate" column="MODIFY_DATE" />
 	</resultMap>
 	
 	<select id="selectCount" resultType="int">
@@ -37,44 +32,43 @@
 	
 	<select id="selectMember" parameterType="string" resultMap="memberResultMap">
 		<include refid="selectMemberSql"/>
-		WHERE ID = #{id} AND STATUS = 'Y'
+		WHERE USERID = #{userId} AND STATUS = 'Y'
 	</select>	
+	
+	<select id="selectMemberByKakaoToken" parameterType="string" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE KAKAOTOKEN = #{kakaoToken} AND STATUS = 'Y'
+	</select>
 	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER(
-			NO,	ID, PASSWORD, 	
-			ROLE, NAME, PHONE,
-			EMAIL, ADDRESS,HOBBY, 		
-			STATUS, ENROLL_DATE, MODIFY_DATE
+			MEMBERNO, USERID, PASSWORD, NAME, KAKAOTOKEN, EMAIL, ADDRESS,
+			ROLE, STATUS
 		) VALUES (
-			 0, #{id}, #{password},
-			 default, #{name}, #{phone},
-			 #{email}, #{address}, #{hobby},
-			 DEFAULT, DEFAULT, DEFAULT)
+			 0, #{userId}, #{password}, #{name}, #{kakaoToken},
+			 #{email}, #{address},
+			 DEFAULT, DEFAULT)
 	</insert>
 	
 	 <update id="updateMember" parameterType="Member">
 	 	UPDATE MEMBER
 	 	SET
 	 		NAME		= #{name}, 
-	 		PHONE		= #{phone},
 	 		EMAIL		= #{email},
-	 		ADDRESS		= #{address},
-	 		HOBBY		= #{hobby},
-	 		MODIFY_DATE	= #{modifyDate}
-	 	WHERE NO = #{no}
+	 		ADDRESS		= #{address}
+	 	WHERE MEMBERNO = #{memberNo}
 	 </update>
 	 
 	 <update id="updatePwd" parameterType="map">
 	 	UPDATE MEMBER 
 	 		SET PASSWORD = #{newPwd} 
- 		WHERE NO = #{no}
+ 		WHERE MEMBERNO = #{memberNo}
 	 </update>
 	 
 	 <update id="deleteMember" parameterType="int">
 	 	UPDATE MEMBER 
 	 		SET STATUS = 'N' 
-	 	WHERE NO = #{no}
+	 	WHERE MEMBERNO = #{memberNo}
 	 </update>
 	
 	

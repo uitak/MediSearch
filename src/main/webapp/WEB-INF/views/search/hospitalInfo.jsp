@@ -18,13 +18,13 @@
           <li class="breadcrumb-item"><a href="#">홈</a></li>
           <li class="breadcrumb-item"><a href="#">병원 찾기</a></li>
           <!--========================================================== 병원 이름이 들어가는 곳 =========================================================-->
-          <li class="breadcrumb-item active" aria-current="page">서울병원</li>
+          <li class="breadcrumb-item active" aria-current="page">${hpInfo.dutyName}</li>
         </ol>
       </nav>
 
       <!--========================================================== 병원 정보가 들어가는 곳 =========================================================-->
       <div class="d-sm-flex align-items-center justify-content-between mb-4 pb-sm-2">
-        <h1 class="h2 me-3 mb-sm-0">서울병원</h1>
+        <h1 class="h2 me-3 mb-sm-0">${hpInfo.dutyName}</h1>
         <div class="text-nowrap">
          
           <!-- 공유 버튼 -->
@@ -34,17 +34,6 @@
             <a class="btn btn-primary btn-lg rounded-pill w-sm-auto w-100" href="#">wishlist<i class="fi-heart fs-sm ms-2"></i></a>
             <!-- </div> -->
           
-            <!-- 공유 버튼 페이스북, 트위터, 인스타 -->
-            <!--
-            <div class="dropdown-menu dropdown-menu-end my-1">
-              <button class="dropdown-item" type="button"><i
-                  class="fi-facebook fs-base opacity-75 me-2"></i>Facebook</button>
-              <button class="dropdown-item" type="button"><i
-                  class="fi-twitter fs-base opacity-75 me-2"></i>Twitter</button>
-              <button class="dropdown-item" type="button"><i
-                  class="fi-instagram fs-base opacity-75 me-2"></i>Instagram</button>
-            </div>
-          -->
           </div>
         
         </div>
@@ -53,13 +42,9 @@
 
       <!-- Nav pills-->
       <ul class="nav nav-pills border-bottom pb-3 mb-4">
-        <!-- <li class="nav-item"><a class="nav-link d-flex align-items-center" href="city-guide-single.html"><i
-              class="fi-image me-2"></i>Gallery</a></li> -->
         <li class="nav-item"><a class="nav-link d-flex align-items-center active" href="#">
           <i class="fi-info-circle me-2"></i>상세정보</a></li>
              
-        <!-- <li class="nav-item"><a class="nav-link d-flex align-items-center" href="city-guide-single-reviews.html">
-          <i class="fi-edit me-2"></i>리뷰</a></li>  링크 누를 시 리뷰 게시판으로 이동 -->
       </ul>
     </section>
     <!-- Page content -->
@@ -86,31 +71,19 @@
               <div class="tns-carousel-inner"
                 data-carousel-options="{&quot;navAsThumbnails&quot;: true, &quot;navContainer&quot;: &quot;#thumbnails&quot;, &quot;gutter&quot;: 12, &quot;responsive&quot;: {&quot;0&quot;:{&quot;controls&quot;: false},&quot;500&quot;:{&quot;controls&quot;: true}}}">
                 <div>
-                  <img class="rounded-3" src="${path}/resources/img/hos/resize/100.jpg" alt="Image"></div>
+                  <img class="rounded-3" src="${path}/resources/img/medisearch/hp/hp${param.i}.jpg" alt="${hpInfo.dutyName}">
+               	</div>
                 <div>
-                  <iframe class="rounded-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50571.503708807424!2d126.87841757497236!3d37.6087723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c9821b2378f7d%3A0x4bc463fe9a7dbd04!2z7ISc7Jq467OR7JuQ!5e0!3m2!1sko!2skr!4v1671269215626!5m2!1sko!2skr" alt="Image" style="height: 420px;"></iframe>
+                  <img class="rounded-3" src="${path}/resources/img/hospital/orPassage.jpeg" alt="내부사진">
                 </div>
-                <!--
-                <div><img class="rounded-3" src="img/real-estate/single/11.jpg" alt="Image"></div>
-                <div><img class="rounded-3" src="img/real-estate/single/12.jpg" alt="Image"></div>
-                -->
-                <!-- 유튜브 동영상 플레이 -->
-                <!-- <div>
-                  <div class="ratio ratio-16x9">
-                    <iframe class="rounded-3" src="https://www.youtube.com/embed/dofyR9p8e7w"
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen></iframe>
-                  </div>
-                </div> -->
               </div>
             </div>
 
 
             <!-- Thumbnails nav-->
             <ul class="tns-thumbnails mb-4" id="thumbnails" >
-              <li class="tns-thumbnail"><img src="${path}/resources/img/hos/resize/100.jpg" alt="Thumbnail" ></li>
-              <li class="tns-thumbnail"><img src="${path}/resources/img/hos/resize/900.png" alt="Thumbnail"></li>
+              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/medisearch/hp/hp${param.i}.jpg" alt="${hpInfo.dutyName}"></li>
+              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/hospital/orPassage.jpeg" alt="내부사진"></li>
               <!--
               <li class="tns-thumbnail"><img src="img/real-estate/single/th11.jpg" alt="Thumbnail"></li>
               <li class="tns-thumbnail"><img src="img/real-estate/single/th12.jpg" alt="Thumbnail"></li>
@@ -130,25 +103,21 @@
           <!--=========================================== 병원 상세설명 ======================================-->
           <h2 class="h4">병원 설명</h2>
           <ul class="list-unstyled">
-            <li><i class="fi-star-filled mt-n1 me-1 text-warning align-middle"></i><b>4.9 </b><span
-                class="text-muted">(48 reviews)</span></li>
+            <li><i class="fi-star-filled mt-n1 me-1 text-warning align-middle"></i><b>${hpInfo.star}</b>
+                <span class="text-muted"> (${hpInfo.reviews} reviews)</span></li>
             <!-- <li><i class="fi-wallet mt-n1 me-1 align-middle opacity-70"></i>$$</li> -->
             <!-- ========================= 병원 위치 정보 들어가는 자리 ========================= -->
-            <li><i class="fi-map-pin mt-n1 me-1 align-middle opacity-70"></i>서울특별시 은평구 대조동 진흥로 191</li>
+            <li><i class="fi-map-pin mt-n1 me-1 align-middle opacity-70"></i>${hpInfo.dutyAddr}</li>
           </ul>
           <div class="mb-4 pb-md-3">
-            <p class="mb-1">
-              서울대학교병원 내과는 대한민국의료계를 이끌어 온 전통과 명예로 세계 최고 수준의 교육, 연구, 진료를 통해 21세기 선진 의료를 선도하기 위해 노력해 오고 있습니다. 서울대학교병원의 가장 큰 규모의 임상진료과로 100여명의 교수, 150여명의 임상강사 및 전공의 의료진이 소속되어 있습니다. 16개의 병동, 응급실, 중환자실에서 1일 500명 이상의 입원 환자를 진료하고 매일 3,000여명의 외래 환자를 진료하고 있습니다. 아울러 특수질환에 대한 다양한 교육프로그램과 안내책자들을 개발 활용하여 환자의 이해를 증진시키고 있으며 다양한 특수클리닉의 개설, 운영으로 특수질환에 대한 환자들의 진료 욕구를 충족시키고 환자의 아픔과 고통을 함께 나눈다는 생각을 가지고 최선을 다해 진료에 임하고 있습니다. 
-
+            <p class="mb-1"> 
+              국내 최초의 현대적 의료기관이자 최고의 신뢰를 받는 ${hpInfo.dutyName}이 ${hpInfo.dutyAddr}에 문을 열었습니다.
+              디지털 혁신, 안전과 공감이라는 운영 목표 아래 뛰어난 의료진과 최고 수준의 진료 환경으로 아시아 중심 병원으로 도약하고자 합니다. ${hpInfo.dutyName}은 디지털 혁신의 효율적인 시스템을 통해 안전하고 질 높은 의료서비스를 제공합니다. 또한 다양한 임상과가 유기적으로 협력하는 다학제 치료를 시행하고 신속한 진료와 체계적인 치료를 제공할 것입니다.
+              ${hpInfo.dutyName}은 환자 안전을 최우선으로 한 혁신적인 진료 프로세스, 첨단 디지털 솔루션, 선진적 케어 시스템을 통한 국내 의료계의 새로운 패러다임을 제시하는 ${hpInfo.dutyDivNam}의 미래 모델입니다.
             </p>
-            <div class="collapse" id="seeMoreAbout">
-              <p class="mb-1">
-                또한 기초 및 임상연구를 통한 새로운 의학기술의 개발, 혁신적인 의학교육을 통한 우수한 의료진의 양성을 바탕으로 수준 높은 진료를 지향해 나가고 있습니다. 구조적으로는 호흡기내과, 순환기내과, 소화기내과, 혈액종양내과, 내분비내과, 알레르기내과, 신장내과, 감염내과, 류마티스내과로 나뉘어 9개의 분과로 구성되어 있고 입원전담전문의 제도를 운영하며 서울대학교 의과대학 및 서울대학교병원의 교육, 연구, 진료에서 중추적 역할을 수행하고 있습니다. 
-              </p>
-            </div>
-            <a class="collapse-label collapsed" href="#seeMoreAbout" data-bs-toggle="collapse"
-              data-bs-label-collapsed="Show more" data-bs-label-expanded="Show less" role="button" aria-expanded="false"
-              aria-controls="seeMoreAbout"></a>
+<!--             <a class="collapse-label collapsed" href="#seeMoreAbout" data-bs-toggle="collapse" -->
+<!--               data-bs-label-collapsed="Show more" data-bs-label-expanded="Show less" role="button" aria-expanded="false" -->
+<!--               aria-controls="seeMoreAbout"></a> -->
           </div>
 
           <!-- =============================================== 수술/시술 들어갈 곳 ================================================ -->
@@ -156,74 +125,45 @@
           <div class="mb-4 pb-md-3">
             <h2 class="h4">수술/시술 가능 여부</h2>
             <ul class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap">
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>MRI</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>CT</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>인공관절</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>파키슨병</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>뇌혈관센터</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>뇌혈관중재적시술</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>종합검진</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>위내시경</li>
-              <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>위암</li>
+            	<c:if test="${operation eq null}">
+            		<li class="col"><i class="fi-alert-circle mt-n1 me-2 fs-lg align-middle"></i>정보 없음</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy1() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>뇌출혈수술</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy2() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>뇌경색의재관류</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy3() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>심근경색의재관류</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy4() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>복부손상의수술</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy5() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>사지접합의수술</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy6() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>응급내시경</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy7() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>응급투석</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy8() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>조산산모</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy9() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>정신질환자</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy10() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>신생아</li>
+            	</c:if>
+            	<c:if test="${operation.getMkioskTy11() eq 'Y'}">
+	              	<li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>중증화상</li>
+            	</c:if>
             </ul>
-            <!-- 더보기 란 -->
-            <div class="collapse" id="seeMoreAmenities">
-              <ul class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap">
-                <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>다한증</li>
-                <li class="col"><i class="fi-spa mt-n1 me-2 fs-lg align-middle"></i>심장혈관촬영및관상동맥중재술</li>
-              </ul>
-            </div><a class="collapse-label collapsed" href="#seeMoreAmenities" data-bs-toggle="collapse"
-              data-bs-label-collapsed="Show more" data-bs-label-expanded="Show less" role="button" aria-expanded="false"
-              aria-controls="seeMoreAmenities"></a>
           </div>
 
-
-          <!-- Room types-->
-          <!--
-          <div class="mb-4 pb-md-3">
-            <h2 class="h4">Room types</h2>
-            <ul class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap">
-              <li class="col"><i class="fi-no-smoke mt-n1 me-2 fs-lg align-middle"></i>Non-smoking rooms</li>
-              <li class="col"><i class="fi-single-bed mt-n1 me-2 fs-lg align-middle"></i>Single rooms</li>
-              <li class="col"><i class="fi-double-bed mt-n1 me-2 fs-lg align-middle"></i>Family suites</li>
-            </ul>
-          </div>
-          -->
-
-          <!-- Awards-->
-          <!--
-          <h2 class="h4">Awards</h2>
-          <ul class="list-unstyled">
-            <li class="d-flex align-items-center mb-2"><img class="flex-shrink-0 me-2"
-                src="img/city-guide/single/awards/01.jpg" width="40" alt="Award logo">
-              <div>2020 Traveler’s Choice</div>
-            </li>
-            <li class="d-flex align-items-center mb-2"><img class="flex-shrink-0 me-2"
-                src="img/city-guide/single/awards/02.jpg" width="40" alt="Award logo">
-              <div>TUI Top Quality 2020</div>
-            </li>
-            <li class="d-flex align-items-center mb-2"><img class="flex-shrink-0 me-2"
-                src="img/city-guide/single/awards/03.jpg" width="40" alt="Award logo">
-              <div>TUI Holly 2019</div>
-            </li>
-          </ul>
-          <hr class="my-4">
-          -->
-
-
-          <!-- Payment-->
-          <!--
-          <div class="d-lg-flex align-items-center pb-2 pb-lg-0">
-            <h4 class="fs-lg mb-lg-0">병원에서 이용 가능한 카드:</h4>
-            <div class="ps-lg-3"><img class="me-2 border rounded-1 shadow-sm"
-                src="img/city-guide/single/payment/visa.svg" width="54" alt="Visa"><img
-                class="me-2 border rounded-1 shadow-sm" src="img/city-guide/single/payment/mastercard.svg" width="54"
-                alt="Mastercard"><img class="me-2 border rounded-1 shadow-sm"
-                src="img/city-guide/single/payment/maestro.svg" width="54" alt="Maestro"><img
-                class="border rounded-1 shadow-sm" src="img/city-guide/single/payment/american-express.svg" width="54"
-                alt="American Express"></div>
-          </div>
-          -->
         </div>
         
 
@@ -238,17 +178,17 @@
                 <!-- 병원이면 병원로고, 응급실이면 응급로고, 등을 넣는 곳 -->
                 <img src="${path}/resources/img/city-guide/brands/hotel.svg" width="60" alt="Thumbnail">
                 <div class="ps-2 ms-1">
-                  <h3 class="h5 mb-2"> 서울병원</h3>
+                  <h3 class="h5 mb-2">${hpInfo.dutyName}</h3>
                   <ul class="list-unstyled d-flex flex-wrap fs-sm">
                     <li class="me-2 mb-1 pe-1">
                       <i class="fi-star-filled mt-n1 me-1 text-warning align-middle opacity-70"></i>
                       <!--=========== 리뷰 별점 넣는 곳 ========-->
-                      <b>4.9 </b>(48)</li>
+                      <b>${hpInfo.star} </b>(${hpInfo.reviews})</li>
                     <!-- <li class="me-2 mb-1 pe-1">
                       <i class="fi-wallet mt-n1 me-1 align-middle opacity-70"></i>$$</li> -->
                       <!--===================================== 병원 분류 넣는 곳 =============================================-->
                     <li class="me-2 mb-1 pe-1">
-                      <i class="fi-globe mt-n1 me-1 align-middle opacity-70"></i>종합병원</li>
+                      <i class="fi-globe mt-n1 me-1 align-middle opacity-70"></i>${hpInfo.dutyDivNam}</li>
                   </ul>
                 </div>
               </div>
@@ -258,25 +198,24 @@
                 <h4 class="h5 mb-2">기본 정보:</h4>
                 <ul class="nav flex-column">
                   <li class="nav-item mb-2">
-                    <i class="fi-map-pin mt-1 me-2 align-middle opacity-70"></i>서울특별시 은평구 대조동 진흥로 191
+                    <i class="fi-map-pin mt-1 me-2 align-middle opacity-70"></i>${hpInfo.dutyAddr}
                   </li>
                   <!-- 전화번호 -->
                   <li class="nav-item mb-2">
                     <a class="nav-link d-inline-block p-0 fw-normal d-inline-flex align-items-start" href="tel:3025550107">
-                      <i class="fi-phone mt-1 me-2 align-middle opacity-70"></i>(302) 555-0107</a>, 
-                      <a class="nav-link d-inline-block p-0 fw-normal" href="tel:3025550208">(302) 555-0208</a></li>
+                      <i class="fi-phone mt-1 me-2 align-middle opacity-70"></i>${hpInfo.dutyTel1}</a>, 
+                      </li>
 
-                  <!-- 진료과목 -->
-                  <!--
-                  <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start" href="#">
-                    <i class="fi-search mt-1 me-2 align-middle opacity-60"></i>내과, 재활치료과</a>
-                  </li>
-                  -->
-                  
                   <!-- 응급실 운영 여부 -->
-                  <li class="nav-item"><a class="nav-link p-0 fw-normal d-flex align-items-start" href="mailto:bb-hotel@example.com">
+                  <li class="nav-item">
+                    <a class="nav-link p-0 fw-normal d-flex align-items-start" href="mailto:bb-hotel@example.com">
                    
-                    <i class="fi-help mt-1 me-2 align-middle opacity-70"></i>응급실 운영 여부 : X</a></li>
+                      <i class="fi-help mt-1 me-2 align-middle opacity-70"></i>
+                      응급실 운영 여부 : 
+                      <c:if test="${hpInfo.dutyEryn == '1'}"> O </c:if>
+                      <c:if test="${hpInfo.dutyEryn != '1'}"> X </c:if>
+                    </a>
+                    </li>
                 </ul>
               </div>
 
@@ -285,7 +224,16 @@
                 <ul class="nav flex-column">
                   <li class="nav-item mb-2">
                     <a class="nav-link p-0 fw-normal d-flex align-items-start" href="#">
-                    <i class="fi-search mt-1 me-2 align-middle opacity-70"></i>내과, 재활치료과, 가정의학과, 피부과, 산부인과</a>
+                    <i class="fi-search mt-1 me-2 align-middle opacity-70"></i>
+                    	<c:if test="${not empty mdList}">
+                    		정보 없음
+                    	</c:if>
+                    	<c:if test="${empty mdList}">
+	                    	<c:forEach var="department" items="${mdList}">
+	                    		${department} | 
+	                    	</c:forEach>
+                    	</c:if>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -321,31 +269,143 @@
                   <tbody>
                       <tr class="active-row">
                           <td>월요일</td>
-                          <td>09:00 ~ 18:00</td>
+                          <td>
+	                          <c:if test="${hpInfo.dutyTime1s eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime1s ne '-'}">
+	                          	<c:set var="start" value="${hpInfo.dutyTime1s}"/>
+	                          	${fn:substring(start, 0, 2)} : ${fn:substring(start, 2, 4)}
+	                          </c:if>
+	                          &emsp;&emsp; ― &emsp;&emsp;
+	                          <c:if test="${hpInfo.dutyTime1c eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime1c ne '-'}">
+	                          	<c:set var="end" value="${hpInfo.dutyTime1c}"/>
+	                          	${fn:substring(end, 0, 2)} : ${fn:substring(end, 2, 4)}
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr class="active-row">
                           <td>화요일</td>
-                          <td>09:00 ~ 18:00</td>
+                          <td>
+	                          <c:if test="${hpInfo.dutyTime2s eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime2s ne '-'}">
+	                          	<c:set var="start" value="${hpInfo.dutyTime2s}"/>
+	                          	${fn:substring(start, 0, 2)} : ${fn:substring(start, 2, 4)}
+	                          </c:if>
+	                          &emsp;&emsp; ― &emsp;&emsp;
+	                          <c:if test="${hpInfo.dutyTime2c eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime2c ne '-'}">
+	                          	<c:set var="end" value="${hpInfo.dutyTime2c}"/>
+	                          	${fn:substring(end, 0, 2)} : ${fn:substring(end, 2, 4)}
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr class="active-row">
                           <td>수요일</td>
-                          <td>09:00 ~ 18:00</td>
+                          <td>
+	                          <c:if test="${hpInfo.dutyTime3s eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime3s ne '-'}">
+	                          	<c:set var="start" value="${hpInfo.dutyTime3s}"/>
+	                          	${fn:substring(start, 0, 2)} : ${fn:substring(start, 2, 4)}
+	                          </c:if>
+	                          &emsp;&emsp; ― &emsp;&emsp;
+	                          <c:if test="${hpInfo.dutyTime3c eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime3c ne '-'}">
+	                          	<c:set var="end" value="${hpInfo.dutyTime3c}"/>
+	                          	${fn:substring(end, 0, 2)} : ${fn:substring(end, 2, 4)}
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr class="active-row">
                           <td>목요일</td>
-                          <td>09:00 ~ 18:00</td>
+                          <td>
+	                          <c:if test="${hpInfo.dutyTime4s eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime4s ne '-'}">
+	                          	<c:set var="start" value="${hpInfo.dutyTime4s}"/>
+	                          	${fn:substring(start, 0, 2)} : ${fn:substring(start, 2, 4)}
+	                          </c:if>
+	                          &emsp;&emsp; ― &emsp;&emsp;
+	                          <c:if test="${hpInfo.dutyTime4c eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime4c ne '-'}">
+	                          	<c:set var="end" value="${hpInfo.dutyTime4c}"/>
+	                          	${fn:substring(end, 0, 2)} : ${fn:substring(end, 2, 4)}
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr class="active-row">
                           <td>금요일</td>
-                          <td>09:00 ~ 18:00</td>
+                          <td>
+	                          <c:if test="${hpInfo.dutyTime5s eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime5s ne '-'}">
+	                          	<c:set var="start" value="${hpInfo.dutyTime5s}"/>
+	                          	${fn:substring(start, 0, 2)} : ${fn:substring(start, 2, 4)}
+	                          </c:if>
+	                          &emsp;&emsp; ― &emsp;&emsp;
+	                          <c:if test="${hpInfo.dutyTime5c eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime5c ne '-'}">
+	                          	<c:set var="end" value="${hpInfo.dutyTime5c}"/>
+	                          	${fn:substring(end, 0, 2)} : ${fn:substring(end, 2, 4)}
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr class="active-row">
                           <td>토요일</td>
-                          <td>09:00 ~ 18:00</td>
+                          <td>
+	                          <c:if test="${hpInfo.dutyTime6s eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime6s ne '-'}">
+	                          	<c:set var="start" value="${hpInfo.dutyTime6s}"/>
+	                          	${fn:substring(start, 0, 2)} : ${fn:substring(start, 2, 4)}
+	                          </c:if>
+	                          &emsp;&emsp; ― &emsp;&emsp;
+	                          <c:if test="${hpInfo.dutyTime6c eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime6c ne '-'}">
+	                          	<c:set var="end" value="${hpInfo.dutyTime6c}"/>
+	                          	${fn:substring(end, 0, 2)} : ${fn:substring(end, 2, 4)}
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr class="active-row">
                           <td>일요일</td>
-                          <td>09:00 ~ 18:00</td>
+                          <td>
+	                          <c:if test="${hpInfo.dutyTime7s eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime7s ne '-'}">
+	                          	<c:set var="start" value="${hpInfo.dutyTime7s}"/>
+	                          	${fn:substring(start, 0, 2)} : ${fn:substring(start, 2, 4)}
+	                          </c:if>
+	                          &emsp;&emsp; ― &emsp;&emsp;
+	                          <c:if test="${hpInfo.dutyTime7c eq '-'}">
+	                          	정보없음
+	                          </c:if>
+	                          <c:if test="${hpInfo.dutyTime7c ne '-'}">
+	                          	<c:set var="end" value="${hpInfo.dutyTime7c}"/>
+	                          	${fn:substring(end, 0, 2)} : ${fn:substring(end, 2, 4)}
+	                          </c:if>
+                          </td>
                       </tr>
                       
                   </tbody>
@@ -353,39 +413,6 @@
        
               </div>
 
-              <!-- 진료시간 -->
-              <!-- Place following-->
-              <!-- <div class="d-flex align-items-center">
-                <h4 class="h5 mb-0 me-3">진료시간</h4>
-                <div class="text-nowrap"> -->
-                  <!-- <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2" href="#"><i class="fi-facebook"></i></a>
-                  <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle me-2" href="#"><i class="fi-instagram"></i></a>
-                  <a class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle" href="#"><i class="fi-twitter"></i></a> -->
-                  <!-- <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start">
-                      <i class="mt-1 me-2 align-middle opacity-70"></i>월요일: 08:00 ~ 18:00</a>
-                    </li>
-                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start">
-                      <i class="mt-1 me-2 align-middle opacity-70"></i>화요일: 08:00 ~ 18:00</a>
-                    </li>
-                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start">
-                      <i class="mt-1 me-2 align-middle opacity-70"></i>수요일: 08:00 ~ 18:00</a>
-                    </li>
-                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start">
-                      <i class="mt-1 me-2 align-middle opacity-70"></i>목요일: 08:00 ~ 18:00</a>
-                    </li>
-                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start">
-                      <i class="mt-1 me-2 align-middle opacity-70"></i>금요일: 08:00 ~ 18:00</a>
-                    </li>
-                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start">
-                      <i class="mt-1 me-2 align-middle opacity-70"></i>토요일: 08:00 ~ 18:00</a>
-                    </li>
-                    <li class="nav-item mb-2"><a class="nav-link p-0 fw-normal d-flex align-items-start">
-                      <i class="mt-1 me-2 align-middle opacity-70"></i>일요일: 08:00 ~ 18:00</a>
-                    </li>
-                  </ul>
-                </div>
-              </div> -->
             </div>
           </div>
 
@@ -420,132 +447,70 @@
 
           <!-- Reviews-->
           <div class="mb-4 pb-4 border-bottom">
-            <h3 class="h4 pb-3"><i class="fi-star-filled mt-n1 me-2 lead align-middle text-warning"></i>4,9 (32 reviews)
+            <h3 class="h4 pb-3"><i class="fi-star-filled mt-n1 me-2 lead align-middle text-warning"></i>${hpInfo.star} (${hpInfo.reviews} reviews)
             </h3>
             <div
               class="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch justify-content-between">
               <a class="btn btn-outline-primary mb-sm-0 mb-3" href="#modal-review" data-bs-toggle="modal"><i
-                  class="fi-edit me-1"></i>Add review</a>
-              <div class="d-flex align-items-center ms-sm-4">
-                <label class="me-2 pe-1 text-nowrap" for="reviews-sorting"><i
-                    class="fi-arrows-sort text-muted mt-n1 me-2"></i>Sort by:</label>
-                <select class="form-select" id="reviews-sorting">
-                  <option>Newest</option>
-                  <option>Oldest</option>
-                  <option>Popular</option>
-                  <option>High rating</option>
-                  <option>Low rating</option>
-                </select>
-              </div>
+                  class="fi-edit me-1"></i>리뷰 쓰기</a>
             </div>
           </div>
-          <!-- Review-->
-          <div class="mb-4 pb-4 border-bottom">
-            <div class="d-flex justify-content-between mb-3">
-              <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1" src="${path}/resources/img/avatars/03.jpg"
-                  width="48" alt="Avatar">
-                <div class="ps-2">
-                  <h6 class="fs-base mb-0">Annette Black</h6><span class="star-rating"><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i></span>
-                </div>
-              </div><span class="text-muted fs-sm">Jan 17, 2021</span>
-            </div>
-            <p>Elementum ut quam tincidunt egestas vitae elit, hendrerit. Ullamcorper nulla amet lobortis elit, nibh
-              condimentum enim. Aliquam felis nisl tellus sodales lectus dictum tristique proin vitae. Odio fermentum
-              viverra tortor quis.</p>
-            <div class="d-flex align-items-center">
-              <button class="btn-like" type="button"><i class="fi-like"></i><span>(3)</span></button>
-              <div class="border-end me-1">&nbsp;</div>
-              <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(0)</span></button>
-            </div>
-          </div>
-          <!-- Review-->
-          <div class="mb-4 pb-4 border-bottom">
-            <div class="d-flex justify-content-between mb-3">
-              <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1" src="${path}/resources/img/avatars/13.png"
-                  width="48" alt="Avatar">
-                <div class="ps-2">
-                  <h6 class="fs-base mb-0">Darrell Steward</h6><span class="star-rating"><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star"></i><i
-                      class="star-rating-icon fi-star"></i></span>
-                </div>
-              </div><span class="text-muted fs-sm">Dec 1, 2020</span>
-            </div>
-            <p>Vel dictum nunc ut tristique. Egestas diam amet, ut proin hendrerit. Dui accumsan at phasellus tempus
-              consequat dignissim.</p>
-            <div class="d-flex align-items-center">
-              <button class="btn-like" type="button"><i class="fi-like"></i><span>(0)</span></button>
-              <div class="border-end me-1">&nbsp;</div>
-              <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(1)</span></button>
-            </div>
-          </div>
-          <!-- Review-->
-          <!-- <div class="mb-4 pb-4 border-bottom">
-            <div class="d-flex justify-content-between mb-3">
-              <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1" src="${path}/resources/img/avatars/05.jpg"
-                  width="48" alt="Avatar">
-                <div class="ps-2">
-                  <h6 class="fs-base mb-0">Floyd Miles</h6><span class="star-rating"><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i></span>
-                </div>
-              </div><span class="text-muted fs-sm">Oct 28, 2020</span>
-            </div>
-            <p>Viverra nunc blandit sapien non imperdiet sit. Purus tempus elementum aliquam eu urna. A aenean duis non
-              egestas at libero porttitor integer eget. Sed dictum lobortis laoreet gravida.</p>
-            <div class="d-flex align-items-center">
-              <button class="btn-like" type="button"><i class="fi-like"></i><span>(2)</span></button>
-              <div class="border-end me-1">&nbsp;</div>
-              <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(1)</span></button>
-            </div>
-          </div> -->
-          <!-- Review-->
-          <!-- <div class="mb-4 pb-4 border-bottom">
-            <div class="d-flex justify-content-between mb-3">
-              <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1" src="${path}/resources/img/avatars/04.jpg"
-                  width="48" alt="Avatar">
-                <div class="ps-2">
-                  <h6 class="fs-base mb-0">Ralph Edwards</h6><span class="star-rating"><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i
-                      class="star-rating-icon fi-star-filled active"></i><i class="star-rating-icon fi-star"></i></span>
-                </div>
-              </div><span class="text-muted fs-sm">Sep 14, 2020</span>
-            </div>
-            <p>Elementum nisl, egestas nam consectetur nisl, at pellentesque cras. Non sed ac vivamus dolor dignissim
-              ut. Nisl sapien blandit pulvinar sagittis donec sociis ipsum arcu est. Tempus, rutrum morbi scelerisque
-              tempor mi. Etiam urna, cras bibendum leo nec faucibus velit. Tempor lectus dignissim at auctor integer
-              neque quam amet.</p>
-            <div class="d-flex align-items-center">
-              <button class="btn-like" type="button"><i class="fi-like"></i><span>(0)</span></button>
-              <div class="border-end me-1">&nbsp;</div>
-              <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(0)</span></button>
-            </div>
-          </div> -->
+          <c:if test="${empty reviewList}">
+	          <div class="mb-4">
+	          	<h6>등록된 리뷰가 없습니다.</h6>
+	          </div>
+          </c:if>
+          <c:if test="${not empty reviewList}">
+          	<c:forEach var="review" items="${reviewList}">
+		          <!-- Review-->
+		          <div class="mb-4 pb-4 border-bottom">
+		            <div class="d-flex justify-content-between mb-3">
+		              <div class="d-flex align-items-center pe-2"><img class="rounded-circle me-1" src="${path}/resources/img/avatars/13.png"
+		                  width="48" alt="Avatar">
+		                <div class="ps-2">
+		                  <h6 class="fs-base mb-0">${review.userId}</h6>
+		                  <span class="star-rating">
+		                  	<c:forEach var="i" begin="1" end="${review.star}" step="1">
+			                  <i class="star-rating-icon fi-star-filled active"></i>
+		                  	</c:forEach>
+		                  	<c:forEach var="i" begin="${review.star+1}" end="5" step="1">
+			                  <i class="star-rating-icon fi-star"></i>
+		                  	</c:forEach>
+		                  </span>
+		                </div>
+		              </div><span class="text-muted fs-sm"><fmt:formatDate type="date" value="${review.createDate}"/></span>
+		            </div>
+		            <p>${review.content}</p>
+<!-- 		            <div class="d-flex align-items-center"> -->
+<!-- 		              <button class="btn-like" type="button"><i class="fi-like"></i><span>(3)</span></button> -->
+<!-- 		              <div class="border-end me-1">&nbsp;</div> -->
+<!-- 		              <button class="btn-dislike" type="button"><i class="fi-dislike"></i><span>(0)</span></button> -->
+<!-- 		            </div> -->
+		          </div>
+          		
+          	</c:forEach>
+          	
+          </c:if>
+          
           <!-- Pagination-->
-          <nav class="mt-2 mb-4" aria-label="Reviews pagination">
-            <ul class="pagination">
-              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
-              <li class="page-item active d-none d-sm-block" aria-current="page"><span class="page-link">1<span
-                    class="visually-hidden">(current)</span></span></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
-              <li class="page-item d-none d-sm-block">...</li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">8</a></li>
-              <li class="page-item"><a class="page-link" href="#" aria-label="Next"><i class="fi-chevron-right"></i></a>
-              </li>
-            </ul>
-          </nav>
+          <c:if test="${not empty reviewList}">
+	            <nav class="pb-md-4 pt-4" aria-label="Pagination">
+	             <ul class="pagination mb-1">
+	               <li class="page-item"><a class="page-link" onclick="movePage(1);" aria-label="Start"><i class="fi-chevrons-left"></i></a></li>
+	               <li class="page-item"><a class="page-link" onclick="movePage(${pageInfo.prevPage});" aria-label="Prev"><i class="fi-chevron-left"></i></a></li>
+					<c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" step="1" varStatus="status">
+						<c:if test="${status.current == pageInfo.currentPage}">
+							<li class="page-item active d-none d-sm-block" aria-current="page"><span class="page-link">${status.current}<span class="visually-hidden">(current)</span></span></li>
+						</c:if>
+						<c:if test="${status.current != pageInfo.currentPage}">
+							<li class="page-item d-none d-sm-block"><a class="page-link" onclick="movePage(${status.current});">${status.current}</a></li>
+						</c:if>
+					</c:forEach>
+	               <li class="page-item"><a class="page-link" onclick="movePage(${pageInfo.nextPage});" aria-label="Next"><i class="fi-chevron-right"></i></a></li>
+	               <li class="page-item"><a class="page-link" onclick="movePage(${pageInfo.maxPage});" aria-label="End"><i class="fi-chevrons-right"></i></a></li>
+	             </ul>
+	           </nav>
+          </c:if>
         </div>
         <!--======================================리뷰 추가===========================================-->
 
@@ -555,102 +520,50 @@
         <!-- Recently viewed-->
         <section class="container pb-5 mb-lg-4">
           <div class="d-flex align-items-center justify-content-between mb-4 pb-2" style="margin-top: 3%;">
-            <h2 class="h3 mb-0">근처 약국</h2><a class="btn btn-link fw-normal ms-sm-3 p-0" href="city-guide-catalog.html">View all<i class="fi-arrow-long-right ms-2"></i></a>
+            <h2 class="h3 mb-0">근처 약국</h2><a class="btn btn-link fw-normal ms-sm-3 p-0" href="${path}/search/hospital">더 보기<i class="fi-arrow-long-right ms-2"></i></a>
           </div>
           <div class="tns-carousel-wrapper tns-controls-outside-xxl tns-nav-outside mb-xxl-2">
             <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 3, &quot;gutter&quot;: 24, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1,&quot;nav&quot;:true},&quot;500&quot;:{&quot;items&quot;:2},&quot;850&quot;:{&quot;items&quot;:3},&quot;1400&quot;:{&quot;items&quot;:3,&quot;nav&quot;:false}}}">
-              <!-- Item-->
-              <div>
-                <div class="position-relative">
-                  <div class="position-relative mb-3">
-                    <button
-                      class="btn btn-icon btn-light-primary btn-xs text-primary rounded-circle position-absolute top-0 end-0 m-3 zindex-5"
-                      type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
-                      <i class="fi-heart"></i>
-                    </button>
-                    <img class="rounded-3" src="${path}/resources/img/pha/2000.jpg" alt="Article img">
-                  </div>
-                  <h3 class="mb-2 fs-lg"><a class="nav-link stretched-link" href="#">소망약국</a></h3>
-                  <ul class="list-inline mb-0 fs-xs">
-                    <li class="list-inline-item pe-1"><i
-                        class="fi-star-filled mt-n1 me-1 fs-base text-warning align-middle"></i><b>5.0</b><span
-                        class="text-muted">&nbsp;(48)</span></li>
-                    <li class="list-inline-item pe-1">
-                      <!-- <i class="fi-credit-card mt-n1 me-1 fs-base text-muted align-middle"></i>$$</li> -->
-                    <li class="list-inline-item pe-1">
-                      <i class="fi-map-pin mt-n1 me-1 fs-base text-muted align-middle"></i>창원 의창구 팔용동</li>
-                  </ul>
-                </div>
-              </div>
-              <!-- Item-->
-              <div>
-                <div class="position-relative">
-                  <div class="position-relative mb-3">
-                    <button
-                      class="btn btn-icon btn-light-primary btn-xs text-primary rounded-circle position-absolute top-0 end-0 m-3 zindex-5"
-                      type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
-                      <i class="fi-heart"></i>
-                    </button>
-                    <img class="rounded-3" src="${path}/resources/img/pha/2001.jpg" alt="Article img">
-                  </div>
-                  <h3 class="mb-2 fs-lg"><a class="nav-link stretched-link" href="#">은혜약국</a></h3>
-                  <ul class="list-inline mb-0 fs-xs">
-                    <li class="list-inline-item pe-1">
-                      <i class="fi-star-filled mt-n1 me-1 fs-base text-warning align-middle"></i><b>4.8</b>
-                      <span class="text-muted">&nbsp;(24)</span></li>
-                    <li class="list-inline-item pe-1">
-                      <!-- <i class="fi-credit-card mt-n1 me-1 fs-base text-muted align-middle"></i>$$$</li> -->
-                    <li class="list-inline-item pe-1">
-                      <i class="fi-map-pin mt-n1 me-1 fs-base text-muted align-middle"></i>서울 강서구 화곡1동</li>
-                  </ul>
-                </div>
-              </div>
-              <!-- Item-->
-              <div>
-                <div class="position-relative">
-                  <div class="position-relative mb-3">
-                    <button
-                      class="btn btn-icon btn-light-primary btn-xs text-primary rounded-circle position-absolute top-0 end-0 m-3 zindex-5"
-                      type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
-                      <i class="fi-heart"></i></button><img class="rounded-3" src="${path}/resources/img/pha/2002.jpg" alt="Article img">
-                  </div>
-                  <h3 class="mb-2 fs-lg"><a class="nav-link stretched-link" href="#">동원약국</a></h3>
-                  <ul class="list-inline mb-0 fs-xs">
-                    <li class="list-inline-item pe-1">
-                      <i class="fi-star-filled mt-n1 me-1 fs-base text-warning align-middle"></i><b>4.9</b>
-                        <span class="text-muted">&nbsp;(43)</span></li>
-                    <li class="list-inline-item pe-1">
-                      <!-- <i class="fi-credit-card mt-n1 me-1 fs-base text-muted align-middle"></i>$$$</li> -->
-                    <li class="list-inline-item pe-1">
-                      <i class="fi-map-pin mt-n1 me-1 fs-base text-muted align-middle"></i>대구 달서구 도원동</li>
-                  </ul>
-                </div>
-              </div>
-              <!-- Item-->
-              <div>
-                <div class="position-relative">
-                  <div class="position-relative mb-3">
-                    <button
-                      class="btn btn-icon btn-light-primary btn-xs text-primary rounded-circle position-absolute top-0 end-0 m-3 zindex-5"
-                      type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
-                      <i class="fi-heart"></i></button><img class="rounded-3" src="${path}/resources/img/pha/2003.jpg" alt="Article img">
-                  </div>
-                  <h3 class="mb-2 fs-lg"><a class="nav-link stretched-link" href="#">지혜약국</a></h3>
-                  <ul class="list-inline mb-0 fs-xs">
-                    <li class="list-inline-item pe-1">
-                      <i class="fi-star-filled mt-n1 me-1 fs-base text-warning align-middle"></i><b>4.5</b><span
-                        class="text-muted">&nbsp;(13)</span></li>
-                    <li class="list-inline-item pe-1">
-                      <!-- <i class="fi-credit-card mt-n1 me-1 fs-base text-muted align-middle"></i>$$</li> -->
-                    <li class="list-inline-item pe-1">
-                      <i class="fi-map-pin mt-n1 me-1 fs-base text-muted align-middle"></i>서울 노원구 하계동</li>
-                  </ul>
-                </div>
-              </div>
+	            <c:forEach var="pharmacy" items="${pharmacyList}" varStatus="status">
+	              <!-- Item-->
+	              <div>
+	                <div class="position-relative">
+	                  <div class="position-relative mb-3">
+	                    <button
+	                      class="btn btn-icon btn-light-primary btn-xs text-primary rounded-circle position-absolute top-0 end-0 m-3 zindex-5"
+	                      type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
+	                      <i class="fi-heart"></i>
+	                    </button>
+	                    <img class="rounded-3" src="${path}/resources/img/medisearch/ph/ph${status.count}.jpg" alt="약국">
+	                  </div>
+	                  <h3 class="mb-2 fs-lg"><a class="nav-link stretched-link" href="${path}/search/pharmacyInfo?no=${pharmacy.pharmacyNo}&i=${status.count}">${pharmacy.dutyName}</a></h3>
+	                  <ul class="list-inline mb-0 fs-xs">
+	                    <li class="list-inline-item pe-1"><i
+	                        class="fi-star-filled mt-n1 me-1 fs-base text-warning align-middle"></i><b>${pharmacy.star}</b><span
+	                        class="text-muted">&nbsp;(${pharmacy.reviews})</span></li>
+	                    <li class="list-inline-item pe-1">
+	                      <!-- <i class="fi-credit-card mt-n1 me-1 fs-base text-muted align-middle"></i>$$</li> -->
+	                    <li class="list-inline-item pe-1">
+	                      <i class="fi-map-pin mt-n1 me-1 fs-base text-muted align-middle"></i>${pharmacy.dutyAddr}</li>
+	                  </ul>
+	                </div>
+	              </div>
+	            
+	            </c:forEach>
             </div>
           </div>
         </section>
   </main>
+  
+  <script type="text/javascript">
+	  var url_href = window.location.href;
+	  var url = new URL(url_href); // URL 객체 선언
+	  function movePage(page){
+			url.searchParams.set("page", page);
+			
+			window.location.search = url.searchParams;
+		};
+  </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

@@ -21,8 +21,9 @@ public class MemberService {
 	private BCryptPasswordEncoder pwEncoder; //  SHA-256 hash code로 패스워드 일방향 암호 지원 모듈
 	// 1234 -> nsikldvnisoldjhv2423jo23 (평문 -> hashCode)
 	
-	public Member login(String id, String pw) {
-		Member member = mapper.selectMember(id);
+	public Member login(String userId, String pw) {
+		Member member = mapper.selectMember(userId);
+		System.out.println("member : " + member);
 		if(member == null) {
 			return null;
 		}
@@ -32,9 +33,10 @@ public class MemberService {
 		System.out.println(pwEncoder.encode(pw)); // encode를 통해 평문에서 hash 코드로 변환
 		System.out.println(pwEncoder.matches(pw, member.getPassword())); // 평문 변환하고 비교까지
 		
-		if(id.equals("admin")) { // admin 테스트를 위한 코드
+		if(userId.equals("admin")) { // admin 테스트를 위한 코드
 			return member;
 		}
+		
 		
 		if(member != null && pwEncoder.matches(pw, member.getPassword()) == true) {
 			// 성공
@@ -50,7 +52,7 @@ public class MemberService {
 	@Transactional(rollbackFor = Exception.class)
 	public int save(Member member) {
 		int result = 0;
-		if(member.getNo() == 0) { // 회원가입
+		if(member.getMemberNo() == 0) { // 회원가입
 			String encodePW = pwEncoder.encode(member.getPassword());
 			member.setPassword(encodePW);
 			result = mapper.insertMember(member);
@@ -64,20 +66,31 @@ public class MemberService {
 		return this.findById(userId) != null;
 	}
 	
-	public Member findById(String id) {
-		return mapper.selectMember(id);
+	public Member findById(String userId) {
+		return mapper.selectMember(userId);
 	}
 
+	public Member loginKaKao(String kakaoToken) {
+		Member member = mapper.selectMemberByKakaoToken(kakaoToken);
+		if(member != null ) {
+			// 성공일때!
+			return member;
+		}else {
+			// 인증 실패했을때
+			return null;
+		}
+	}
+	
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int delete(int no) {
-		return mapper.deleteMember(no);
+	public int delete(int memberNo) {
+		return mapper.deleteMember(memberNo);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int updatePwd(Member loginMember, String userPW) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("no", "" + loginMember.getNo());
+		map.put("memberNo", "" + loginMember.getMemberNo());
 		map.put("newPwd", pwEncoder.encode(userPW));
 		return mapper.updatePwd(map);
 	}

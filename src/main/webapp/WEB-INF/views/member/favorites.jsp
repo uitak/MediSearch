@@ -26,20 +26,20 @@
             <div class="card card-body border-0 shadow-sm pb-1 me-lg-1">
               <div class="d-flex d-md-block d-lg-flex align-items-start pt-lg-2 mb-4"><img class="rounded-circle" src="${path}/resources/img/avatars/14.png" width="48" alt="Annette Black">
                 <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ps-lg-3">
-                  <h2 class="fs-lg mb-0">홍길동 님</h2>
+                  <h2 class="fs-lg mb-0">${loginMember.name} 님</h2>
                   <ul class="list-unstyled fs-sm mt-3 mb-0">
-                    <li><i class="fi-mail opacity-60 me-2"></i>hong@email.com</li>
-                    <li><i class="fi-map-pin opacity-60 me-2"></i>서울시 강남구 역삼동</li>
+                    <li><i class="fi-mail opacity-60 me-2"></i>${loginMember.email}</li>
+                    <li><i class="fi-map-pin opacity-60 me-2"></i>${loginMember.address}</li>
                   </ul>
                 </div>
               </div>
               <div class="collapse d-md-block mt-3" id="account-nav">
                 <div class="card-nav">
-                  <a class="card-nav-link" href="medisearch-member-info.html"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
-                  <a class="card-nav-link" href="medisearch-member-security.html"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
-                  <a class="card-nav-link active" href="medisearch-member-favorites.html"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
-                  <a class="card-nav-link" href="medisearch-member-reviews.html"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
-                  <a class="card-nav-link" href="medisearch-signin-light.html"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
+                  <a class="card-nav-link active" onclick="location.href='${path}/member/info';" style="cursor: pointer;"><i class="fi-user opacity-60 me-2"></i>회원정보</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/security';" style="cursor: pointer;"><i class="fi-lock opacity-60 me-2"></i>비밀번호 재설정</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/favorites';" style="cursor: pointer;"><i class="fi-heart opacity-60 me-2"></i>즐겨찾기</a>
+                  <a class="card-nav-link" onclick="location.href='${path}/member/reviews';" style="cursor: pointer;"><i class="fi-star opacity-60 me-2"></i>리뷰</a>
+                  <a class="card-nav-link" onclick="location.replace('${path}/logout')" style="cursor:pointer;"><i class="fi-logout opacity-60 me-2"></i>로그아웃</a>
                 </div>
               </div>
             </div>

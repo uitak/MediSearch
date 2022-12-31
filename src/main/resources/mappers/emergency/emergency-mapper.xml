@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper
+	namespace="com.multi.mvc.emergency.model.mapper.EmergencyMapper">
+
+	<resultMap type="Emergency" id="EmergencyListResultMap">
+		<result property="hpid" column="hpid" />
+		<result property="dutyTel3" column="dutyTel3" />
+		<result property="hpbdn" column="hpbdn" />
+		<result property="hpccuyn" column="hpccuyn" />
+		<result property="hpcuyn" column="hpcuyn" />
+		<result property="hperyn" column="hperyn" />
+		<result property="hpgryn" column="hpgryn" />
+		<result property="hpicuyn" column="hpicuyn" />
+		<result property="hpnicuyn" column="hpnicuyn" />
+		<result property="hpopyn" column="hpopyn" />
+		<result property="phpid" column="phpid" />
+		<result property="hvdnm" column="hvdnm" />
+		<result property="dutyHayn" column="dutyHayn" />
+		<result property="hv1" column="hv1" />
+		<result property="hv12" column="hv12" />
+
+		<result property="MkioskTy25" column="MkioskTy25" />
+		<result property="MkioskTy1" column="MkioskTy1" />
+		<result property="MkioskTy2" column="MkioskTy2" />
+		<result property="MkioskTy3" column="MkioskTy3" />
+		<result property="MkioskTy4" column="MkioskTy4" />
+		<result property="MkioskTy5" column="MkioskTy5" />
+		<result property="MkioskTy6" column="MkioskTy6" />
+		<result property="MkioskTy7" column="MkioskTy7" />
+		<result property="MkioskTy8" column="MkioskTy8" />
+		<result property="MkioskTy9" column="MkioskTy9" />
+		<result property="MkioskTy10" column="MkioskTy10" />
+		<result property="MkioskTy11" column="MkioskTy11" />
+
+		<result property="dutyHano" column="dutyHano" />
+		<result property="hvctayn" column="hvctayn" />
+		<result property="hvmriayn" column="hvmriayn" />
+		<result property="hvangioayn" column="hvangioayn" />
+		<result property="hvventiayn" column="hvventiayn" />
+		<result property="hvamyn" column="hvamyn" />
+		<result property="hv2" column="hv2" />
+		<result property="hv3" column="hv3" />
+		<result property="hv4" column="hv4" />
+		<result property="hv5" column="hv5" />
+		<result property="hv6" column="hv6" />
+		<result property="hv7" column="hv7" />
+		<result property="hv8" column="hv8" />
+		<result property="hv9" column="hv9" />
+		<result property="hv10" column="hv10" />
+		<result property="hv11" column="hv11" />
+
+		<result property="dutyAddr" column="dutyAddr" />
+		<result property="dutyDivNam" column="dutyDivNam" />
+		<result property="dutyName" column="dutyName" />
+		<result property="dutyTel1" column="dutyTel1" />
+		<result property="dutyEryn" column="dutyEryn" />
+		<result property="dutyTime1c" column="dutyTime1c" />
+		<result property="dutyTime2c" column="dutyTime2c" />
+		<result property="dutyTime3c" column="dutyTime3c" />
+		<result property="dutyTime4c" column="dutyTime4c" />
+		<result property="dutyTime5c" column="dutyTime5c" />
+		<result property="dutyTime6c" column="dutyTime6c" />
+		<result property="dutyTime7c" column="dutyTime7c" />
+		<result property="dutyTime8c" column="dutyTime8c" />
+		<result property="dutyTime1s" column="dutyTime1s" />
+		<result property="dutyTime2s" column="dutyTime2s" />
+		<result property="dutyTime3s" column="dutyTime3s" />
+		<result property="dutyTime4s" column="dutyTime4s" />
+		<result property="dutyTime5s" column="dutyTime5s" />
+		<result property="dutyTime6s" column="dutyTime6s" />
+		<result property="dutyTime7s" column="dutyTime7s" />
+		<result property="dutyTime8s" column="dutyTime8s" />
+		<result property="postCdn1" column="postCdn1" />
+		<result property="postCdn2" column="postCdn2" />
+		<result property="wgs84Lon" column="wgs84Lon" />
+		<result property="wgs84Lat" column="wgs84Lat" />
+		<result property="dutyInf" column="dutyInf" />
+		<result property="hospitalImg" column="hospitalImg" />
+
+		<result property="dgidIdName" column="dgidIdName" />
+	</resultMap>
+	<resultMap type="Department" id="EmergencyInfoResultMap">
+		<result property="department" column="department" />
+	</resultMap>
+	
+	<resultMap 	type="EPharmacy" id="PharmacyResult">
+		<id 	property="pharmacyNo" 	column="pharmacyNo" />
+		<result property="hpid" 		column="hpid" />
+		<result property="dutyName" 	column="dutyName" />
+		<result property="dutyAddr" 	column="dutyAddr" />
+		<result property="star" 		column="star" />
+		<result property="reviews" 		column="reviews" />
+		<result property="distance" 	column="distance" />
+	</resultMap>
+	
+<!-- 페이징 기본 : 오름차순 -->
+	<select id="selectEmergencyList" resultMap="EmergencyListResultMap" parameterType="map">
+		select 
+		b.hpid, b.dutyTel3,b.hpbdn,b.hpccuyn,b.hpcuyn,b.hperyn,b.hpgryn,b.hpicuyn,b.hpnicuyn,b.hpopyn,b.phpid,b.hvdnm,b.dutyHayn,b.hv1,b.hv12,	
+		o.MkioskTy25, o.MkioskTy1,o.MkioskTy2,o.MkioskTy3,o.MkioskTy4,o.MkioskTy5,o.MkioskTy6,o.MkioskTy7,o.MkioskTy8,o.MkioskTy9,o.MkioskTy10,o.MkioskTy11,
+		a.dutyHano, a.hvctayn,a.hvmriayn,a.hvangioayn,a.hvventiayn,a.hvamyn,a.hv2,a.hv3,a.hv4,a.hv5,a.hv6,a.hv7,a.hv8,a.hv9,a.hv10,a.hv11,			
+		h.dutyAddr ,h.dutyDivNam,h.dutyName,h.dutyTel1,h.dutyEryn,h.dutyTime1c,h.dutyTime2c,h.dutyTime3c,h.dutyTime4c,h.dutyTime5c,h.dutyTime6c,h.dutyTime7c,h.dutyTime8c,h.dutyTime1s,h.dutyTime2s,h.dutyTime3s,h.dutyTime4s,h.dutyTime5s,h.dutyTime6s,h.dutyTime7s,h.dutyTime8s,h.postCdn1,h.postCdn2,h.wgs84Lon,h.wgs84Lat,h.dutyInf,h.hospitalImg
+		from emergency_base b, emergency_operation o, emergency_available a, hospital h
+		where b.hpid=o.hpid and o.hpid=a.hpid and a.hpid=h.hpid
+ 		<if test="addr != null">
+			AND h.dutyAddr like '${addr}%'
+		</if>		
+		<if test="erName != null">
+			AND h.dutyName like '%${erName}%'
+		</if>		
+ 		<if test="MkioskTy25 != null">
+			AND o.MkioskTy25='Y' 
+		</if>		
+		<if test="hpopyn != null">
+			AND b.hpopyn > 0 
+		</if>		
+		<if test="hv2 != null">
+			AND a.hv2 > 0 
+		</if>		 
+		<if test="hv3 != null">
+			AND a.hv3 > 0 
+		</if>		 
+		<if test="hv6 != null">
+			AND a.hv6 > 0 
+		</if>		 
+		<if test="hvctayn != null">
+			AND a.hvctayn = 'Y' 
+		</if>		 
+		<if test="hvmriayn != null">
+			AND a.hvmriayn = 'Y' 
+		</if>		 
+		<if test="hvangioayn != null">
+			AND a.hvangioayn = 'Y' 
+		</if>		 
+		<if test="hvventiayn != null">
+			AND a.hvventiayn = 'Y' 
+		</if>		 
+		<if test="hvamyn != null">
+			AND a.hvamyn = 'Y' 
+		</if>		 
+		ORDER BY h.dutyName ASC LIMIT ${limit} OFFSET ${offset}
+	</select>
+<!-- 페이징 : 내림차순 -->
+	<select id="selectEmergencyListDesc" resultMap="EmergencyListResultMap" parameterType="map">
+		select 
+		b.hpid, b.dutyTel3,b.hpbdn,b.hpccuyn,b.hpcuyn,b.hperyn,b.hpgryn,b.hpicuyn,b.hpnicuyn,b.hpopyn,b.phpid,b.hvdnm,b.dutyHayn,b.hv1,b.hv12,	
+		o.MkioskTy25, o.MkioskTy1,o.MkioskTy2,o.MkioskTy3,o.MkioskTy4,o.MkioskTy5,o.MkioskTy6,o.MkioskTy7,o.MkioskTy8,o.MkioskTy9,o.MkioskTy10,o.MkioskTy11,
+		a.dutyHano, a.hvctayn,a.hvmriayn,a.hvangioayn,a.hvventiayn,a.hvamyn,a.hv2,a.hv3,a.hv4,a.hv5,a.hv6,a.hv7,a.hv8,a.hv9,a.hv10,a.hv11,			
+		h.dutyAddr ,h.dutyDivNam,h.dutyName,h.dutyTel1,h.dutyEryn,h.dutyTime1c,h.dutyTime2c,h.dutyTime3c,h.dutyTime4c,h.dutyTime5c,h.dutyTime6c,h.dutyTime7c,h.dutyTime8c,h.dutyTime1s,h.dutyTime2s,h.dutyTime3s,h.dutyTime4s,h.dutyTime5s,h.dutyTime6s,h.dutyTime7s,h.dutyTime8s,h.postCdn1,h.postCdn2,h.wgs84Lon,h.wgs84Lat,h.dutyInf,h.hospitalImg
+		from emergency_base b, emergency_operation o, emergency_available a, hospital h
+		where b.hpid=o.hpid and o.hpid=a.hpid and a.hpid=h.hpid
+		<if test="addr != null">
+			AND h.dutyAddr like '${addr}%'
+		</if>		
+		<if test="erName != null">
+			AND h.dutyName like '%${erName}%'
+		</if>		
+ 		<if test="MkioskTy25 != null">
+			AND o.MkioskTy25='Y' 
+		</if>		
+		<if test="hpopyn != null">
+			AND b.hpopyn > 0 
+		</if>		
+		<if test="hv2 != null">
+			AND a.hv2 > 0 
+		</if>		 
+		<if test="hv3 != null">
+			AND a.hv3 > 0 
+		</if>		 
+		<if test="hv6 != null">
+			AND a.hv6 > 0 
+		</if>		 
+		<if test="hvctayn != null">
+			AND a.hvctayn = 'Y' 
+		</if>		 
+		<if test="hvmriayn != null">
+			AND a.hvmriayn = 'Y' 
+		</if>		 
+		<if test="hvangioayn != null">
+			AND a.hvangioayn = 'Y' 
+		</if>		 
+		<if test="hvventiayn != null">
+			AND a.hvventiayn = 'Y' 
+		</if>		 
+		<if test="hvamyn != null">
+			AND a.hvamyn = 'Y' 
+		</if>		
+		ORDER BY h.dutyName DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+<!-- 병원 수 카운트 -->
+	<select id="selectEmergencyCount" resultType="int" parameterType="map">
+		select count(*)
+		from emergency_base b, emergency_operation o, emergency_available a, hospital h
+		where b.hpid=o.hpid and o.hpid=a.hpid and a.hpid=h.hpid
+		<if test="addr != null">
+			AND h.dutyAddr like '%${addr}%'
+		</if>		
+		<if test="erName != null">
+			AND h.dutyName like '%${erName}%'
+		</if>		
+ 		<if test="MkioskTy25 != null">
+			AND o.MkioskTy25='Y' 
+		</if>		
+		<if test="hpopyn != null">
+			AND b.hpopyn > 0 
+		</if>		
+		<if test="hv2 != null">
+			AND a.hv2 > 0 
+		</if>		 
+		<if test="hv3 != null">
+			AND a.hv3 > 0 
+		</if>		 
+		<if test="hv6 != null">
+			AND a.hv6 > 0 
+		</if>		 
+		<if test="hvctayn != null">
+			AND a.hvctayn = 'Y' 
+		</if>		 
+		<if test="hvmriayn != null">
+			AND a.hvmriayn = 'Y' 
+		</if>		 
+		<if test="hvangioayn != null">
+			AND a.hvangioayn = 'Y' 
+		</if>		 
+		<if test="hvventiayn != null">
+			AND a.hvventiayn = 'Y' 
+		</if>		 
+		<if test="hvamyn != null">
+			AND a.hvamyn = 'Y' 
+		</if>			
+	</select>
+<!-- 선택한 병원 정보 가져오기 -->
+	<select id="selectEmergencyInfo" resultMap="EmergencyListResultMap" parameterType="String">
+		select 
+		b.hpid, b.dutyTel3,b.hpbdn,b.hpccuyn,b.hpcuyn,b.hperyn,b.hpgryn,b.hpicuyn,b.hpnicuyn,b.hpopyn,b.phpid,b.hvdnm,b.dutyHayn,b.hv1,b.hv12,	
+		o.MkioskTy25, o.MkioskTy1,o.MkioskTy2,o.MkioskTy3,o.MkioskTy4,o.MkioskTy5,o.MkioskTy6,o.MkioskTy7,o.MkioskTy8,o.MkioskTy9,o.MkioskTy10,o.MkioskTy11,
+		a.dutyHano, a.hvctayn,a.hvmriayn,a.hvangioayn,a.hvventiayn,a.hvamyn,a.hv2,a.hv3,a.hv4,a.hv5,a.hv6,a.hv7,a.hv8,a.hv9,a.hv10,a.hv11,			
+		h.dutyAddr ,h.dutyDivNam,h.dutyName,h.dutyTel1,h.dutyEryn,h.dutyTime1c,h.dutyTime2c,h.dutyTime3c,h.dutyTime4c,h.dutyTime5c,h.dutyTime6c,h.dutyTime7c,h.dutyTime8c,h.dutyTime1s,h.dutyTime2s,h.dutyTime3s,h.dutyTime4s,h.dutyTime5s,h.dutyTime6s,h.dutyTime7s,h.dutyTime8s,h.postCdn1,h.postCdn2,h.wgs84Lon,h.wgs84Lat,h.dutyInf,h.hospitalImg
+		from emergency_base b, emergency_operation o, emergency_available a, hospital h
+		where b.hpid=o.hpid and o.hpid=a.hpid and a.hpid=h.hpid
+ 		AND b.hpid = #{hpid}		
+	</select>
+<!-- 병원별 진료과목 가져오기 -->
+	<select id="inst" resultMap="EmergencyInfoResultMap" parameterType="String">
+		select d.dgidIdName
+		from emergency_base b join MEDICAL_DEPARTMENT d
+		on b.hpid=d.hpid
+		where 1=1
+		AND b.hpid = #{hpid} 	
+	</select>
+	
+<!-- 약국 -->
+	<select id="selectPharmacy" resultMap="PharmacyResult" parameterType="String">
+		SELECT
+			P.pharmacyNo, hpid, dutyName, dutyAddr, 
+			AVG(star) AS star, COUNT(reviewNo) AS reviews,
+		    ROUND(ST_Distance_Sphere(POINT(
+				(SELECT wgs84Lon FROM HOSPITAL WHERE hpid = #{hpid}),
+				(SELECT wgs84Lat FROM HOSPITAL WHERE hpid = #{hpid})
+		    ), POINT(wgs84Lon, wgs84Lat)), -1) AS distance
+		FROM PHARMACY P
+		LEFT JOIN REVIEW_PHARMACY R ON P.pharmacyNo = R.pharmacyNo
+		GROUP BY P.pharmacyNo
+		ORDER BY distance
+		LIMIT 0 , 5
+	</select>
+</mapper>
