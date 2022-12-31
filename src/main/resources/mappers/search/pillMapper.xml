@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.multi.mvc.search.model.mapper.PillMapper">
+
+	<resultMap type="Pill" id="pillListResultMap">
+		<id property="pillNo" column="pillNo"/>
+		<result property="itemSeq" column="itemSeq"/>
+		<result property="itemName" column="itemName"/>
+		<result property="entpName" column="entpName"/>
+		<result property="useMethodQesitm" column="useMethodQesitm"/>
+		<result property="itemImage" column="itemImage"/>
+		<result property="efcyQesitm" column="efcyQesitm"/>
+		<result property="atpnWarmQesitm" column="atpnWarmQesitm"/>
+		<result property="atpnQesitm" column="atpnQesitm"/>
+		<result property="intrcQesitm" column="intrcQesitm"/>
+		<result property="seQesitm" column="seQesitm"/>
+		<result property="depositMethodQesitm" column="depositMethodQesitm"/>
+	</resultMap>
+
+	
+	<!-- MySQL의 페이징 기능을 활용한 코드 -->
+	<select id="selectPillList" resultMap="pillListResultMap" parameterType="map">
+		SELECT  
+			pillNo, itemSeq, itemName, entpName, useMethodQesitm, itemImage, efcyQesitm,
+			atpnWarmQesitm, atpnQesitm, intrcQesitm, seQesitm, depositMethodQesitm 
+		FROM pill 
+		WHERE 1 = 1
+		<if test="itemName != null">
+			AND itemName LIKE '%${itemName}%' 
+		</if>		
+		<if test="efcyQesitm != null">
+			AND efcyQesitm LIKE '%${efcyQesitm}%' 
+		</if>			
+		ORDER BY pillNo DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectPillCount" resultType="int" parameterType="map">
+		SELECT   
+			COUNT(*) 
+		FROM Pill 
+		WHERE 1 = 1 
+		<if test="itemName != null">
+			AND itemName LIKE '%${itemName}%' 
+		</if>		
+		<if test="efcyQesitm != null">
+			AND efcyQesitm LIKE '%${efcyQesitm}%' 
+		</if>				
+	</select>
+	
+	<select id="selectPillByNo" parameterType="int" resultMap="pillListResultMap">
+		SELECT  
+			pillNo, itemSeq, itemName, entpName, useMethodQesitm, itemImage, efcyQesitm, 
+			atpnWarmQesitm, atpnQesitm, intrcQesitm, seQesitm, depositMethodQesitm 
+		FROM pill 
+		WHERE pillNo = #{no} 
+	</select>
+	
+	
+	
+
+</mapper>

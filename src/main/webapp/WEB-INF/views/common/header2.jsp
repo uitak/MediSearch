@@ -358,7 +358,7 @@
                 aria-expanded="false" style="font-size: 1.1rem;">병원</a></li>
             <li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false" style="font-size: 1.1rem;">약국</a></li>
-            <li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+            <li class="nav-item dropdown"><a class="nav-link" href=href="${path}/search/pill" role="button" 
                 aria-expanded="false" style="font-size: 1.1rem;">의약품</a></li>
             <li class="nav-item dropdown"><a class="nav-link" href="./community_list.html" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false" style="font-size: 1.1rem;">게시판</a></li>
