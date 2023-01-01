@@ -9,7 +9,7 @@
 </jsp:include>
 
 <link href="${path}/resources/css/table.css" rel="stylesheet">
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=de43de051b10f18cf420b0e4cf8140a1"></script>		
 
     <!-- Page header-->
     <section class="container pt-5 mt-5">
@@ -46,7 +46,6 @@
     <section class="container pb-5 mb-md-4">
       <div class="row">
 
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=de43de051b10f18cf420b0e4cf8140a1"></script>		
 		
 
 		
@@ -66,8 +65,8 @@
               </div>
               <div class="tns-carousel-inner"
                 data-carousel-options="{&quot;navAsThumbnails&quot;: true, &quot;navContainer&quot;: &quot;#thumbnails&quot;, &quot;gutter&quot;: 12, &quot;responsive&quot;: {&quot;0&quot;:{&quot;controls&quot;: false},&quot;500&quot;:{&quot;controls&quot;: true}}}">
-                <div><img class="rounded-3" src="${path}/resources/img/medisearch/ph/ph${param.i}.jpg" alt="Image"></div>
-                <div><img class="rounded-3" src="${path}/resources/img/medisearch/ph/pharmacy.jpg" alt="Image"></div>
+                <div><img class="rounded-3" src="${path}/resources/img/medisearch/ph/phResize/ph${param.i}.jpg" alt="Image"></div>
+                <div><img class="rounded-3" src="${path}/resources/img/medisearch/ph/phResize/pharmacy.jpg" alt="Image"></div>
 <!-- ============================== 카카오 지도 api ================================ -->
 				
 				<div id="map" onclick="relayout() panTo()"  ><img class="rounded-3" src="${path}/resources/img/pha/white.jpg" alt="Image"></div>
@@ -93,14 +92,14 @@
 				<script>
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				    mapOption = { 
-				        center: new kakao.maps.LatLng(<c:out value="${pharmacyList.wgs84Lat}"/>, <c:out value="${pharmacyList.wgs84Lon}"/>), // 지도의 중심좌표
+				        center: new kakao.maps.LatLng(<c:out value="${pharmacy.wgs84Lat}"/>, <c:out value="${pharmacy.wgs84Lon}"/>), // 지도의 중심좌표
 				        level: 3 // 지도의 확대 레벨
 				    };
 				
 				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 				
 				// 마커가 표시될 위치입니다 
-				var markerPosition  = new kakao.maps.LatLng(<c:out value="${pharmacyList.wgs84Lat}"/>, <c:out value="${pharmacyList.wgs84Lon}"/>); 
+				var markerPosition  = new kakao.maps.LatLng(<c:out value="${pharmacy.wgs84Lat}"/>, <c:out value="${pharmacy.wgs84Lon}"/>); 
 				
 				// 마커를 생성합니다
 				var marker = new kakao.maps.Marker({
@@ -122,7 +121,7 @@
 				
 				function panTo() {
 				    // 이동할 위도 경도 위치를 생성합니다 
-				    var moveLatLon = new kakao.maps.LatLng(<c:out value="${pharmacyList.wgs84Lat}"/>, <c:out value="${pharmacyList.wgs84Lon}"/>);
+				    var moveLatLon = new kakao.maps.LatLng(<c:out value="${pharmacy.wgs84Lat}"/>, <c:out value="${pharmacy.wgs84Lon}"/>);
 				    
 				    // 지도 중심을 부드럽게 이동시킵니다
 				    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
@@ -134,8 +133,8 @@
 
             <!-- Thumbnails nav-->
             <ul class="tns-thumbnails mb-4" id="thumbnails" >
-              <li class="tns-thumbnail"><img src="${path}/resources/img/medisearch/ph/ph${param.i}.jpg" alt="Thumbnail" ></li>
-              <li class="tns-thumbnail"><img src="${path}/resources/img/medisearch/ph/pharmacy.jpg" alt="Thumbnail" ></li>
+              <li class="tns-thumbnail"><img src="${path}/resources/img/medisearch/ph/phResize/ph${param.i}.jpg" alt="Thumbnail" ></li>
+              <li class="tns-thumbnail"><img src="${path}/resources/img/medisearch/ph/phResize/pharmacy.jpg" alt="Thumbnail" ></li>
               <li class="tns-thumbnail"><img src="${path}/resources/img/hos/resize/900.png" onclick="relayout() panTo()" alt="Thumbnail"></li>
               <!--
               <li class="tns-thumbnail"><img src="img/real-estate/single/th11.jpg" alt="Thumbnail"></li>
@@ -209,7 +208,7 @@
 				marker2.setMap(map2);
 				
 				var iwContent = '<div style="padding:5px; font-size:10px">${pharmacy.dutyName} <br><a style="text-decoration: none;" href="https://map.kakao.com/link/map/<c:out value="${pharmacy.dutyName}"/>,<c:out value="${pharmacy.wgs84Lat}"/>,<c:out value="${pharmacy.wgs84Lon}"/>" target="_blank" >큰지도보기</a> <a style="text-decoration: none;" href="https://map.kakao.com/link/to/<c:out value="${pharmacy.dutyName}"/>,<c:out value="${pharmacy.wgs84Lat}"/>, <c:out value="${pharmacy.wgs84Lon}"/>" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-				iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
+				iwPosition = new kakao.maps.LatLng(<c:out value="${pharmacy.wgs84Lat}"/>, <c:out value="${pharmacy.wgs84Lon}"/>); //인포윈도우 표시 위치입니다
 				
 				//인포윈도우를 생성합니다
 				var infowindow = new kakao.maps.InfoWindow({
@@ -237,7 +236,7 @@
               <!-- Place info-->
               <div class="d-flex align-items-start mb-3 pb-2 border-bottom">
                 <!-- 병원이면 병원로고, 약국이면 응급로고, 등을 넣는 곳 -->
-                <img src="${path}/resources/img/pha/phaLogo.png" width="60" alt="Thumbnail">
+                <img src="${path}/resources/img/logo/phaLogo.png" width="60" alt="Thumbnail">
                 <div class="ps-2 ms-1">
                   <h3 class="h5 mb-2"> ${pharmacy.dutyName}</h3>
                   <ul class="list-unstyled d-flex flex-wrap fs-sm">
@@ -293,7 +292,6 @@
                 </ul>
 
 <!-- ==================================================================== 시간표 ===================================================================== -->                
-                <!-- table css 적용해놨음 -->
                 <!-- table css 적용해놨음 -->
                 <table class="styled-table" style="margin-left:auto;margin-right:auto;">
                   <tbody>
@@ -457,11 +455,10 @@
           <div class="mb-4 pb-4 border-bottom">
             <h3 class="h4 pb-3"><i class="fi-star-filled mt-n1 me-2 lead align-middle text-warning"></i><c:out value="${pharmacy.star}"/> (${pharmacy.reviews } reviews)
             </h3>
-            <c:if test="${loginMember != null}">
-            <div
-              class="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch justify-content-between">
-              <a class="btn btn-outline-primary mb-sm-0 mb-3" onclick="moveReview();" data-bs-toggle="modal"><i
-                  class="fi-edit me-1"></i>리뷰 쓰기</a>
+	    <c:if test="${loginMember != null}">
+	    <div class="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch justify-content-between">
+	    <a class="btn btn-outline-primary mb-sm-0 mb-3" onclick="moveReview();" data-bs-toggle="modal">
+	    <i class="fi-edit me-1"></i>리뷰 쓰기</a>
               <!-- <div class="d-flex align-items-center ms-sm-4">
                 <label class="me-2 pe-1 text-nowrap" for="reviews-sorting"><i
                     class="fi-arrows-sort text-muted mt-n1 me-2"></i>Sort by:</label>
@@ -474,7 +471,7 @@
                 </select>
               </div> -->
             </div>
-            </c:if>
+ 	    </c:if>
           </div>
           <c:if test="${empty reviewList}">
 	          <div class="mb-4">
@@ -584,7 +581,6 @@
 			
 			window.location.search = url.searchParams;
 		};
-		
 		const urlParams = new URLSearchParams(window.location.search);
 		function moveReview(){
 			var idValue = urlParams.get('no');

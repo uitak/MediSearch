@@ -15,8 +15,8 @@
       <!-- Breadcrumb-->
       <nav class="mb-3 pt-md-3" aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">홈</a></li>
-          <li class="breadcrumb-item"><a href="#">병원 찾기</a></li>
+          <li class="breadcrumb-item"><a href="${path}">홈</a></li>
+          <li class="breadcrumb-item"><a href="${path}/search/hospital">병원 찾기</a></li>
           <!--========================================================== 병원 이름이 들어가는 곳 =========================================================-->
           <li class="breadcrumb-item active" aria-current="page">${hpInfo.dutyName}</li>
         </ol>
@@ -71,10 +71,10 @@
               <div class="tns-carousel-inner"
                 data-carousel-options="{&quot;navAsThumbnails&quot;: true, &quot;navContainer&quot;: &quot;#thumbnails&quot;, &quot;gutter&quot;: 12, &quot;responsive&quot;: {&quot;0&quot;:{&quot;controls&quot;: false},&quot;500&quot;:{&quot;controls&quot;: true}}}">
                 <div>
-                  <img class="rounded-3" src="${path}/resources/img/medisearch/hp/hp${param.i}.jpg" alt="${hpInfo.dutyName}">
+                  <img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/hp${param.i}.jpg" alt="${hpInfo.dutyName}">
                	</div>
                 <div>
-                  <img class="rounded-3" src="${path}/resources/img/hospital/orPassage.jpeg" alt="내부사진">
+                  <img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/orPassage.jpg" alt="내부사진">
                 </div>
               </div>
             </div>
@@ -82,8 +82,8 @@
 
             <!-- Thumbnails nav-->
             <ul class="tns-thumbnails mb-4" id="thumbnails" >
-              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/medisearch/hp/hp${param.i}.jpg" alt="${hpInfo.dutyName}"></li>
-              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/hospital/orPassage.jpeg" alt="내부사진"></li>
+              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/hp${param.i}.jpg" alt="${hpInfo.dutyName}"></li>
+              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/orPassage.jpg" alt="내부사진"></li>
               <!--
               <li class="tns-thumbnail"><img src="img/real-estate/single/th11.jpg" alt="Thumbnail"></li>
               <li class="tns-thumbnail"><img src="img/real-estate/single/th12.jpg" alt="Thumbnail"></li>
@@ -176,7 +176,7 @@
               <!-- Place info-->
               <div class="d-flex align-items-start mb-3 pb-2 border-bottom">
                 <!-- 병원이면 병원로고, 응급실이면 응급로고, 등을 넣는 곳 -->
-                <img src="${path}/resources/img/city-guide/brands/hotel.svg" width="60" alt="Thumbnail">
+                <img src="${path}/resources/img/logo/hospitalLogo.png" width="60" alt="Thumbnail">
                 <div class="ps-2 ms-1">
                   <h3 class="h5 mb-2">${hpInfo.dutyName}</h3>
                   <ul class="list-unstyled d-flex flex-wrap fs-sm">
@@ -208,7 +208,7 @@
 
                   <!-- 응급실 운영 여부 -->
                   <li class="nav-item">
-                    <a class="nav-link p-0 fw-normal d-flex align-items-start" href="mailto:bb-hotel@example.com">
+                    <a class="nav-link p-0 fw-normal d-flex align-items-start">
                    
                       <i class="fi-help mt-1 me-2 align-middle opacity-70"></i>
                       응급실 운영 여부 : 
@@ -223,7 +223,7 @@
                 <h4 class="h5 mb-2">진료과목:</h4>
                 <ul class="nav flex-column">
                   <li class="nav-item mb-2">
-                    <a class="nav-link p-0 fw-normal d-flex align-items-start" href="#">
+                    <a class="nav-link p-0 fw-normal d-flex align-items-start">
                     <i class="fi-search mt-1 me-2 align-middle opacity-70"></i>
                     	<c:if test="${not empty mdList}">
                     		정보 없음
@@ -419,18 +419,46 @@
           <!--========================================================================= 지도 ===========================================================================-->
           <!-- Location (Map)-->
           <div class="position-relative">
-            <!-- <img class="rounded-3" src="img/city-guide/single/map-sm.jpg" alt="Map"> -->
-            <iframe class="rounded-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50571.503708807424!2d126.87841757497236!3d37.6087723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c9821b2378f7d%3A0x4bc463fe9a7dbd04!2z7ISc7Jq467OR7JuQ!5e0!3m2!1sko!2skr!4v1671269215626!5m2!1sko!2skr" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-            <div class="d-flex w-100 h-100 flex-column align-items-center justify-content-center position-absolute top-0 start-0">
-              <!-- <img class="d-block mx-auto mb-4 rounded-circle bg-white shadow" src="img/city-guide/brands/hotel.svg" width="40" alt="Place logo"> -->
-              <!-- 길찾기 버튼 > 누를 시 구글 맵과 연동되서 길찾기 버튼 활성화 -->
-              <a class="btn btn-primary rounded-pill stretched-link"
-                href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50571.503708807424!2d126.87841757497236!3d37.6087723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c9821b2378f7d%3A0x4bc463fe9a7dbd04!2z7ISc7Jq467OR7JuQ!5e0!3m2!1sko!2skr!4v1671269215626!5m2!1sko!2skr"
-                data-iframe="true" data-bs-toggle="lightbox">
-                <i class="fi-route me-2"></i>길 찾기
-              </a>
-            </div>
+            <h4 class="fs-lg mb-2">병원 위치</h4>
+				
+				<div id="map2" style="width: 100%; height: 300px; border-radius: 20px;"></div>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=de43de051b10f18cf420b0e4cf8140a1"></script>
+				<script>
+				var mapContainer2 = document.getElementById('map2'), // 지도를 표시할 div 
+				    mapOption2 = { 
+				        center: new kakao.maps.LatLng(<c:out value="${hpInfo.wgs84Lat}"/>, <c:out value="${hpInfo.wgs84Lon}"/>), // 지도의 중심좌표
+				        level: 3 // 지도의 확대 레벨
+				    };
+				
+				var map2 = new kakao.maps.Map(mapContainer2, mapOption2); // 지도를 생성합니다
+				
+				// 마커가 표시될 위치입니다 
+				var markerPosition2  = new kakao.maps.LatLng(<c:out value="${hpInfo.wgs84Lat}"/>, <c:out value="${hpInfo.wgs84Lon}"/>); 
+				
+				// 마커를 생성합니다
+				var marker2 = new kakao.maps.Marker({
+				    position: markerPosition2
+				});
+				
+				// 마커가 지도 위에 표시되도록 설정합니다
+				marker2.setMap(map2);
+				
+				var iwContent = '<div style="padding:5px; font-size:10px">${hpInfo.dutyName} <br><a style="text-decoration: none;" href="https://map.kakao.com/link/map/<c:out value="${hpInfo.dutyName}"/>,<c:out value="${hpInfo.wgs84Lat}"/>,<c:out value="${hpInfo.wgs84Lon}"/>" target="_blank" >큰지도보기</a> <a style="text-decoration: none;" href="https://map.kakao.com/link/to/<c:out value="${hpInfo.dutyName}"/>,<c:out value="${hpInfo.wgs84Lat}"/>, <c:out value="${hpInfo.wgs84Lon}"/>" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				iwPosition = new kakao.maps.LatLng(<c:out value="${hpInfo.wgs84Lat}"/>, <c:out value="${hpInfo.wgs84Lon}"/>); //인포윈도우 표시 위치입니다
+				
+				//인포윈도우를 생성합니다
+				var infowindow = new kakao.maps.InfoWindow({
+				position : iwPosition, 
+				content : iwContent 
+				});
+				
+				//마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+				infowindow.open(map2, marker2); 
+				
+				</script>
+          </div>
+            
+            
           </div>
         </aside>
       </div>
@@ -558,7 +586,6 @@
   </main>
   
   <script type="text/javascript">
-      
 	  var url_href = window.location.href;
 	  var url = new URL(url_href); // URL 객체 선언
 	  function movePage(page){
@@ -566,15 +593,15 @@
 			
 			window.location.search = url.searchParams;
 		};
-		
-		
 		const urlParams = new URLSearchParams(window.location.search);
 		function moveReview(){
-			var idValue = urlParams.get('hpid');
-			location.href = '${path}/board/postHospitalReview?hpid='+idValue;
+		var idValue = urlParams.get('hpid');
+		location.href = '${path}/board/postHospitalReview?hpid='+idValue;
 			
 	  }
   </script>
+		
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
