@@ -65,8 +65,19 @@ public class BoardController {
 		
 		int boardCount = service.getBoardCount(searchMap);
 		PageInfo pageInfo = new PageInfo(page, 10, boardCount, 10);
-		List<Board> list1 = service.getBoardList(pageInfo, searchMap);
+		List<Board> boardList = service.getBoardList(pageInfo, searchMap);
 		
+		// 질병Q&A
+		int qnaCount = service.getQnACount(searchMap);
+		pageInfo = new PageInfo(page, 10, qnaCount, 10);
+		List<Board> qnaList = service.getQnAList(pageInfo, searchMap);
+		
+		// 공지사항
+		int noticeCount = service.getNoticeCount(searchMap);
+		pageInfo = new PageInfo(page, 10, noticeCount, 10);
+		List<Board> noticeList = service.getNoticeList(pageInfo, searchMap);
+		
+		// 리뷰
 		int reviewCount = service.getAllReviewCount();
 		List<Review> reviewList = service.getALLReview();
 		reviewList = setName(reviewList);
@@ -75,14 +86,22 @@ public class BoardController {
 		List<Review> pillReview = service.getPillReview();
 		pillReview = setName(pillReview);
 		
+		// 리뷰
 		model.addAttribute("reviewCount", reviewCount);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("hospitalReview", hospitalReview);
 		model.addAttribute("pharmacyReview", pharmacyReview);
 		model.addAttribute("pillReview", pillReview);
 		
-		
-		model.addAttribute("boardList", list1);
+		// 자유게시판
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("boardCount", boardCount);
+		// 질병Q&A
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("qnaCount", qnaCount);
+		// 공지사항
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("noticeCount", noticeCount);
 		model.addAttribute("param", param);
 //		model.addAttribute("pageInfo", pageInfo);
 		return "/board/communityList";
@@ -439,18 +458,6 @@ public class BoardController {
 		return "/board/helpCenter";
 	}
 	
-	private List<Review> setName(List<Review> list) {
-		
-		for(int i = 0; i < list.size(); i++) {
-			if(list.get(i).getDivision().equals("의약품")) {
-				String[] nameArray = list.get(i).getName().split("\\(");
-				String newName = nameArray[0];
-				list.get(i).setName(newName);
-			}
-		}
-		
-		return list;
-	}
 	
 	
 	// 리뷰 글쓰기 영역
@@ -541,6 +548,48 @@ public class BoardController {
 		
 		return "common/msg";
 	}
+	
+	
+	// 리뷰 보기
+	@GetMapping("/postReview")
+	public String review(Model model,  @RequestParam Map<String, String> param) {
+		
+		log.info("리뷰 보기 요청 param : " + param);
+		
+		int no = Integer.parseInt(param.get("no"));
+		String type = param.get("type");
+		
+		Review review = null;
+		if(type.equals("병원")) {
+			review = service.hospitalByNo(no);
+		} else if(type.equals("약국")) {
+			review = service.pharmacyByNo(no);
+		} else {
+			review = service.pillByNo(no);
+			String[] nameArray = review.getName().split("\\(");
+			String newName = nameArray[0];
+			review.setName(newName);
+		}
+		
+		model.addAttribute("review", review);
+		model.addAttribute("param", param);
+		
+		return "/board/postReview";
+	}
+	
+	private List<Review> setName(List<Review> list) {
+		
+		for(int i = 0; i < list.size(); i++) {
+			if(list.get(i).getDivision().equals("의약품")) {
+				String[] nameArray = list.get(i).getName().split("\\(");
+				String newName = nameArray[0];
+				list.get(i).setName(newName);
+			}
+		}
+		
+		return list;
+	}
+
 	
 	
 }

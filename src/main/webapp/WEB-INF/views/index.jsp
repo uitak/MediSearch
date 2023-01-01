@@ -168,7 +168,7 @@
 			 
 			var mapContainer = document.getElementById('map'), 
 			    mapOption = {
-			        center: new kakao.maps.LatLng(33.450701, 126.570667), 
+			        center: new kakao.maps.LatLng(37.5662952, 126.9779451), 
 			        level: 5 
 			    };  
 			
@@ -387,7 +387,12 @@
 						  <article class="card border-0 shadow-sm card-hover card-horizontal">
 						    <a href="#" class="card-img-top custom" style="background-image: url(${path}/resources/img/medisearch/hp/hp${status.count}.jpg);"></a>
 						    <div class="card-body py-3 ps-2 pe-0">
-						      <a href="#" class="fs-xs text-decoration-none">약 ${emergency.distance} M</a>
+						    	<c:if test="${emergency.distance >= 1000}">
+							      <a href="#" class="fs-xs text-decoration-none">약 ${emergency.distance / 1000} km</a>
+						    	</c:if>
+						    	<c:if test="${emergency.distance < 1000}">
+							      <a href="#" class="fs-xs text-decoration-none">약 ${emergency.distance} m</a>
+						    	</c:if>
 						      <h3 class="fs-base pt-1 mb-1">
 						        <a href="#" class="nav-link custom-font fw-normal fs-sm">${emergency.dutyName}</a>
 						      </h3>
@@ -476,6 +481,7 @@
           </c:if>
           
         </div>
+        
       </section>
       <!-- 의약품 -->
       <section class="container overflow-auto mb-5">
@@ -484,15 +490,15 @@
         </div>
         <div class="row g-2 g-md-3 gallery" data-thumbnails="true" style="min-width: 30rem; margin-bottom: 100px;">
           <div class="col-6">
-            <a class="gallery-item rounded rounded-md-3" href="#}"><img src="${path}/resources/img/medisearch/pill/pill1.jpg"></a>
+            <a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(3).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill1.jpg"></a>
           </div>
           <div class="col-3">
-            <a class="gallery-item rounded rounded-md-3 mb-md-2" href="#"><img src="${path}/resources/img/medisearch/pill/pill2.jpg" ></a>
-            <a class="gallery-item rounded rounded-md-3" href="#"><img src="${path}/resources/img/medisearch/pill/pill3.jpg" ></a>
+            <a class="gallery-item rounded rounded-md-3 mb-md-2" href="${path}/search/pill?searchValue=${phillList.get(0).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill2.jpg" ></a>
+            <a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(1).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill3.jpg" ></a>
           </div>
           <div class="col-3">
-            <a class="gallery-item rounded rounded-md-3 mb-md-2" href="#"><img src="${path}/resources/img/medisearch/pill/pill4.png"></a>
-            <a class="gallery-item rounded rounded-md-3" href="#"><img src="${path}/resources/img/medisearch/pill/pill5.jpg"></a>
+            <a class="gallery-item rounded rounded-md-3 mb-md-2" href="${path}/search/pill?searchValue=${phillList.get(4).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill4.png"></a>
+            <a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(2).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill5.jpg"></a>
           </div>
         </div>
       </section>

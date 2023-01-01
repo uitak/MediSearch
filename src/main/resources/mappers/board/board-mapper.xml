@@ -20,7 +20,7 @@
 	</resultMap>
 
 	<resultMap type="Reply" id="boardReplyResultMap">
-		<id 	property="replyNo"			column="REPLYNO"/>
+		<id 	property="replyNo"		column="REPLYNO"/>
 		<result property="boardNo" 		column="BOARDNO"/>
 		<result property="memberNo" 	column="MEMBERNO"/>
 		<result property="writerId" 	column="USERID"/> 
@@ -42,18 +42,54 @@
 		<result property="name" 		column="name"/>
 		<result property="title" 		column="title"/>
 		<result property="content" 		column="content"/>
+		<result property="star" 		column="star"/>
 		<result property="createDate" 	column="createDate"/>
-		<result property="star" 	column="star"/>
 	</resultMap>
 	
 	
-	
+	<!-- 자유게시판 -->
 	<!-- MySQL의 페이징 기능을 활용한 코드 -->
 	<select id="selectBoardList1" resultMap="boardListResultMap" parameterType="map">
 		SELECT  
 			B.BOARDNO, B.TITLE, M.USERID, B.CREATEDATE, B.DTYPE, B.ORIGINALFILENAME, B.VIEWS, B.STATUS
 		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
-		WHERE B.STATUS = 'Y'
+		WHERE B.STATUS = 'Y' AND B.DTYPE = 'A'
+		<if test="writer != null">
+			AND M.USERID LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.TITLE LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.CONTENT LIKE '%${content}%' 
+		</if>		
+		ORDER BY B.BOARDNO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<!-- 질병Q&A -->
+	<select id="selectQnAList" resultMap="boardListResultMap" parameterType="map">
+		SELECT  
+			B.BOARDNO, B.TITLE, M.USERID, B.CREATEDATE, B.DTYPE, B.QTYPE, B.ORIGINALFILENAME, B.VIEWS, B.STATUS
+		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
+		WHERE B.STATUS = 'Y' AND B.DTYPE = 'B'
+		<if test="writer != null">
+			AND M.USERID LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.TITLE LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.CONTENT LIKE '%${content}%' 
+		</if>		
+		ORDER BY B.BOARDNO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<!-- 공지사항 -->
+	<select id="selectNoticeList" resultMap="boardListResultMap" parameterType="map">
+		SELECT  
+			B.BOARDNO, B.TITLE, M.USERID, B.CREATEDATE, B.DTYPE, B.ORIGINALFILENAME, B.VIEWS, B.STATUS
+		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
+		WHERE B.STATUS = 'Y' AND B.DTYPE = 'C'
 		<if test="writer != null">
 			AND M.USERID LIKE '%${writer}%' 
 		</if>		
@@ -84,11 +120,46 @@
 		ORDER BY B.BOARDNO DESC 
 	</select>
 	
+	<!-- 자유게시판 개수 -->
 	<select id="selectBoardCount" resultType="int" parameterType="map">
 		SELECT  
 			COUNT(*)
 		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
-		WHERE B.STATUS = 'Y'
+		WHERE B.STATUS = 'Y' AND B.DTYPE = 'A'
+		<if test="writer != null">
+			AND M.USERID LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.TITLE LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.CONTENT LIKE '%${content}%' 
+		</if>		
+	</select>
+	
+	<!-- 질병Q&A 개수 -->
+	<select id="selectQnACount" resultType="int" parameterType="map">
+		SELECT  
+			COUNT(*)
+		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
+		WHERE B.STATUS = 'Y' AND B.DTYPE = 'B'
+		<if test="writer != null">
+			AND M.USERID LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.TITLE LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.CONTENT LIKE '%${content}%' 
+		</if>		
+	</select>
+	
+	<!-- 공지사항 개수 -->
+	<select id="selectNoticeCount" resultType="int" parameterType="map">
+		SELECT  
+			COUNT(*)
+		FROM BOARD B JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO) 
+		WHERE B.STATUS = 'Y' AND B.DTYPE = 'C'
 		<if test="writer != null">
 			AND M.USERID LIKE '%${writer}%' 
 		</if>		
@@ -172,6 +243,7 @@
 	
 	
 	
+<!-- ============================ 리뷰 =================================== -->
 	
 	<select id="selectALLReview" resultMap="ReviewResultMap">
 	
@@ -319,6 +391,39 @@
 			WHERE
 			BORADNO=#{boardNo}
 	</update>
+	
+	<select id="selectByHospital" resultMap="ReviewResultMap" parameterType="int">
+		SELECT 
+			reviewNo, R.hpid AS divId, M.memberNo, userId, 
+			'병원' AS division, dutyName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_HOSPITAL R 
+		JOIN HOSPITAL H ON R.hpid = H.hpid
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		WHERE reviewNo = #{no}
+	</select>
+	
+	<select id="selectByPharmacy" resultMap="ReviewResultMap" parameterType="int">
+		SELECT 
+			reviewNo, R.pharmacyNo AS divId, M.memberNo, userId, 
+			'약국' AS division, dutyName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_PHARMACY R 
+		JOIN PHARMACY P ON R.pharmacyNo = P.pharmacyNo
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		WHERE reviewNo = #{no}
+	</select>
+	
+	<select id="selectByPill" resultMap="ReviewResultMap" parameterType="int">
+		SELECT 
+			reviewNo, R.pillNo AS divId, M.memberNo, userId, 
+			'의약품' AS division, itemName AS name, 
+			title, content, star, createDate 
+		FROM REVIEW_PILL R 
+		JOIN PILL P ON R.pillNo = P.pillNo
+		JOIN MEMBER M ON R.memberNo = M.memberNo
+		WHERE reviewNo = #{no}
+	</select>
 	
 
 </mapper>

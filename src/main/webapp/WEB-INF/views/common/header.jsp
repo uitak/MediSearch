@@ -95,7 +95,12 @@
     	}
 	</script>
 	<!-- 카카오 도로명 주소 api 끝 -->
-
+<!-- 체크박스 css 추가 -->
+	<style type="text/css">
+        #available{
+            accent-color: #FF603F;
+        }
+    </style>
 
   </head>
   <!-- Body-->

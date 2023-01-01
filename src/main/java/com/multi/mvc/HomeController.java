@@ -40,7 +40,6 @@ public class HomeController {
 		phList = setPharmacyAddr(phList);
 		List<IndexPill> phillList = service.getPhill();
 		
-		
 		model.addAttribute("hpList", hpList);
 		model.addAttribute("emList", emList);
 		model.addAttribute("hdList", hdList);
@@ -50,20 +49,6 @@ public class HomeController {
 		
 		return "index";
 	}
-	
-//	@RequestMapping(value = "/", method = RequestMethod.POST)
-//	public String home2(Locale locale, Model model, HttpSession session, @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude) {
-//		
-//		
-//		logger.info("Welcome home! The client locale is {}.", locale);
-//
-//		
-//		List<Hospital> hpList = service.getHospitalLsitUser(longitude, latitude);
-//		
-//		model.addAttribute("hpList", hpList);
-//		return "index";
-//	}
-	
 	
 	private List<IndexEmergency> setEmergency(List<IndexEmergency> emList) {
 		

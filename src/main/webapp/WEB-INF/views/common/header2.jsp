@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href=".${path}/resources/img/medisearch/logo_final.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="${path}/resources/img/medisearch/logo_final.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="${path}/resources/img/medisearch/logo_final.jpg">
-  <link rel="manifest" href="site.webmanifest">
+<!--   <link rel="manifest" href="site.webmanifest"> -->
   <link rel="mask-icon" color="#5bbad5" href="safari-pinned-tab.svg">
   <meta name="msapplication-TileColor" content="#766df4">
   <meta name="theme-color" content="#ffffff">

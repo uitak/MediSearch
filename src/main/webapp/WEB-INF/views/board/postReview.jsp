@@ -5,7 +5,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="| 리뷰 작성" />
+	<jsp:param name="title" value="| 리뷰 보기" />
 </jsp:include>
 
       <section class="mt-5 pt-4">
@@ -20,15 +20,15 @@
             <!-- Breadcrumb-->
             <nav class="pt-3" aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-lg-5">
-                <li class="breadcrumb-item"><a href="city-guide-home-v1.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="city-guide-home-v1.html">Community</a></li>
+                <li class="breadcrumb-item"><a href="${path}">Home</a></li>
+                <li class="breadcrumb-item"><a href="${path}/board/communityList">Community</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Review</li>
               </ol>
             </nav>
             <!-- Text-->
             <div class="col-md-6 col-sm-8 py-md-5 py-4 px-0">
-              <h1 class="display-4 mb-4 pb-md-2" style="color: black; font-size: 3.8rem;"> &nbsp;Post Review</h1>
-              <p class="mb-sm-5 mb-4 pb-md-5 pb-3 lead" style="color: rgb(255, 115, 55);"> &nbsp;&nbsp;&nbsp;&nbsp;병원, 약국, 의약품에 대한 후기를 남겨주세요.</p>
+              <h1 class="display-4 mb-4 pb-md-2" style="color: black; font-size: 3.8rem;"> &nbsp;Review</h1>
+<!--               <p class="mb-sm-5 mb-4 pb-md-5 pb-3 lead" style="color: rgb(255, 115, 55);"> &nbsp;&nbsp;&nbsp;&nbsp;병원, 약국, 의약품에 대한 후기를 남겨주세요.</p> -->
             </div>
           </div>
         </div>
@@ -58,79 +58,40 @@
             
             <!-- Step 1: Basic Info-->
             <div class="bg-light rounded-3 p-4 p-md-5 mb-3">
-              <h2 class="h4 mb-4"><i class="fi-pencil text-primary fs-5 mt-n1 me-2"></i>글 쓰기</h2>
-              <form>
+              <h2 class="h4 mb-4"><i class="fi-file text-primary fs-5 mt-n1 me-2"></i>${review.name}</h2>
               <div class="row">
                 <div class="col-sm-12 mb-4">
-                  <label class="form-label" for="pr-fn"><b>제목</b> <span class='text-danger'>*</span></label>
-                  <input class="form-control form-control-lg" type="text" id="pr-fn" placeholder="글 제목을 입력하세요" required>
+                  <label class="form-label" for="pr-fn"><b>제목</b> <span class='text-danger'></span></label>
+                  <input class="form-control form-control-lg border-0" type="text" id="pr-fn" value="${review.title}" readonly>
                 </div>
                 
                 <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="pr-fn"><b>평점</b><span class='text-danger'>*</span></label><br>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                         1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    </label>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                         2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                    </label>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-                    <label class="form-check-label" for="flexRadioDefault3">
-                         3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                    </label>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
-                    <label class="form-check-label" for="flexRadioDefault4">
-                         4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                    </label>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5">
-                    <label class="form-check-label" for="flexRadioDefault5">
-                         5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                    </label>
-                </div>
-                <div class="col-sm-6 mb-4">
-                </div>
-                <div class="col-sm-6 mb-4">
-                  <label class="form-label" for="pr-country"><b>분류</b> <span class='text-danger'>*</span></label>
-                  <select class="form-select form-select-lg" id="pr-country" required>
-                    <option value="" disabled selected>항목을 선택하세요.</option>
-                    <option value="Australia">병원</option>
-                    <option value="Belgium">약국</option>
-                    <option value="Canada">의약품</option>
-                    
-                  </select>
-                </div>
-                <div class="col-sm-6 mb-4">
-                  
+                    <label class="form-label" for="pr-fn"><b>평점</b><span class='text-danger'></span></label><br>
+                    <span class="star-rating">
+	                  	<c:forEach var="i" begin="1" end="${review.star}" step="1">
+		                  <i class="star-rating-icon fi-star-filled active"></i>
+	                  	</c:forEach>
+	                  	<c:forEach var="i" begin="${review.star+1}" end="5" step="1">
+		                  <i class="star-rating-icon fi-star"></i>
+	                  	</c:forEach>
+		            </span>
                 </div>
                 <div class="col-12 mb-4">
-                    <label class="form-label" for="pr-description"><b>내용</b> <span class='text-danger'>*</span></label>
-                    <textarea style="resize: none;"class="form-control" rows="7" id="pr-description" placeholder="500자 이내로 작성해주세요."></textarea>
+                    <label class="form-label" for="pr-description"><b>내용</b> <span class='text-danger'></span></label>
+                    <textarea style="resize: none;"class="form-control border-0" rows="7" id="pr-description" readonly>${review.content}</textarea>
                 </div>
-
-                <div class="col-12 mb-4">
-                  <div class="mb-3">
-                  <!-- Image -->
-                  <div class="position-relative">
-                    <label class="form-label" for="pr-country"><b>파일 <span class='text-danger'>올리기</span></b></label>
-                    <label class="w-100" style="cursor:pointer;">
-                      <span> 
-                        <input class="form-control" type="file" name="my-image" id="image" accept="image/gif, image/jpeg, image/png">
-                      </span>
-                    </label>
-                  </div>
-                  <p class="small mb-0 mt-2"><i class="fi-alert-triange text-danger fs-5 mt-n1 me-2"></i><b class='text-danger'>주의 :</b> JPG, JPEG, PNG의 이미지 파일만 업로드 가능합니다.</p>
-                  </div>
-                </div>
-               
-              
-            
-              <div class="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
-                <a class="btn btn-primary btn-lg rounded-pill ms-sm-auto"type="submit">제출<i class="fi-chevron-right fs-sm ms-2"></i></a>
-              </div>
+				<div class="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
+					<c:if test="${param.type eq '병원'}">
+	                	<a class="btn btn-primary btn-lg rounded-pill ms-sm-auto" href="${path}/search/hospitalInfo?hpid=${review.divId}&i=5">상세 정보 보러가기<i class="fi-chevron-right fs-sm ms-2"></i></a>
+					</c:if>
+					<c:if test="${param.type eq '약국'}">
+	                	<a class="btn btn-primary btn-lg rounded-pill ms-sm-auto" href="${path}/search/pharmacyInfo?no=${review.divId}&i=5">상세 정보 보러가기<i class="fi-chevron-right fs-sm ms-2"></i></a>
+					</c:if>
+					<c:if test="${param.type eq '의약품'}">
+	                	<a class="btn btn-primary btn-lg rounded-pill ms-sm-auto" href="${path}/search/pill?searchValue=${review.name}&searchType=itemName"">상세 정보 보러가기<i class="fi-chevron-right fs-sm ms-2"></i></a>
+					</c:if>
+              	</div>
             </div>
-        </form>
             <!-- Navigation-->
           </div>
         </div>

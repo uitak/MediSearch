@@ -74,7 +74,7 @@
                   <img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/hp${param.i}.jpg" alt="${hpInfo.dutyName}">
                	</div>
                 <div>
-                  <img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/orPassage.jpg" alt="내부사진">
+                  <img class="rounded-3" src="${path}/resources/img/hospital/orPassage.jpeg" alt="내부사진">
                 </div>
               </div>
             </div>
@@ -83,7 +83,7 @@
             <!-- Thumbnails nav-->
             <ul class="tns-thumbnails mb-4" id="thumbnails" >
               <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/hp${param.i}.jpg" alt="${hpInfo.dutyName}"></li>
-              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/medisearch/hp/hpResize/orPassage.jpg" alt="내부사진"></li>
+              <li class="tns-thumbnail"><img class="rounded-3" src="${path}/resources/img/hospital/orPassage.jpeg" alt="내부사진"></li>
               <!--
               <li class="tns-thumbnail"><img src="img/real-estate/single/th11.jpg" alt="Thumbnail"></li>
               <li class="tns-thumbnail"><img src="img/real-estate/single/th12.jpg" alt="Thumbnail"></li>
@@ -176,7 +176,7 @@
               <!-- Place info-->
               <div class="d-flex align-items-start mb-3 pb-2 border-bottom">
                 <!-- 병원이면 병원로고, 응급실이면 응급로고, 등을 넣는 곳 -->
-                <img src="${path}/resources/img/logo/hospitalLogo.png" width="60" alt="Thumbnail">
+                <img src="${path}/resources/img/logo/hospitalLogo.png" width="60" alt="병원">
                 <div class="ps-2 ms-1">
                   <h3 class="h5 mb-2">${hpInfo.dutyName}</h3>
                   <ul class="list-unstyled d-flex flex-wrap fs-sm">

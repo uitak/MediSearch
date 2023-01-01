@@ -13,7 +13,7 @@
 	<form action="${path}/search/hospital" method="GET">
 	
       <section class="jarallax bg-dark zindex-1 py-xxl-5" data-jarallax data-speed="0.5" style="height: 500px;"><span class="img-overlay bg-transparent opacity-100" style="background-image: linear-gradient(0deg, rgba(31, 27, 45, .7), rgba(31, 27, 45, .7));"></span>
-        <div class="jarallax-img" style="background-image: url(${path}/resources/img/hospital/hp27.jpg); height: 500px;"></div>
+        <div class="jarallax-img" style="background-image: url(${path}/resources/img/medisearch/header/header2.jpg); height: 500px;"></div>
         <div class="content-overlay container py-md-5">
           <div class="mt-5 mb-md-5 py-5">
             <div class="col-xl-6 col-lg-8 col-md-10 mx-auto mb-sm-5 mb-4 px-0 text-center">

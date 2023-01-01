@@ -73,6 +73,7 @@ public class BoardService {
 		return reNameFileName;
 	}
 	
+	// 자유게시판
 	public int getBoardCount(Map<String, String> param) {
 		return mapper.selectBoardCount(param);
 	}
@@ -82,6 +83,28 @@ public class BoardService {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectBoardList1(param);
+	}
+	
+	// 질병Q&A
+	public int getQnACount(Map<String, String> param) {
+		return mapper.selectQnACount(param);
+	}
+	
+	public List<Board> getQnAList(PageInfo pageInfo, Map<String, String> param){
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectQnAList(param);
+	}
+	
+	// 공지사항
+	public int getNoticeCount(Map<String, String> param) {
+		return mapper.selectNoticeCount(param);
+	}
+	
+	public List<Board> getNoticeList(PageInfo pageInfo, Map<String, String> param){
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectNoticeList(param);
 	}
 	
 	// MyBatis 페이지 기반 코드
@@ -119,7 +142,8 @@ public class BoardService {
 	public int deleteReply(int no) {
 		return mapper.deleteReply(no);
 	}
-	
+
+// =========================== 리뷰 =====================================
 	public List<Review> getALLReview() {
 		return mapper.selectALLReview();
 	}
@@ -139,6 +163,20 @@ public class BoardService {
 	public List<Review> getPillReview() {
 		return mapper.selectPillReview();
 	}
+	
+	public Review hospitalByNo(int reviewNo) {
+		return mapper.selectByHospital(reviewNo);
+	}
+	
+	public Review pharmacyByNo(int reviewNo) {
+		return mapper.selectByPharmacy(reviewNo);
+	}
+	
+	public Review pillByNo(int reviewNo) {
+		return mapper.selectByPill(reviewNo);
+	}
+	
+	
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int saveHospitalReview(Review review) {
