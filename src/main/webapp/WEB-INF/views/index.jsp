@@ -62,7 +62,7 @@
                         </div>
                       </div>
                       &nbsp;&nbsp;
-                      <div class="input-group input-group-lg">
+                      <div class="input-group input-group-lg" style="font-size:14px">
                         
                         <input type="checkbox" name="available" value="ct">&nbsp;CT&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="checkbox" name="available" value="ct">&nbsp;MRI&nbsp;&nbsp;&nbsp;&nbsp;
