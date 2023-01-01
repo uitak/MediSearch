@@ -6,6 +6,10 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
+<!-- 카카오 지도 map css -->
+<link href="${path}/resources/css/map.css" rel="stylesheet">
+
+
       <!-- Page content-->
       <!-- Hero-->
       <section class="jarallax bg-dark zindex-1 py-xxl-5" data-jarallax data-speed="0.5"><span class="img-overlay bg-transparent opacity-100" style="background-image: linear-gradient(0deg, rgba(31, 27, 45, .7), rgba(31, 27, 45, .7));"></span>
@@ -133,14 +137,240 @@
           </div>
         </div>
       </section>
+      
+      
       <!-- 지도 -->
       <section class="container pt-lg-4 pb-lg-4 mb-3">
         <div class="d-sm-flex align-items-center justify-content-between pb-2">
-          <h2 class="h3 mb-sm-0"
-           style="font-size: 1.8rem; margin-top: 0px;">지도</h2>
+          <h2 class="h3 mb-sm-0" style="font-size: 1.8rem; margin-top: 0px;">지도</h2>
         </div>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50571.503708807424!2d126.87841757497236!3d37.6087723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c9821b2378f7d%3A0x4bc463fe9a7dbd04!2z7ISc7Jq467OR7JuQ!5e0!3m2!1sko!2skr!4v1671269215626!5m2!1sko!2skr" width="600" height="450" style="border:1; box-shadow: 0px 0px 10px rgb(194, 194, 194); border-radius: 20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </section>
+                
+		<div class="map_wrap">
+		    <div id="map" style="width:100%; height:100%; position:relative;overflow:hidden; border:1; box-shadow: 0px 0px 10px rgb(194, 194, 194); border-radius: 20px;"></div>
+		    <ul id="category">
+		        <li id="HP8" data-order="2"> 
+		            <span class="category_bg pharmacy"></span>
+		            병원
+		        </li>      
+		        <li id="PM9" data-order="4"> 
+		            <span class="category_bg cafe"></span>
+		            약국
+		        </li>  
+		    </ul>
+		</div>
+		
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=de43de051b10f18cf420b0e4cf8140a1&libraries=services"></script>
+		<script>
+			var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
+			    contentNode = document.createElement('div'), 
+			    markers = [], 
+			    currCategory = ''; 
+			 
+			var mapContainer = document.getElementById('map'), 
+			    mapOption = {
+			        center: new kakao.maps.LatLng(33.450701, 126.570667), 
+			        level: 5 
+			    };  
+			
+			var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+			if (navigator.geolocation) {
+			    
+			    navigator.geolocation.getCurrentPosition(function(position) {
+			        
+			        var lat = position.coords.latitude, // 위도
+			            lon = position.coords.longitude; // 경도
+			        
+			        var locPosition = new kakao.maps.LatLng(lat, lon), 
+			            message = '<div style="padding:5px;">여기에 계신가요?!<br>병원과 약국 버튼을 눌러보세요!<br>우리동네 병원/약국을 한눈에&nbps</div>'; // 인포윈도우에 표시될 내용입니다
+			        
+			        displayMarker(locPosition, message);
+			            
+			      });
+			    
+			} else { 
+			    
+			    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+			        message = 'geolocation을 사용할수 없어요..'
+			        
+			    displayMarker(locPosition, message);
+			}
+			
+			function displayMarker(locPosition, message) {
+			
+			    var marker = new kakao.maps.Marker({  
+			        map: map, 
+			        position: locPosition
+			    }); 
+			    
+			    var iwContent = message, 
+			        iwRemoveable = true;
+			
+			    var infowindow = new kakao.maps.InfoWindow({
+			        content : iwContent,
+			        removable : iwRemoveable
+			    });
+			    
+			    infowindow.open(map, marker);
+			    
+			    map.setCenter(locPosition);      
+			}    
+			
+			var ps = new kakao.maps.services.Places(map); 
+			
+			kakao.maps.event.addListener(map, 'idle', searchPlaces);
+			
+			contentNode.className = 'placeinfo_wrap';
+			
+			addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap);
+			addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap);
+			
+			placeOverlay.setContent(contentNode);  
+			
+			addCategoryClickEvent();
+			
+			function addEventHandle(target, type, callback) {
+			    if (target.addEventListener) {
+			        target.addEventListener(type, callback);
+			    } else {
+			        target.attachEvent('on' + type, callback);
+			    }
+			}
+			
+			function searchPlaces() {
+			    if (!currCategory) {
+			        return;
+			    }
+			    
+			    placeOverlay.setMap(null);
+			
+			    removeMarker();
+			    
+			    ps.categorySearch(currCategory, placesSearchCB, {useMapBounds:true}); 
+			}
+			
+			function placesSearchCB(data, status, pagination) {
+			    if (status === kakao.maps.services.Status.OK) {
+			
+			        displayPlaces(data);
+			    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+			
+			    } else if (status === kakao.maps.services.Status.ERROR) {
+			        
+			    }
+			}
+			
+			function displayPlaces(places) {
+			
+			    var order = document.getElementById(currCategory).getAttribute('data-order');
+			
+			    for ( var i=0; i<places.length; i++ ) {
+			
+			            var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
+			
+			            (function(marker, place) {
+			                kakao.maps.event.addListener(marker, 'click', function() {
+			                    displayPlaceInfo(place);
+			                });
+			            })(marker, places[i]);
+			    }
+			}
+			
+			function addMarker(position, order) {
+			    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', 
+			        imageSize = new kakao.maps.Size(27, 28),  
+			        imgOptions =  {
+			            spriteSize : new kakao.maps.Size(72, 208), 
+			            spriteOrigin : new kakao.maps.Point(46, (order*36)), 
+			            offset: new kakao.maps.Point(11, 28) 
+			        },
+			        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+			            marker = new kakao.maps.Marker({
+			            position: position,
+			            image: markerImage 
+			        });
+			
+			    marker.setMap(map); 
+			    markers.push(marker);  
+			
+			    return marker;
+			}
+			
+			function removeMarker() {
+			    for ( var i = 0; i < markers.length; i++ ) {
+			        markers[i].setMap(null);
+			    }   
+			    markers = [];
+			}
+			
+			function displayPlaceInfo (place) {
+			    var content = '<div class="placeinfo">' +
+			                    '   <a class="title" href="' + place.place_url + '" target="_blank" title="' + place.place_name + '">' + place.place_name + '</a>';   
+			
+			    if (place.road_address_name) {
+			        content += '    <span title="' + place.road_address_name + '">' + place.road_address_name + '</span>' +
+			                    '  <span class="jibun" title="' + place.address_name + '">(지번 : ' + place.address_name + ')</span>';
+			    }  else {
+			        content += '    <span title="' + place.address_name + '">' + place.address_name + '</span>';
+			    }                
+			   
+			    content += '    <span class="tel">' + place.phone + '</span>' + 
+			                '</div>' + 
+			                '<div class="after"></div>';
+			
+			    contentNode.innerHTML = content;
+			    placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+			    placeOverlay.setMap(map);  
+			}
+			
+			
+			function addCategoryClickEvent() {
+			    var category = document.getElementById('category'),
+			        children = category.children;
+			
+			    for (var i=0; i<children.length; i++) {
+			        children[i].onclick = onClickCategory;
+			    }
+			}
+			
+			function onClickCategory() {
+			    var id = this.id,
+			        className = this.className;
+			
+			    placeOverlay.setMap(null);
+			
+			    if (className === 'on') {
+			        currCategory = '';
+			        changeCategoryClass();
+			        removeMarker();
+			    } else {
+			        currCategory = id;
+			        changeCategoryClass(this);
+			        searchPlaces();
+			    }
+			}
+			
+			function changeCategoryClass(el) {
+			    var category = document.getElementById('category'),
+			        children = category.children,
+			        i;
+			
+			    for ( i=0; i<children.length; i++ ) {
+			        children[i].className = '';
+			    }
+			
+			    if (el) {
+			        el.className = 'on';
+			    } 
+			} 
+		</script>
+<!-- =======================================================지도======================================================= -->        
+	</section>
+        
+        
+        
+        
+        
 
       <!-- 응급실 / 공휴일진료기관 -->
       <section class="container mb-3">
@@ -267,50 +497,5 @@
         </div>
       </section>
     </main>
-    
-    <!-- 위치 정보 받기 -->
-	<script type="text/javascript">
-		$(function() {
-			let latitude = 0.0;
-			let longitude = 0.0;
-			if(navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					latitude = position.coords.latitude;
-					longitude = position.coords.longitude;
-// 					alert("위도 : " + latitude + "\n" + "경도 : " + longitude);
-// 					$.ajax({
-// 						type: "post",
-// 						url: "${path}",
-// 						data: {longitude, latitude},
-// 						success:
-// 							(data) => {
-// 								console.log(data);
-// 								alert("사용자 위치 기반으로 정보를 불러옵니다.");
-// 								location.href("${path}/");
-// 							},
-// 						error:
-// 							(e)=>{
-// 								console.log(e);	    				
-// 			    			}
-// 					});
-				}, function() {
-					latitude = 37.5642135;
-					longitude = 127.0016985;
-// 					alert("위도 : " + latitude + "\n" + "경도 : " + longitude);
-				});
-				
-			} else {
-				latitude = 37.5642135;
-				longitude = 127.0016985;
-			}
-			
-			
-			
-		})
-
-
-		
-		
-    </script>
 	
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
