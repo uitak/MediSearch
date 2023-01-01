@@ -82,6 +82,7 @@
             
           </div>
           <!-- Comment form-->
+          <c:if test="${loginMember != null}">
           <h3 class="mb-4 pb-sm-2" style="color: rgb(255, 115, 55);">댓글 쓰기</h3>
           <form class="needs-validation row gy-md-4 gy-3 pb-sm-2" action="${path}/board/reply" method="post">
           <div>
@@ -99,6 +100,7 @@
                 <input class="btn btn-primary btn-lg rounded-pill ms-sm-auto" type="submit" value="등록">
               </div>
           </form>
+          </c:if>
         </div>
       </div>
     </main>
