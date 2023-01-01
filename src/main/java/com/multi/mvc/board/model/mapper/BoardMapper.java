@@ -17,6 +17,7 @@ public interface BoardMapper {
 	// MyBatis Page 기능 활용
 	List<Board> selectBoardList2(RowBounds rowBounds, Map<String, String> map);
 	int selectBoardCount(Map<String, String> map);
+	
 	Board selectBoardByNo(int boardNo);
 	int insertBoard(Board board);
 	int insertReply(Reply reply);

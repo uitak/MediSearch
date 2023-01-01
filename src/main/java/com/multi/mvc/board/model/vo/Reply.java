@@ -16,4 +16,5 @@ public class Reply {
 	private String writerId;
 	private String content;	
 	private String status;
+	private Date createDate;
 }

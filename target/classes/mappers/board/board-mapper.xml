@@ -23,7 +23,7 @@
 		<id 	property="replyNo"			column="REPLYNO"/>
 		<result property="boardNo" 		column="BOARDNO"/>
 		<result property="memberNo" 	column="MEMBERNO"/>
-	<!--	<result property="writerId" 	column="USERID"/> -->
+		<result property="writerId" 	column="USERID"/> 
 		<result property="content" 		column="CONTENT"/>
 		<result property="createDate" 	column="CREATEDATE"/>
 	</resultMap>
@@ -102,18 +102,18 @@
 	
 	<select id="selectBoardByNo" parameterType="int" resultMap="boardDetailResultMap">
 		SELECT  
-			B.BOARDNO, B.TITLE, M.USERID, B.VIEWS, B.TYPE, B.ORIGINALFILENAME, B.RENAMEDFILENAME, B.CONTENT, B.CREATEDATE,
-			R.REPLYNO,
-		    R.BOARDNO,
-		    R.CONTENT,
-		    M2.USERID  AS R_ID, 
-		    R.CREATEDATE  AS R_CREATEDATE,
+			B.BOARDNO, B.TITLE, M.USERID, B.VIEWS, B.DTYPE, B.QTYPE, B.ORIGINALFILENAME, B.RENAMEDFILENAME, B.CONTENT, B.CREATEDATE,
+			R.REPLYNO AS R_REPLYNO,
+		    R.BOARDNO AS R_BOARDNO,
+		    R.CONTENT AS R_CONTENT,
+		    M2.USERID AS R_USERID, 
+		    R.CREATEDATE  AS R_CREATEDATE
 		FROM BOARD B
 		JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO)
-		LEFT JOIN REPLY R ON (B.BOARDNO = R.BOARDNO)
-		LEFT JOIN MEMBER M2 ON (R.MEMBERNO = M2.MEMBERNO)
+		LEFT OUTER JOIN REPLY R ON (B.BOARDNO = R.BOARDNO)
+		LEFT OUTER JOIN MEMBER M2 ON (R.MEMBERNO = M2.MEMBERNO)
 		WHERE B.STATUS = 'Y' AND B.BOARDNO = #{boardNo}
-		ORDER BY R.REPLYNO DESC
+		
 	</select>
 	
 	<insert id="insertBoard" parameterType="Board">

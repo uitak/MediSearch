@@ -27,7 +27,7 @@
             </nav>
             <!-- Text-->
             <div class="col-md-6 col-sm-8 py-md-5 py-4 px-0">
-              <h1 class="display-4 mb-4 pb-md-2" style="color: black; font-size: 3.8rem;"> &nbsp;Post Board</h1>
+              <h1 class="display-4 mb-4 pb-md-2" style="color: black; font-size: 3.8rem;"> &nbsp;View Post</h1>
               <p class="mb-sm-5 mb-4 pb-md-5 pb-3 lead" style="color: rgb(255, 115, 55);"> &nbsp;&nbsp;&nbsp;&nbsp;자유롭게 의견을 나누세요.</p>
             </div>
           </div>
@@ -40,99 +40,68 @@
         <!-- Post content-->
         <div class="col-lg">
           <!-- Post meta-->
-          <div class="d-flex flex-wrap border-bottom border-light pb-3 mb-4 justify-content-end" style="border-bottom: 1px solid #666276 !important;">
-            <a class="text-uppercase text-decoration-none border-end border-light pe-3 me-3 mb-2" href="#">Reviews</a>
-            <div class="d-flex align-items-center border-end border-light pe-3 me-3 mb-2">
-              <i class="fi-calendar-alt opacity-70 me-2"></i><span>Mar 25</span>
-            </div>
-            <div class="d-flex align-items-center border-end border-light pe-3 me-3 mb-2">
-              <i class="fi-clock opacity-70 me-2"></i><span>6 min read</span>
-            </div>
-            <a class="d-flex align-items-center text-decoration-none mb-2" href="#comments" data-scroll>
-              <i class="fi-chat-circle opacity-70 me-2"></i><span>2 comments</span>
-            </a>
-          </div>
+         
           
           <blockquote class="blockquote mb-4">
-            <h1><c:out value="${board.title}"/></h1>
+            <h1 style="color: rgb(255, 115, 55);"><c:out value="${board.title}"/></h1>
             <footer class="blockquote-footer"> </footer>
           </blockquote>
-
-          <p class="opacity-70"><c:out value="${board.content}"/></p>
+		
+		<div class="border-bottom border-light pb-4 mb-4" style="border-bottom: 1px solid #000000 !important;">
+          <h3 class="opacity-0" style="font-size: 1.5rem;" ><c:out value="${board.content}"/></h3>
+          </div>
          
           
           <!-- Tags + Sharing-->
-          <div class="pt-4 pb-5 mb-md-3">
-            <div class="d-md-flex align-items-center justify-content-between border-top pt-4" style="border-top: 1px solid #fd5631 !important;">
-              <div class="d-flex align-items-center me-3 mb-3 mb-md-0">
-                <div class="d-none d-sm-block fw-bold text-nowrap mb-2 me-2 pe-1">Tags:</div>
-                <div class="d-flex flex-wrap">
-                  <a class="btn btn-xs rounded-pill fs-sm fw-normal btn-translucent-light me-2 mb-2" style="background-color:#fd5631;" href="#">Tage_1</a>
-                  <a class="btn btn-xs rounded-pill fs-sm fw-normal btn-translucent-light me-2 mb-2" style="background-color:#fd5631;" href="#">Tage_2</a>
-                  <a class="btn btn-xs rounded-pill fs-sm fw-normal btn-translucent-light mb-2" style="background-color:#fd5631;" href="#">Tage_3</a>
-                </div>
-              </div>
-              <div class="d-flex align-items-center">
-                <div class="fw-bold text-nowrap pe-1 mb-2">Share:</div>
-                <div class="d-flex">
-                  <a class="btn btn-icon btn-xs rounded-circle mb-2 ms-2" href="#" data-bs-toggle="tooltip" style="background-color:#fd5631;">
-                    <i class="fi-facebook" style="color:#fff;"></i>
-                  </a>
-                  <a class="btn btn-icon btn-xs rounded-circle mb-2 ms-2" href="#" data-bs-toggle="tooltip" style="background-color:#fd5631;">
-                    <i class="fi-twitter" style="color:#fff;"></i>
-                  </a>
-                  <a class="btn btn-icon btn-xs rounded-circle mb-2 ms-2" href="#" data-bs-toggle="tooltip" style="background-color:#fd5631;">
-                    <i class="fi-linkedin" style="color:#fff;"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+         
           <!-- Comments-->
           <div class="mb-4 mb-md-5" id="comments">
-            <h3 class="mb-4 pb-2">2 comments</h3>
             <!-- Comment-->
+            <c:if test="${!empty replyList}">
+            <c:forEach var="reply" items="${replyList}">
             <div class="border-bottom border-light pb-4 mb-4" style="border-bottom: 1px solid #000000 !important;">
-              <p class="opacity-70">Elementum ut quam tincidunt egestas vitae elit, hendrerit. Ullamcorper nulla amet lobortis elit, nibh condimentum enim. Aliquam felis nisl tellus sodales lectus dictum tristique proin vitae. Odio fermentum viverra tortor quis reprehenderit in voluptate velit.</p>
+              <p class="opacity-30"><c:out value="${reply.content}"/></p>
               <div class="d-flex justify-content-end align-items-center">
                 <div class="d-flex align-items-center pe-2">
                   <div class="ps-2">
-                    <h6 class="fs-base mb-0">Daniel Adams</h6><span class="opacity-50 fs-sm">3 days ago</span>
+                    <h6 class="fs-base mb-0" style="color: rgb(255, 115, 55);"><c:out value="${reply.writerId}"/></h6>
+                    <span class="opacity-50 fs-sm"><fmt:formatDate type="date" value="${reply.createDate}"/></span>
                   </div>
                 </div>                
               </div>
               
             </div>
+            </c:forEach>
+            </c:if>
+            <c:if test="${empty replyList}">
+			
+				<p>등록된 리플이 없습니다.</p>
+			
+			</c:if>
             <!-- Comment-->
-            <div class="pb-4">
-              <p class="opacity-70">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
-              <div class="d-flex justify-content-end align-items-center">
-                <div class="d-flex align-items-center pe-2">
-                  
-                  <div class="ps-2">
-                    <h6 class="fs-base mb-0">Darrel Steward</h6><span class="opacity-50 fs-sm">1 week ago</span>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
+            
           </div>
           <!-- Comment form-->
-          <h3 class="mb-4 pb-sm-2">Leave your comment</h3>
-          <form class="needs-validation row gy-md-4 gy-3 pb-sm-2" novalidate>
+          <h3 class="mb-4 pb-sm-2" style="color: rgb(255, 115, 55);">댓글 쓰기</h3>
+          <form class="needs-validation row gy-md-4 gy-3 pb-sm-2" action="${path}/board/reply" method="post">
+          <div>
+          <input type="hidden" name="writerId" value="${loginMember.userId}" readonly>
+          <input type="hidden" name="boardNo" value="${board.boardNo}" />
+          </div>
             
             <div class="col-12">
-              <label class="form-label" for="comment-text">Comment</label>
-              <textarea class="form-control form-control-lg" id="comment-text" rows="4" placeholder="Type comment here" required></textarea>
+              <label class="form-label" for="comment-text"><b>내용</b></label>
+              <textarea class="form-control form-control-lg" id="comment-text" rows="4" placeholder="댓글을 작성하세요" name="content" required></textarea>
               <div class="invalid-feedback">Please type your comment.</div>
             </div>
-            <div class="col-12 py-2">
-              <button class="btn btn-lg btn-primary" type="submit">Post comment</button>
-            </div>
+            
+            <div class="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
+                <input class="btn btn-primary btn-lg rounded-pill ms-sm-auto" type="submit" value="등록">
+              </div>
           </form>
         </div>
       </div>
     </main>
-
+	
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

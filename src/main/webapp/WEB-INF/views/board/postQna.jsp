@@ -7,7 +7,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="| Q&A 작성" />
 </jsp:include>
-
+	<body class="bg-secondary">
 
       <section class="mt-5 pt-4">
         <!-- Parallax container-->
@@ -114,6 +114,7 @@
           </div>
         </div>
       </div>
+      </body>
     </main>
     
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

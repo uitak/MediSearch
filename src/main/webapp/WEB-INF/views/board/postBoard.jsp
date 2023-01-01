@@ -7,7 +7,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="| 글 작성" />
 </jsp:include>
-
+	<body class="bg-secondary">
       <section class="mt-5 pt-4">
         <!-- Parallax container-->
         <div class="jarallax mt-2" data-jarallax data-speed="0.5">
@@ -101,6 +101,7 @@
           </div>
         </div>
       </div>
+      </body>
     </main>
     
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
