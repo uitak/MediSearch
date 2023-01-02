@@ -30,6 +30,12 @@
 
 <!-- 추가 -->
 	<style type="text/css">
+		body {
+          -webkit-user-select:none;
+          -moz-user-select:none;
+          -ms-user-select:none;
+          user-select:none
+        }
 		#available{
 			accent-color: #FF603F;
 		}

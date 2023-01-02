@@ -452,7 +452,7 @@
 						    <div class="position-relative mb-3">
 						      <button class="btn btn-icon btn-light-primary btn-xs text-primary rounded-circle position-absolute top-0 end-0 m-3 zindex-5" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Favorites"><i class="fi-heart"></i></button>
 						      <c:if test="${holiday.dutyDivNam ne '약국'}">
-							      <img class="rounded-3" src="${path}/resources/img/medisearch/ph/ph${i}.jpg" alt="Article img" width="900px" height="200px">
+							      <img class="rounded-3" src="${path}/resources/img/medisearch/hp/hp${i}.jpg" alt="Article img" width="900px" height="200px">
 						      </c:if>
 						      <c:if test="${holiday.dutyDivNam eq '약국'}">
 							      <img class="rounded-3" src="${path}/resources/img/medisearch/ph/ph${i}.jpg" alt="Article img" width="900px" height="200px">

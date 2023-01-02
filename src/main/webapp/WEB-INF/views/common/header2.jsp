@@ -40,6 +40,12 @@
   <link rel="stylesheet" type="text/css"
     href="${path}/resources/blogzine/template/assets/vendor/overlay-scrollbar/css/OverlayScrollbars.min.css">
   <style>
+  	body {
+	    -webkit-user-select:none;
+	    -moz-user-select:none;
+	    -ms-user-select:none;
+	    user-select:none
+    }
     .hv-btn {
       border: none;
     }
