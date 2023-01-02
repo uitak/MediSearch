@@ -61,7 +61,7 @@
                         </div>
                       </div>
                       &nbsp;&nbsp;
-                      <div class="input-group input-group-lg">
+                      <div class="input-group input-group-lg fs-sm">
                         
                         <input type="checkbox" id="available" name="available" value="hvctayn">&nbsp;CT&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="checkbox" id="available" name="available" value="hvmriayn">&nbsp;MRI&nbsp;&nbsp;&nbsp;&nbsp;
@@ -386,7 +386,12 @@
 						  <article class="card border-0 shadow-sm card-hover card-horizontal" style=" margin-bottom: 33px;">
 						    <a class="card-img-top custom" href="${path}/search/emergencyInfo.do?hpid=${emergency.hpid}&img=resources/img/medisearch/hp/hp${status.count}.jpg" style="background-image: url(${path}/resources/img/medisearch/hp/hp${status.count}.jpg);"></a>
 						    <div class="card-body py-3 ps-2 pe-0">
-						      <a class="fs-xs text-decoration-none">약 ${emergency.distance} M</a>
+						      <c:if test="${emergency.distance >= 1000}">
+							      <a href="#" class="fs-xs text-decoration-none">약 ${emergency.distance / 1000} km</a>
+						    	</c:if>
+						    	<c:if test="${emergency.distance < 1000}">
+							      <a href="#" class="fs-xs text-decoration-none">약 ${emergency.distance} m</a>
+						    	</c:if>
 						      <h3 class="fs-base pt-1 mb-1">
 						        <a class="nav-link custom-font fw-normal fs-sm" href="${path}/search/emergencyInfo.do?hpid=${emergency.hpid}&img=resources/img/medisearch/hp/hp${status.count}.jpg">${emergency.dutyName}</a>
 						      </h3>
