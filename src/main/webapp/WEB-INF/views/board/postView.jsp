@@ -44,7 +44,16 @@
           
           <blockquote class="blockquote mb-4">
             <h1 style="color: rgb(255, 115, 55);"><c:out value="${board.title}"/></h1>
+            <div class="d-flex flex-row-reverse" >
+            <a class="btn btn-sm  mb-0 mx-2 hv-btn" href="#" style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;">
+	                      	삭제
+	        </a>
+	        <a class="btn btn-sm  mb-0 mx-2 hv-btn" href="#" style="background-color: rgb(255, 158, 84); color: white; font-weight: 700; border: none;">
+	                      	수정
+	        </a>
+	        </div>
             <footer class="blockquote-footer"> </footer>
+            
           </blockquote>
 		
 		<div class="border-bottom border-light pb-4 mb-4" style="border-bottom: 1px solid #000000 !important;">
