@@ -195,7 +195,7 @@
               <!--========================================  병원 정보 입력 란 별 다른일 없음 href="#" 삭제=========================================-->
               <!-- Place contacts-->
               <div class="mb-3 pb-3 border-bottom">
-                <h4 class="h5 mb-2">기본 정보:</h4>
+                <h4 class="h5 mb-2">기본 정보</h4>
                 <ul class="nav flex-column">
                   <li class="nav-item mb-2">
                     <i class="fi-map-pin mt-1 me-2 align-middle opacity-70"></i>${hpInfo.dutyAddr}
@@ -220,20 +220,21 @@
               </div>
 
               <div class="mb-3 pb-3 border-bottom">
-                <h4 class="h5 mb-2">진료과목:</h4>
+                <h4 class="h5 mb-2" style="margin-bottom: 80px;">진료과목</h4>
                 <ul class="nav flex-column">
                   <li class="nav-item mb-2">
-                    <a class="nav-link p-0 fw-normal d-flex align-items-start">
-                    <i class="fi-search mt-1 me-2 align-middle opacity-70"></i>
                     	<c:if test="${not empty mdList}">
-                    		정보 없음
+	                    	<ul class="list-unstyled row row-cols-md-3 row-cols-1 gy-2 mb-0 text-nowrap">
+		                    	<c:forEach var="department" items="${mdList}">
+		                    		<c:if test="${department.medicalDepartment ne '-'}">
+					                    <li class="col"><i class="fi-telegram mt-n1 me-2 fs-lg align-middle"></i>${department.medicalDepartment}</li>
+		                    		</c:if>
+		                    		<c:if test="${department.medicalDepartment eq '-'}">
+					                    <li class="col"><i class="fi-telegram mt-n1 me-2 fs-lg align-middle"></i>정보 없음</li>
+		                    		</c:if>
+		                    	</c:forEach>
+	                  		</ul>
                     	</c:if>
-                    	<c:if test="${empty mdList}">
-	                    	<c:forEach var="department" items="${mdList}">
-	                    		${department} | 
-	                    	</c:forEach>
-                    	</c:if>
-                    </a>
                   </li>
                 </ul>
               </div>
@@ -256,7 +257,7 @@
               -->
              
               <div class="mb-3 pb-0">
-                <h4 class="h5 mb-2">진료시간:</h4>
+                <h4 class="h5 mb-2">진료시간</h4>
                 <ul class="nav flex-column">
                   <li class="nav-item mb-2">
                     <a class="nav-link p-0 fw-normal d-flex align-items-start" href="#">

@@ -213,7 +213,7 @@
 			ORDER BY dutyName 
 		</if>
 		<if test="star != null">
-			ORDER BY star
+			ORDER BY star DESC
 		</if>
 		<if test="addr != null">
 			ORDER BY dutyAddr

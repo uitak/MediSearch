@@ -79,17 +79,17 @@
 			AND dutyAddr LIKE '%${searchTown}%'
 		</if>
 		GROUP BY P.hpid
-		<if test="name == null and star == null and review == null">
+		<if test="name == null and star == null and addr == null">
 			ORDER BY P.pharmacyNo DESC 
 		</if>
 		<if test="name != null">
 			ORDER BY dutyName 
 		</if>
 		<if test="star != null">
-			ORDER BY star
+			ORDER BY star DESC
 		</if>
-		<if test="review != null">
-			ORDER BY reviews
+		<if test="addr != null">
+			ORDER BY dutyAddr
 		</if>
 		LIMIT ${limit} OFFSET ${offset}
 	</select>
