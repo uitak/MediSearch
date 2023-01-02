@@ -791,17 +791,17 @@
 							<c:if test="${not empty qnaList}">
 								<c:forEach var="qna" items="${qnaList}">
 									<tr onclick="board(${qna.boardNo});" style="cursor:pointer;">
-			                            <!-- Table data -->
-			                            <td>${qna.qType}</td>
-			                            <!-- Table data -->
+<!-- 			                            Table data -->
+			                            <td><c:out value="${qna.getQType()}" /></td>
+<!-- 			                            Table data -->
 			                            <td>${qna.title}</td>
-			                            <!-- Table data -->
+<!-- 			                            Table data -->
 			                            <td>${qna.userId}</td>
-			                            <!-- Table data -->
+<!-- 			                            Table data -->
 			                            <td>${qna.views}</td>
-			                            <!-- Table data -->
+<!-- 			                            Table data -->
 			                            <td><fmt:formatDate type="date" value="${qna.createDate}"/></td>
-			                            <!-- Table data -->
+<!-- 			                            Table data -->
 			                            <td>
 			                              <div class="d-flex gap-2">
 			                                <a href="" class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
