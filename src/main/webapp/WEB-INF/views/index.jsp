@@ -30,7 +30,6 @@
             <div class="col-xl-8 col-lg-9 col-md-10 mx-auto px-0">
               <!-- Search form-->
               <form method="get" action="${path}/search/emergencyMap2.do" class="form-group d-block d-md-flex position-relative rounded-md-pill mb-2 mb-sm-4 mb-lg-5">   
-                  <form class="form-group d-block d-md-flex position-relative">
                       <div class="d-sm-flex">
                         <div class="dropdown w-100 mb-sm-0 mb-3" data-bs-toggle="select">
                           <button class="btn btn-link btn-lg dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"><span class="dropdown-toggle-label">중환자분류</span></button>
@@ -76,7 +75,6 @@
                 </div>
             </div>
           </div>
-        </div>
         <div class="position-absolute d-none d-xxl-block bottom-0 start-0 w-100 bg-white zindex-1" style="border-top-left-radius: 30px; border-top-right-radius: 30px; height: 30px;"></div>
       </section>
 
@@ -99,7 +97,8 @@
               <div class="icon-box-media bg-faded-success text-success rounded-circle mb-3 mx-auto"><i class="fi-meds"></i></div>
               <h3 class="icon-box-title fs-base mb-0">의약품</h3></a>
           </div>
-          <div class="dropdown h-100"><a class="icon-box card card-body h-100 border-0 shadow-sm card-hover text-center" href="${path}/board/communityList">
+          <div class="dropdown h-100">
+          	<a class="icon-box card card-body h-100 border-0 shadow-sm card-hover text-center" href="${path}/board/communityList">
                 <div class="icon-box-media bg-faded-info text-info rounded-circle mb-3 mx-auto"><i class="fi-chat-circle"></i></div>
                 <h3 class="icon-box-title fs-base mb-0">커뮤니티</h3></a>
           </div>
