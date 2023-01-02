@@ -13,6 +13,10 @@ import com.multi.mvc.emergency.model.vo.EPharmacy;
 public interface EmergencyMapper {
 		List<Emergency> selectEmergencyList(Map<String, String> map);
 		List<Emergency> selectEmergencyListDesc(Map<String, String> map);
+		
+		// 추가
+		List<Emergency> selectEmergencyListMain(Map<String, String> map);
+
 		int selectEmergencyCount(Map<String, String> map);
 		
 		List<Emergency> selectEmergencyInfo(String hpid);

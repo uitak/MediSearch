@@ -41,6 +41,14 @@ public class EmergencyService {
 		return mapper.selectEmergencyList(searchMap);
 	}
 	
+	// 추가
+	public List<Emergency> getEmergencyListMain(PageInfo pageInfo, Map<String, String> searchMap) {
+		searchMap.put("limit", "" + pageInfo.getListLimit());
+		searchMap.put("offset", "" + (pageInfo.getStartList() - 1));
+		
+		return mapper.selectEmergencyListMain(searchMap);
+	}
+	
 	public List<Emergency> getErInfo(String hpid) {
 		return mapper.selectEmergencyInfo(hpid);
 	}

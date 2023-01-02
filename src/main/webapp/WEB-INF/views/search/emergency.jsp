@@ -199,7 +199,6 @@
                   </div>
                   <h3 class="mb-2 fs-lg" ><a class="nav-link stretched-link" onclick="movePage('${path}/search/emergencyInfo.do?hpid=${v.hpid}&img=${v.hospitalImg}');">${v.dutyName}</a></h3>
                   <ul class="list-inline mb-0 fs-xs">
-                    <li class="list-inline-item pe-1"><i class="fi-star-filled mt-n1 me-1 fs-base text-warning align-middle"></i><b>5.0</b><span class="text-muted">&nbsp;(48)</span></li>
                     <li class="list-inline-item pe-1"><i class="fi-map-pin mt-n1 me-1 fs-base text-muted align-middle"></i>${v.dutyAddr}</li>
                     <li class="list-inline-item pe-1"><i class="fi-apartment mt-n1 me-1 fs-base text-muted align-middle"></i>${v.dutyDivNam}</li>
                   </ul>

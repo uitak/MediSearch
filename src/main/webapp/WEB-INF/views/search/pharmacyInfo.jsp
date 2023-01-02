@@ -135,7 +135,11 @@
             <ul class="tns-thumbnails mb-4" id="thumbnails" >
               <li class="tns-thumbnail"><img src="${path}/resources/img/medisearch/ph/phResize/ph${param.i}.jpg" alt="Thumbnail" ></li>
               <li class="tns-thumbnail"><img src="${path}/resources/img/medisearch/ph/phResize/pharmacy.jpg" alt="Thumbnail" ></li>
-              <li class="tns-thumbnail"><img src="${path}/resources/img/hos/resize/900.png" onclick="relayout() panTo()" alt="Thumbnail"></li>
+              
+ <!-- 주석처리하기 -->
+              <%-- <li class="tns-thumbnail"><img src="${path}/resources/img/hos/resize/900.png" onclick="relayout() panTo()" alt="Thumbnail"></li> --%>
+              
+              
               <!--
               <li class="tns-thumbnail"><img src="img/real-estate/single/th11.jpg" alt="Thumbnail"></li>
               <li class="tns-thumbnail"><img src="img/real-estate/single/th12.jpg" alt="Thumbnail"></li>

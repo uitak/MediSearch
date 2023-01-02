@@ -29,20 +29,20 @@
 
             <div class="col-xl-8 col-lg-9 col-md-10 mx-auto px-0">
               <!-- Search form-->
-              <form class="form-group d-block d-md-flex position-relative rounded-md-pill mb-2 mb-sm-4 mb-lg-5">
+              <form method="get" action="${path}/search/emergencyMap2.do" class="form-group d-block d-md-flex position-relative rounded-md-pill mb-2 mb-sm-4 mb-lg-5">   
                   <form class="form-group d-block d-md-flex position-relative">
                       <div class="d-sm-flex">
                         <div class="dropdown w-100 mb-sm-0 mb-3" data-bs-toggle="select">
                           <button class="btn btn-link btn-lg dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"><span class="dropdown-toggle-label">중환자분류</span></button>
-                          <input type="hidden">
-                          <ul class="dropdown-menu">
-                            <li class="dropdown-item"><span class="dropdown-item-label">신경중환자</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">신생중환자</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">흉부중환자</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">일반중환자</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">약물중환자</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">화상중환자</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">외상중환자</span></li>
+                          <input type="hidden" id="patientClassification" name="patientClassification" value=null>
+                          <ul id="menu" class="dropdown-menu">
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr1();"><span class="dropdown-item-label">신경중환자</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr1();"><span class="dropdown-item-label">신생중환자</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr1();"><span class="dropdown-item-label">흉부중환자</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr1();"><span class="dropdown-item-label">일반중환자</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr1();"><span class="dropdown-item-label">약물중환자</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr1();"><span class="dropdown-item-label">화상중환자</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr1();"><span class="dropdown-item-label">외상중환자</span></a></li>
                           </ul>
                         </div>
                       </div>
@@ -51,27 +51,27 @@
                       <div class="d-sm-flex">
                         <div class="dropdown w-100 mb-sm-0 mb-3" data-bs-toggle="select">
                           <button class="btn btn-link btn-lg dropdown-toggle ps-2 ps-sm-3" type="button" data-bs-toggle="dropdown"><span class="dropdown-toggle-label">진료 과목</span></button>
-                          <input type="hidden">
+                          <input type="hidden" id="department" name="department" value=null>
                           <ul class="dropdown-menu">
-                            <li class="dropdown-item"><span class="dropdown-item-label">내과</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">외과</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">신경외과</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">신경과</span></li>
-                            <li class="dropdown-item"><span class="dropdown-item-label">소아과</span></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr2();"><span class="dropdown-item-label">내과</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr2();"><span class="dropdown-item-label">외과</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr2();"><span class="dropdown-item-label">신경외과</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr2();"><span class="dropdown-item-label">신경과</span></a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="changeAttr2();"><span class="dropdown-item-label">소아과</span></a></li>
                           </ul>
                         </div>
                       </div>
                       &nbsp;&nbsp;
-                      <div class="input-group input-group-lg" style="font-size:14px">
+                      <div class="input-group input-group-lg">
                         
-                        <input type="checkbox" name="available" value="ct">&nbsp;CT&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="checkbox" name="available" value="ct">&nbsp;MRI&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="checkbox" name="available" value="ct">&nbsp;조영촬영기&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="checkbox" name="available" value="ct">&nbsp;인공호흡기&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="checkbox" name="available" value="ct">&nbsp;구급차&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="checkbox" name="available" value="ct">&nbsp;인큐베이터
+                        <input type="checkbox" id="available" name="available" value="hvctayn">&nbsp;CT&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="available" name="available" value="hvmriayn">&nbsp;MRI&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="available" name="available" value="hvangioayn">&nbsp;조영촬영기&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="available" name="available" value="hvventiayn">&nbsp;인공호흡기&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="available" name="available" value="hvamyn">&nbsp;구급차&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="available" name="available" value="hv11">&nbsp;인큐베이터
                       </div>
-                      <button class="btn btn-primary btn-lg rounded-pill" type="button">Search</button>
+                      <button class="btn btn-primary btn-lg rounded-pill" type="submit">Search</button>
                   </form>
                 </div>
             </div>
@@ -190,7 +190,7 @@
 			    
 			} else { 
 			    
-			    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+			    var locPosition = new kakao.maps.LatLng(37.5662952, 126.9779451),    
 			        message = 'geolocation을 사용할수 없어요..'
 			        
 			    displayMarker(locPosition, message);
@@ -375,7 +375,7 @@
       <!-- 응급실 / 공휴일진료기관 -->
       <section class="container mb-3">
         <div class="row gallery">
-          <div class="col-md-7 mt-3"">
+          <div class="col-md-7 mt-3">
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h2 class="h3 mb-0" style="font-size: 1.8rem;">내 주변 응급실</h2><a class="btn btn-link fw-normal ms-md-3 pb-0" href="${path}/search/emergency.do">더보기<i class="fi-arrow-long-right ms-2"></i></a>
             </div>
@@ -384,25 +384,20 @@
             	<c:if test="${not empty emList}">
             		<c:forEach var="emergency" items="${emList}" varStatus="status">
 						<div class="col-sm-6 mb-3">
-						  <article class="card border-0 shadow-sm card-hover card-horizontal">
-						    <a href="#" class="card-img-top custom" style="background-image: url(${path}/resources/img/medisearch/hp/hp${status.count}.jpg);"></a>
+						  <article class="card border-0 shadow-sm card-hover card-horizontal" style=" margin-bottom: 33px;">
+						    <a class="card-img-top custom" href="${path}/search/emergencyInfo.do?hpid=${emergency.hpid}&img=resources/img/medisearch/hp/hp${status.count}.jpg" style="background-image: url(${path}/resources/img/medisearch/hp/hp${status.count}.jpg);"></a>
 						    <div class="card-body py-3 ps-2 pe-0">
-						    	<c:if test="${emergency.distance >= 1000}">
-							      <a href="#" class="fs-xs text-decoration-none">약 ${emergency.distance / 1000} km</a>
-						    	</c:if>
-						    	<c:if test="${emergency.distance < 1000}">
-							      <a href="#" class="fs-xs text-decoration-none">약 ${emergency.distance} m</a>
-						    	</c:if>
+						      <a class="fs-xs text-decoration-none">약 ${emergency.distance} M</a>
 						      <h3 class="fs-base pt-1 mb-1">
-						        <a href="#" class="nav-link custom-font fw-normal fs-sm">${emergency.dutyName}</a>
+						        <a class="nav-link custom-font fw-normal fs-sm" href="${path}/search/emergencyInfo.do?hpid=${emergency.hpid}&img=resources/img/medisearch/hp/hp${status.count}.jpg">${emergency.dutyName}</a>
 						      </h3>
 						      <span class="fi-map-pin"></span>
-						      <span class="fs-sm text-muted custom-font fw-light fs-xs">${emergency.dutyAddr}<br>
+						      <span class="fs-sm text-muted fs-xs" style="color: black;">${emergency.dutyAddr}</span><br>
 						      <c:if test="${emergency.dutyTel3 == '-'}">
-							      <span><i class="fi-phone me-1"></i> ${emergency.dutyTel1}</span>
+							      <span><i class="fi-phone me-1" style="font-weight:900;"></i> ${emergency.dutyTel1}</span>
 						      </c:if>
 						      <c:if test="${emergency.dutyTel3 != '-'}">
-							      <span><i class="fi-phone me-1"></i> ${emergency.dutyTel3}</span>
+							      <span><i class="fi-phone me-1" style="font-weight:900;"></i> &nbsp;${emergency.dutyTel3}</span>
 						      </c:if>
 						    </div>
 						  </article>
@@ -417,7 +412,7 @@
               <h2 class="h3 mb-0" style="font-size: 1.8rem;">공휴일 진료기관</h2><a class="btn btn-link fw-normal ms-md-3 pb-0" href="${path}/search/holiday">더보기<i class="fi-arrow-long-right ms-2"></i></a>
             </div>
             <!-- Basic table -->
-            <div class="table-responsive" style="border:1; box-shadow: 0px 0px 10px rgb(221, 221, 221); border-radius: 20px;">
+            <div class="table-responsive" style="border:1; box-shadow: 0px 0px 10px #d3d3d3; border-radius: 20px;">
               <table class="table table-striped table-mb">
                 <thead>
                   <tr>
@@ -481,7 +476,6 @@
           </c:if>
           
         </div>
-        
       </section>
       <!-- 의약품 -->
       <section class="container overflow-auto mb-5">
@@ -489,19 +483,47 @@
           <h2 class="h3 mb-0" style="margin-top:30px; font-size: 1.8rem;">의약품</h2><a class="btn btn-link fw-normal ms-md-3 pb-0" href="${path}/search/pill">더보기<i class="fi-arrow-long-right ms-2"></i></a>
         </div>
         <div class="row g-2 g-md-3 gallery" data-thumbnails="true" style="min-width: 30rem; margin-bottom: 100px;">
-          <div class="col-6">
-            <a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(3).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill1.jpg"></a>
+          <div class="col-6" style="border-radius: 20px; padding:0px; box-shadow: 0px 0px 10px #d3d3d3;">
+            <a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(3).itemName}&searchType=itemName">
+            	<img src="${path}/resources/img/medisearch/pill/pill1.jpg">
+            </a>
           </div>
           <div class="col-3">
-            <a class="gallery-item rounded rounded-md-3 mb-md-2" href="${path}/search/pill?searchValue=${phillList.get(0).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill2.jpg" ></a>
-            <a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(1).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill3.jpg" ></a>
+            <span style="display: inline-block; border-radius: 20px; padding:0px; box-shadow: 0px 0px 10px #d3d3d3;">
+            	<a class="gallery-item rounded rounded-md-3 mb-md-2" href="${path}/search/pill?searchValue=${phillList.get(0).itemName}&searchType=itemName">
+            		<img src="${path}/resources/img/medisearch/pill/pill2.jpg" >
+            	</a>
+            </span>
+            <span style="display: inline-block; border-radius: 20px; padding:0px; box-shadow: 0px 0px 10px #d3d3d3;">
+            	<a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(1).itemName}&searchType=itemName">
+            		<img src="${path}/resources/img/medisearch/pill/pill3.jpg" >
+            	</a>
+            </span>
           </div>
           <div class="col-3">
-            <a class="gallery-item rounded rounded-md-3 mb-md-2" href="${path}/search/pill?searchValue=${phillList.get(4).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill4.png"></a>
-            <a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(2).itemName}&searchType=itemName"><img src="${path}/resources/img/medisearch/pill/pill5.jpg"></a>
+            <span style="display: inline-block; border-radius: 20px; padding:0px; box-shadow: 0px 0px 10px #d3d3d3;">
+            	<a class="gallery-item rounded rounded-md-3 mb-md-2" href="${path}/search/pill?searchValue=${phillList.get(4).itemName}&searchType=itemName">
+            		<img src="${path}/resources/img/medisearch/pill/pill4.png">
+            	</a>
+            </span>
+            <span style="display: inline-block; border-radius: 20px; padding:0px; box-shadow: 0px 0px 10px #d3d3d3;">
+            	<a class="gallery-item rounded rounded-md-3" href="${path}/search/pill?searchValue=${phillList.get(2).itemName}&searchType=itemName">
+            		<img src="${path}/resources/img/medisearch/pill/pill5.jpg">
+            	</a>
+            </span>
           </div>
         </div>
       </section>
     </main>
+
+<!-- 추가 -->
+<script>
+	function changeAttr1(v) {
+		$("#patientClassification").attr("value", v);
+	}
+	function changeAttr2(v) {
+		$("#department").attr("value", v);
+	}
+</script>
 	
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

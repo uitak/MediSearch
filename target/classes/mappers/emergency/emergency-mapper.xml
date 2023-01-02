@@ -243,6 +243,50 @@
 		where b.hpid=o.hpid and o.hpid=a.hpid and a.hpid=h.hpid
  		AND b.hpid = #{hpid}		
 	</select>
+	
+<!-- 추가 -->
+<!-- 응급실 페이징 : 메인 : 진료과목 포함 -->
+	<select id="selectEmergencyListMain" resultMap="EmergencyListResultMap" parameterType="map">
+		select 
+		b.hpid, b.dutyTel3,b.hpbdn,b.hpccuyn,b.hpcuyn,b.hperyn,b.hpgryn,b.hpicuyn,b.hpnicuyn,b.hpopyn,b.phpid,b.hvdnm,b.dutyHayn,b.hv1,b.hv12,	
+		o.MkioskTy25, o.MkioskTy1,o.MkioskTy2,o.MkioskTy3,o.MkioskTy4,o.MkioskTy5,o.MkioskTy6,o.MkioskTy7,o.MkioskTy8,o.MkioskTy9,o.MkioskTy10,o.MkioskTy11,
+		a.dutyHano, a.hvctayn,a.hvmriayn,a.hvangioayn,a.hvventiayn,a.hvamyn,a.hv2,a.hv3,a.hv4,a.hv5,a.hv6,a.hv7,a.hv8,a.hv9,a.hv10,a.hv11,			
+		h.dutyAddr ,h.dutyDivNam,h.dutyName,h.dutyTel1,h.dutyEryn,h.dutyTime1c,h.dutyTime2c,h.dutyTime3c,h.dutyTime4c,h.dutyTime5c,h.dutyTime6c,h.dutyTime7c,h.dutyTime8c,h.dutyTime1s,h.dutyTime2s,h.dutyTime3s,h.dutyTime4s,h.dutyTime5s,h.dutyTime6s,h.dutyTime7s,h.dutyTime8s,h.postCdn1,h.postCdn2,h.wgs84Lon,h.wgs84Lat,h.dutyInf,h.hospitalImg,
+		MAX(d.dgidIdName)
+		from emergency_base b, emergency_operation o, emergency_available a, hospital h, MEDICAL_DEPARTMENT d
+		where b.hpid=o.hpid and o.hpid=a.hpid and a.hpid=h.hpid and h.hpid=d.hpid	 
+		<if test='!patientClassification.equals("null")'>
+			AND ${patientClassification} > 0
+		</if>
+		
+		<if test='!department.equals("null")'>
+			AND d.dgidIdName = #{department}
+		</if>
+		
+		<if test="hvctayn != null">
+			AND a.hvctayn = 'Y' 
+		</if>		 
+		<if test="hvmriayn != null">
+			AND a.hvmriayn = 'Y' 
+		</if>		 
+		<if test="hvangioayn != null">
+			AND a.hvangioayn = 'Y' 
+		</if>		 
+		<if test="hvventiayn != null">
+			AND a.hvventiayn = 'Y' 
+		</if>		 
+		<if test="hvamyn != null">
+			AND a.hvamyn = 'Y' 
+		</if>			
+		<if test="hv11 != null">
+			AND a.hv11 = 'Y' 
+		</if>
+		group by b.hpid,b.dutyTel3,b.hpbdn,b.hpccuyn,b.hpcuyn,b.hperyn,b.hpgryn,b.hpicuyn,b.hpnicuyn,b.hpopyn,b.phpid,b.hvdnm,b.dutyHayn,b.hv1,b.hv12,	
+		o.MkioskTy25, o.MkioskTy1,o.MkioskTy2,o.MkioskTy3,o.MkioskTy4,o.MkioskTy5,o.MkioskTy6,o.MkioskTy7,o.MkioskTy8,o.MkioskTy9,o.MkioskTy10,o.MkioskTy11,
+		a.dutyHano, a.hvctayn,a.hvmriayn,a.hvangioayn,a.hvventiayn,a.hvamyn,a.hv2,a.hv3,a.hv4,a.hv5,a.hv6,a.hv7,a.hv8,a.hv9,a.hv10,a.hv11,			
+		h.dutyAddr ,h.dutyDivNam,h.dutyName,h.dutyTel1,h.dutyEryn,h.dutyTime1c,h.dutyTime2c,h.dutyTime3c,h.dutyTime4c,h.dutyTime5c,h.dutyTime6c,h.dutyTime7c,h.dutyTime8c,h.dutyTime1s,h.dutyTime2s,h.dutyTime3s,h.dutyTime4s,h.dutyTime5s,h.dutyTime6s,h.dutyTime7s,h.dutyTime8s,h.postCdn1,h.postCdn2,h.wgs84Lon,h.wgs84Lat,h.dutyInf,h.hospitalImg
+		ORDER BY h.dutyName ASC LIMIT ${limit} OFFSET ${offset}			
+	</select>
 <!-- 병원별 진료과목 가져오기 -->
 	<select id="inst" resultMap="EmergencyInfoResultMap" parameterType="String">
 		select d.dgidIdName

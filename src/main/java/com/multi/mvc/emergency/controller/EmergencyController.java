@@ -92,6 +92,41 @@ public class EmergencyController {
 		return "search/emergency";
 	}
 	
+	// form3 : 메인
+	// 추가
+	@RequestMapping("/search/emergencyMap2.do")
+	String emergencyMap2(Model model, @RequestParam Map<String, String> param, String[] available) {
+		int page = 1;
+		Map<String, String> searchMap = new HashMap<String, String>();
+		String[] imgs = {"hp19.jpg","hp20.jpg","hp21.jpg","hp22.jpg","hp23.jpg","hp24.jpg","hp25.jpg","hp26.jpg","hp27.jpg","hp28.jpg","hp29.jpg"};
+		try {
+			searchMap.put("patientClassification", patientCF(param.get("patientClassification")));
+			searchMap.put("department", param.get("department"));
+			searchMap.put("available", param.get("department"));
+			for(int i=0;i<available.length;i++) {
+				searchMap.put(available[i], "Y");
+			}
+			
+			page = Integer.parseInt(param.get("page"));
+		} catch (Exception e) {}
+		
+		int erCount = service.getEmergencyCount(searchMap);
+		PageInfo pageInfo = new PageInfo(page, 5, erCount, 12);
+		List<Emergency> list = service.getEmergencyListMain(pageInfo, searchMap);
+		
+		for(int i=0;i<list.size();i++) {
+			int num = (int)(Math.random()*11)+0;
+			list.get(i).setDutyAddr(list.get(i).getDutyAddr().split("로")[0]+"로");
+			list.get(i).setHospitalImg("resources/img/hospital/"+imgs[num]);
+		}
+		model.addAttribute("count", erCount);
+		model.addAttribute("list", list);
+		model.addAttribute("param", param);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "search/emergency";
+	}
+	
 	// form2 : 병원 이름으로 검색
 	@RequestMapping("/search/emergencyName.do")
 	String emergencyMapName(Model model, @RequestParam Map<String, String> param) {
@@ -193,6 +228,26 @@ public class EmergencyController {
 		}
 		String addr=temp+" "+object2;
 		return addr;
+	}
+	
+	// 추가
+	private String patientCF(String cs) {
+		if(cs.equals("신경중환자")) {
+			cs="hpcuyn";
+		}else if(cs.equals("신생중환자")) {
+			cs="hpnicuyn";
+		}else if(cs.equals("흉부중환자")) {
+			cs="hpccuyn";
+		}else if(cs.equals("일반중환자")) {
+			cs="hpicuyn";
+		}else if(cs.equals("약물중환자")) {
+			cs="hv7";
+		}else if(cs.equals("화상중환자")) {
+			cs="hv8";
+		}else if(cs.equals("외상중환자")) {
+			cs="hv9";
+		}
+		return cs;
 	}
 	
 	// 약국 주소 메소드

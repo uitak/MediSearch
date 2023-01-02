@@ -26,6 +26,15 @@
 
     <!-- 스타일시트 -->
     <link href="${path}/resources/custom-css/custom.css" rel="stylesheet">
+
+
+<!-- 추가 -->
+	<style type="text/css">
+		#available{
+			accent-color: #FF603F;
+		}
+	</style>
+    
     
 	<!-- Page loading styles-->
     <link href="${path}/resources/css/page.css" rel="stylesheet">
@@ -95,12 +104,7 @@
     	}
 	</script>
 	<!-- 카카오 도로명 주소 api 끝 -->
-<!-- 체크박스 css 추가 -->
-	<style type="text/css">
-        #available{
-            accent-color: #FF603F;
-        }
-    </style>
+
 
   </head>
   <!-- Body-->
